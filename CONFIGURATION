@@ -22,6 +22,8 @@ default:
     - !expr conflicted::conflict_prefer("group_by", "dplyr", quiet = TRUE)
     - !expr conflicted::conflict_prefer("summarise", "dplyr", quiet = TRUE)
     - !expr conflicted::conflict_prefer("box", "shinydashboard", quiet = TRUE)
+  drake:
+    - !expr options(drake_make_menu = FALSE)
 
 package:
   messages:
