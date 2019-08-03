@@ -94,7 +94,7 @@ following functionality:
 <!-- end list -->
 
   - Create a data model if relational tables exist;
-  - Introduce new features and ready-for-modelling tables;
+  - Introduce new features and ready-for-modelling tables; and
   - Make the data available for query.
 
 The template provides skeletons for `Ingest`, `Prepare` and `Store`
