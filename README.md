@@ -71,10 +71,51 @@ You can install `template.project` by using:
     install.packages("devtools")
     devtools::install_github("data-science-competitions/template.project")
 
+## Data Pipeline
+
+The template includes a database abstraction layer (DAL) that separates
+data sources and analytic applications. The DAL has 3 stages with the
+following functionality:
+
+1.  `Ingest`
+
+<!-- end list -->
+
+  - Pull data from external sources; and
+  - Matching schema, organizing, indexing, encoding and compressing the
+    data.
+
+<!-- end list -->
+
+2.  `Prepare`
+
+<!-- end list -->
+
+  - Type conversion of variables if necessary; and
+  - Data cleansing;
+
+<!-- end list -->
+
+3.  `Store`
+
+<!-- end list -->
+
+  - Create a data model if relational tables exist;
+  - Introduce new features and ready-for-modelling tables;
+  - Make the data available for query.
+
+The template provides skeletons for `Ingest`, `Prepare` and `Store`
+interfaces. In addition, the template includes a data flow demonstration
+that implements all three interfaces with a toy
+dataset.
+
 ## Function Dependencies
 
 <img src="README_files/figure-gfm/package-function-dependencies-1.png" width="100%" style="display: block; margin: auto;" />
 
 ## Datasets
+
+    ## Error in utils::download.file(url, path, method = method, quiet = quiet,  : 
+    ##   cannot open URL 'https://api.github.com/repos/krlmlr/dm/tarball/master'
 
 <img src="README_files/figure-gfm/package-data-overview-1.png" width="100%" style="display: block; margin: auto;" />
