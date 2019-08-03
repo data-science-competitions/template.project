@@ -67,6 +67,10 @@ IngestDTO <- function(path = getOption("path_dropzone", default = tempdir())){
 }
 
 .import_data <- function(private){
+
+    private$.historical_data <- mtcars[1:22,]
+    private$.new_data <- mtcars[23:32,]
+
     invisible(private)
 }
 
