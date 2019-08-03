@@ -56,13 +56,6 @@ This is possible as the boilerplate comes with:
 14. Push changed on the `inception` branch.
 15. Go to [Travis website](https://travis-ci.org/account/repositories),
     add the project and enable its integration.
-16. Decide if you would need binder – an RStudio Server that lets you
-    demonstrate the package. If you do then:
-
-<!-- end list -->
-
-  - Uncomment *build-binder* under *.travis.yml*; and
-  - Uncomment *Launch Rstudio Binder* from README.Rmd.
 
 ## Installation
 
@@ -106,16 +99,46 @@ following functionality:
 
 The template provides skeletons for `Ingest`, `Prepare` and `Store`
 interfaces. In addition, the template includes a data flow demonstration
-that implements all three interfaces with a toy
-dataset.
+that implements all three interfaces with a toy dataset.
 
+``` r
+ingest_interface <- Ingest$new(path = tempdir())
+class(ingest_interface)
+```
+
+    ## [1] "Ingest" "R6"
+
+``` r
+ingest_object <- IngestDAO$new(path = tempdir())
+class(ingest_object)
+```
+
+    ## [1] "IngestDAO" "Ingest"    "R6"
+
+<!--
 ## Function Dependencies
 
 <img src="README_files/figure-gfm/package-function-dependencies-1.png" width="100%" style="display: block; margin: auto;" />
+-->
 
 ## Datasets
 
-    ## Error in utils::download.file(url, path, method = method, quiet = quiet,  : 
-    ##   cannot open URL 'https://api.github.com/repos/krlmlr/dm/tarball/master'
+### Data Overview
 
 <img src="README_files/figure-gfm/package-data-overview-1.png" width="100%" style="display: block; margin: auto;" />
+
+### Data Glimpse
+
+    ## Observations: 22
+    ## Variables: 11
+    ## $ mpg  <dbl> 21.0, 21.0, 22.8, 21.4, 18.7, 18.1, 14.3, 24.4, 22.8, 19.2, 17.8, 16.4, 17.3, 15.2...
+    ## $ cyl  <dbl> 6, 6, 4, 6, 8, 6, 8, 4, 4, 6, 6, 8, 8, 8, 8, 8, 8, 4, 4, 4, 4, 8
+    ## $ disp <dbl> 160.0, 160.0, 108.0, 258.0, 360.0, 225.0, 360.0, 146.7, 140.8, 167.6, 167.6, 275.8...
+    ## $ hp   <dbl> 110, 110, 93, 110, 175, 105, 245, 62, 95, 123, 123, 180, 180, 180, 205, 215, 230, ...
+    ## $ drat <dbl> 3.90, 3.90, 3.85, 3.08, 3.15, 2.76, 3.21, 3.69, 3.92, 3.92, 3.92, 3.07, 3.07, 3.07...
+    ## $ wt   <dbl> 2.620, 2.875, 2.320, 3.215, 3.440, 3.460, 3.570, 3.190, 3.150, 3.440, 3.440, 4.070...
+    ## $ qsec <dbl> 16.46, 17.02, 18.61, 19.44, 17.02, 20.22, 15.84, 20.00, 22.90, 18.30, 18.90, 17.40...
+    ## $ vs   <dbl> 0, 0, 1, 1, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0
+    ## $ am   <dbl> 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0
+    ## $ gear <dbl> 4, 4, 4, 3, 3, 3, 3, 4, 4, 4, 4, 3, 3, 3, 3, 3, 3, 4, 4, 4, 3, 3
+    ## $ carb <dbl> 4, 4, 1, 1, 2, 1, 4, 2, 2, 4, 4, 3, 3, 3, 4, 4, 4, 1, 2, 1, 1, 2

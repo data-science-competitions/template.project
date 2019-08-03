@@ -86,10 +86,7 @@ knitr::include_graphics("https://i.imgur.com/RLEQkhe.png")
 9. Push changed on the `inception` branch.
 10. Go to [Travis website](https://travis-ci.org/account/repositories), add the
 project and enable its integration.
-11. Decide if you would need binder -- an RStudio Server that lets you
-demonstrate the package. If you do then:
-* Uncomment *build-binder* under *.travis.yml*; and
-* Uncomment *Launch Rstudio Binder* from README.Rmd.
+
 
 ## Installation
 
@@ -106,28 +103,52 @@ sources and analytic applications. The DAL has 3 stages with the following
 functionality:
 
 1. `Ingest`
-  * Pull data from external sources; and
-  * Matching schema, organizing, indexing, encoding and compressing the data.
+* Pull data from external sources; and
+* Matching schema, organizing, indexing, encoding and compressing the data.
 2. `Prepare`
-  * Type conversion of variables if necessary; and
-  * Data cleansing;
+* Type conversion of variables if necessary; and
+* Data cleansing;
 3. `Store`
-  * Create a data model if relational tables exist;
-  * Introduce new features and ready-for-modelling tables; 
-  * Make the data available for query.
-  
+* Create a data model if relational tables exist;
+* Introduce new features and ready-for-modelling tables; 
+* Make the data available for query.
+
 The template provides skeletons for `Ingest`, `Prepare` and `Store` interfaces.
 In addition, the template includes a data flow demonstration that implements all
 three interfaces with a toy dataset.
 
+```{r, message = FALSE}
+ingest_interface <- Ingest$new(path = tempdir())
+class(ingest_interface)
+
+ingest_object <- IngestDAO$new(path = tempdir())
+class(ingest_object)
+```
+
+<!--
 ## Function Dependencies
 
 ```{r package-function-dependencies, echo = FALSE, out.width = "100%"}
 plot_function_dependencies(package_name)
 ```
+-->
 
 ## Datasets
 
-```{r package-data-overview, out.width = "100%", fig.height=0.5, echo = FALSE, error=FALSE}
-plot_datasets_overview(x = list(mtcars = mtcars, iris = iris))
+### Data Overview
+
+```{r package-data-overview, out.width = "100%", fig.height=0.5, echo = FALSE}
+plot_datasets_overview(
+  list(
+    historical_data = ingest_object$historical_data, 
+    new_data = ingest_object$new_data,
+    submission_sample = ingest_object$submission_sample
+  )
+)
+```
+
+### Data Glimpse
+
+```{r data-glimpse, eval=TRUE, message=FALSE, echo=FALSE}
+ingest_object$historical_data %>% dplyr::glimpse(width = 100)
 ```
