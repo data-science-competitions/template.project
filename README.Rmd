@@ -114,8 +114,8 @@ functionality:
 * Make the data available for query.
 
 The template provides skeletons for `Ingest`, `Prepare` and `Store` interfaces.
-In addition, the template includes a data flow demonstration that implements all
-three interfaces with a toy dataset.
+In addition, the template includes a toy example which demonstrates the data
+flow between all three interfaces.
 
 ```{r, message = FALSE}
 ingest_interface <- Ingest$new(path = tempdir())
@@ -128,7 +128,7 @@ class(ingest_object)
 <!--
 ## Function Dependencies
 
-```{r package-function-dependencies, echo = FALSE, out.width = "100%"}
+```{r package-function-dependencies, echo = FALSE, out.width = "100%", eval = FALSE}
 plot_function_dependencies(package_name)
 ```
 -->

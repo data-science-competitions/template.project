@@ -15,17 +15,22 @@
 #' * \href{https://docs.microsoft.com/en-us/azure/data-explorer/ingest-data-overview}{What is data ingestion?}
 #' * \href{https://en.wikipedia.org/wiki/Data_access_object}{What is data access object?}
 #'
+#' @examples
+#' \dontrun{
+#' db <- IngestDAO(path = getOption("path_dropzone", default = tempdir())
+#' names(db)
+#' }
 IngestDAO <- R6::R6Class(
     classname = "IngestDAO",
     inherit = Ingest,
     private = list(
-        # Private Variables ------------------------------------------------
+        # Private Variables ----------------------------------------------------
         .path = character(0),
         .historical_data = data.frame(),
         .new_data = data.frame(),
         .submission_sample = data.frame(),
 
-        # Private Methods --------------------------------------------------
+        # Private Methods ------------------------------------------------------
         #' Pull data from external sources
         pull_data = function() .pull_data(private),
         #' Make the data available for query
@@ -37,8 +42,7 @@ IngestDAO <- R6::R6Class(
         new_data = function() private$.new_data,
         submission_sample = function() private$.submission_sample
     )
-)#end Ingest
-
+)#end IngestDAO
 
 # Private Methods: High-level Functions ----------------------------------------
 .pull_data <- function(private){
