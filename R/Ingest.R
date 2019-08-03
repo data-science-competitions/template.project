@@ -1,89 +1,74 @@
-#' @title Instantiate the Ingest Interface
+#' @title Data Ingestion Interface for Non-Real-Time Analytic Applications
 #'
 #' @description Data ingestion is the process used to load data records from one
 #'   or more sources to create or update a table in R session. Once ingested,
 #'   the data becomes available for query.
 #'
-#' @details
-#' Instantiating the Ingest Interface results with a Data Transfer Object (DTO).
-#'
 #' @param path (`character`) A path to a folder where the raw data files
 #'   are/will-be stored.
 #'
-#' @return (`Ingest`) An implementing of the `Ingest` interface.
+#' @return (`Ingest`) An interface that defines an abstract type that contains
+#'   no data but defines behaviours as method signatures.
 #'
 #' @export
 #'
+#' @family Data Pipeline
+#'
+#' @note The methods defined in an interface contain no code and thus cannot
+#'   themselves be called; they must be implemented by non-abstract code to be
+#'   run when they are invoked.
+#'
+#' @section Interface Methods:
+#' Define \code{active binding function} as a function that looks like a
+#' variable but actually invokes a function each time it is accessed.
+#'
+#' The interface specifies three \code{active binding functions}, each fetches a
+#' data table.
+#'
+#' In addition, the interface specifies a
+#' \href{https://en.wikipedia.org/wiki/Template_method_pattern}{template method
+#' pattern} for pulling and importing the data.
+#'
 #' @section Further Reading:
 #' * \href{https://docs.microsoft.com/en-us/azure/data-explorer/ingest-data-overview}{What is data ingestion?}
-#' * \href{https://en.wikipedia.org/wiki/Data_transfer_object}{What is data transfer object?}
+#' * \href{https://en.wikipedia.org/wiki/Template_method_pattern}{What is template method pattern?}
 #'
-IngestDTO <- function(path = getOption("path_dropzone", default = tempdir())){
+#' @examples
+#' \dontrun{
+#' db <- Ingest(path = getOption("path_dropzone", default = tempdir())
+#' names(db)
+#' }
+Ingest <- R6::R6Class(
+    classname = "Ingest",
+    public = list(
+        # Public Variables -------------------------------------------------
 
-    Ingest <- R6::R6Class(
-        classname = "Ingest",
-        public = list(
-            # Public Variables -------------------------------------------------
+        # Public Methods ---------------------------------------------------
+        initialize = function(path)
+        {
+            message("Ingesting Data")
+            private$.path <- path
+            private$pull_data()
+            private$import_data()
+        }),
 
-            # Public Methods ---------------------------------------------------
-            initialize = function(path)
-            {
-                message("Ingesting Data")
-                private$.path <- path
-                private$pull_data()
-                private$import_data()
-            }),
+    private = list(
+        # Private Variables ------------------------------------------------
+        .path = character(0),
+        .historical_data = data.frame(),
+        .new_data = data.frame(),
+        .submission_sample = data.frame(),
 
-        private = list(
-            # Private Variables ------------------------------------------------
-            .path = character(0),
-            .historical_data = data.frame(),
-            .new_data = data.frame(),
-            .submission_sample = data.frame(),
+        # Private Methods --------------------------------------------------
+        #' Pull data from external sources
+        pull_data = function() invisible(private),
+        #' Make the data available for query
+        import_data = function() invisible(private)
+    ),
 
-            # Private Methods --------------------------------------------------
-            #' Pull data from external sources
-            pull_data = function() .pull_data(private),
-            #' Make the data available for query
-            import_data = function() .import_data(private)
-        ),
-
-        active = list(
-            historical_data = function() private$.historical_data,
-            new_data = function() private$.new_data,
-            submission_sample = function() private$.submission_sample
-        )
-    )#end Ingest
-
-    return(Ingest$new(path))
-
-}#end IngestDTO
-
-# Private Methods: High-level Functions ----------------------------------------
-.pull_data <- function(private){
-    path <- private$.path
-    dir.create(path, showWarnings = FALSE, recursive = TRUE)
-
-    sources <- c()
-    targets <- c()
-
-    for(k in seq_along(sources)){
-        .download_missing_files(sources[[k]], targets[[k]])
-    }
-
-    invisible(private)
-}
-
-.import_data <- function(private){
-
-    private$.historical_data <- mtcars[1:22,]
-    private$.new_data <- mtcars[23:32,]
-
-    invisible(private)
-}
-
-# Private Methods: Low-level Functions -----------------------------------------
-.download_missing_files <- function(source, target){
-    if(identical(file.exists(target), FALSE))
-        utils::download.file(source, target)
-}
+    active = list(
+        historical_data = function() private$.historical_data,
+        new_data = function() private$.new_data,
+        submission_sample = function() private$.submission_sample
+    )
+)#end Ingest
