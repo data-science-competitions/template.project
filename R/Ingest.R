@@ -1,7 +1,11 @@
 #' @title Instantiate the Ingest Interface
 #'
-#' @description Instantiating the Ingest Interface results with a Data Transfer
-#'   Object (DTO).
+#' @description Data ingestion is the process used to load data records from one
+#'   or more sources to create or update a table in R session. Once ingested,
+#'   the data becomes available for query.
+#'
+#' @details
+#' Instantiating the Ingest Interface results with a Data Transfer Object (DTO).
 #'
 #' @param path (`character`) A path to a folder where the raw data files
 #'   are/will-be stored.
@@ -19,8 +23,9 @@ IngestDTO <- function(path = getOption("path_dropzone", default = tempdir())){
     Ingest <- R6::R6Class(
         classname = "Ingest",
         public = list(
-            ## Public Variables
-            ## Public Methods
+            # Public Variables -------------------------------------------------
+
+            # Public Methods ---------------------------------------------------
             initialize = function(path)
             {
                 message("Ingesting Data")
@@ -30,13 +35,16 @@ IngestDTO <- function(path = getOption("path_dropzone", default = tempdir())){
             }),
 
         private = list(
-            ## Private Variables
+            # Private Variables ------------------------------------------------
             .path = character(0),
             .historical_data = data.frame(),
             .new_data = data.frame(),
             .submission_sample = data.frame(),
-            ## Private Methods
+
+            # Private Methods --------------------------------------------------
+            #' Pull data from external sources
             pull_data = function() .pull_data(private),
+            #' Make the data available for query
             import_data = function() .import_data(private)
         ),
 
