@@ -56,7 +56,7 @@ binder_url <- paste0("https://mybinder.org/v2/gh/", package_repo, "/master?urlpa
 
 ---
 
-```{r, echo = FALSE, out.width = "100%", eval = FALSE}
+```{r, echo = FALSE, out.width = "100%"}
 knitr::include_graphics("https://i.imgur.com/RLEQkhe.png")
 ```
 

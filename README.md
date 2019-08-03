@@ -16,6 +16,8 @@ Competitions
 
 -----
 
+<img src="https://i.imgur.com/RLEQkhe.png" width="100%" style="display: block; margin: auto;" />
+
 <!-- Package Description -->
 
 ## Overview
