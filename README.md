@@ -1,5 +1,5 @@
 
-# `template.project`
+# `template.project` <img src='https://i.imgur.com/cLcAYfz.png' align="right" height="50"/>
 
 <!-- badges: start -->
 
@@ -15,8 +15,6 @@ R Project Template for Analytic Applications such as Machine Learning
 Competitions
 
 -----
-
-<img src="https://i.imgur.com/RLEQkhe.png" width="75%" style="display: block; margin: auto;" />
 
 <!-- Package Description -->
 
