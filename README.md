@@ -1,5 +1,5 @@
 
-# `template.project`
+# `template.project` <img src='https://i.imgur.com/cLcAYfz.png' align="right" height="50"/>
 
 <!-- badges: start -->
 
@@ -16,7 +16,7 @@ Competitions
 
 -----
 
-<img src="https://i.imgur.com/RLEQkhe.png" width="75%" style="display: block; margin: auto;" />
+<img src="https://i.imgur.com/RLEQkhe.png" width="100%" style="display: block; margin: auto;" />
 
 <!-- Package Description -->
 
@@ -94,12 +94,12 @@ following functionality:
 <!-- end list -->
 
   - Create a data model if relational tables exist;
-  - Introduce new features and ready-for-modelling tables;
+  - Introduce new features and ready-for-modelling tables; and
   - Make the data available for query.
 
 The template provides skeletons for `Ingest`, `Prepare` and `Store`
-interfaces. In addition, the template includes a data flow demonstration
-that implements all three interfaces with a toy dataset.
+interfaces. In addition, the template includes a toy example which
+demonstrates the data flow between all three interfaces.
 
 ``` r
 ingest_interface <- Ingest$new(path = tempdir())
@@ -118,7 +118,7 @@ class(ingest_object)
 <!--
 ## Function Dependencies
 
-<img src="README_files/figure-gfm/package-function-dependencies-1.png" width="100%" style="display: block; margin: auto;" />
+
 -->
 
 ## Datasets

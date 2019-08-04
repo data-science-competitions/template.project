@@ -35,16 +35,17 @@
 #'
 #' @examples
 #' \dontrun{
-#' db <- Ingest(path = getOption("path_dropzone", default = tempdir())
+#' db <- Ingest(path = tempdir())
 #' names(db)
 #' }
 Ingest <- R6::R6Class(
     classname = "Ingest",
+    cloneable = FALSE,
     public = list(
-        # Public Variables -------------------------------------------------
+        # Public Variables -----------------------------------------------------
 
-        # Public Methods ---------------------------------------------------
-        initialize = function(path)
+        # Public Methods -------------------------------------------------------
+        initialize = function(path = getOption("path_dropzone", default = tempdir()))
         {
             message("Ingesting Data")
             private$.path <- path
@@ -53,13 +54,13 @@ Ingest <- R6::R6Class(
         }),
 
     private = list(
-        # Private Variables ------------------------------------------------
+        # Private Variables ----------------------------------------------------
         .path = character(0),
         .historical_data = data.frame(),
         .new_data = data.frame(),
         .submission_sample = data.frame(),
 
-        # Private Methods --------------------------------------------------
+        # Private Methods ------------------------------------------------------
         #' Pull data from external sources
         pull_data = function() invisible(private),
         #' Make the data available for query

@@ -43,7 +43,7 @@ covr_url <- paste0("https://codecov.io/gh/", package_repo, "/branch/master/graph
 binder_url <- paste0("https://mybinder.org/v2/gh/", package_repo, "/master?urlpath=rstudio")
 ```
 
-# ``r package_name``
+# ``r package_name`` <img src='https://i.imgur.com/cLcAYfz.png' align="right" height="50"/>
 
 <!-- badges: start -->
 [![Travis build status](`r pipeline_url`)](`r travis_url`)
@@ -56,7 +56,7 @@ binder_url <- paste0("https://mybinder.org/v2/gh/", package_repo, "/master?urlpa
 
 ---
 
-```{r, echo = FALSE, out.width = "75%"}
+```{r, echo = FALSE, out.width = "100%"}
 knitr::include_graphics("https://i.imgur.com/RLEQkhe.png")
 ```
 
@@ -64,7 +64,7 @@ knitr::include_graphics("https://i.imgur.com/RLEQkhe.png")
 
 ## Overview
 
-`r desc_obj$get_field("Description")`
+`r desc_obj$get_field("Description")` 
 
 <!--- Only relevant for the {boilerplate} package -->
 
@@ -110,12 +110,12 @@ functionality:
 * Data cleansing;
 3. `Store`
 * Create a data model if relational tables exist;
-* Introduce new features and ready-for-modelling tables; 
+* Introduce new features and ready-for-modelling tables; and 
 * Make the data available for query.
 
 The template provides skeletons for `Ingest`, `Prepare` and `Store` interfaces.
-In addition, the template includes a data flow demonstration that implements all
-three interfaces with a toy dataset.
+In addition, the template includes a toy example which demonstrates the data
+flow between all three interfaces.
 
 ```{r, message = FALSE}
 ingest_interface <- Ingest$new(path = tempdir())
@@ -128,7 +128,7 @@ class(ingest_object)
 <!--
 ## Function Dependencies
 
-```{r package-function-dependencies, echo = FALSE, out.width = "100%"}
+```{r package-function-dependencies, echo = FALSE, out.width = "100%", eval = FALSE}
 plot_function_dependencies(package_name)
 ```
 -->
