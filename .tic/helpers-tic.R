@@ -18,7 +18,7 @@ install_package <- function(pkg){
     install_form_GitHub <- function(pkg){
         message("--> Installing {", get_package_name(pkg), "}")
         install_from_CRAN("devtools")
-        devtools:install_github(pkg, dependencies = TRUE, upgrade = "never")
+        devtools::install_github(pkg, dependencies = TRUE, upgrade = "never")
     }
     install_from_CRAN <- function(pkg){
         message("--> Installing {", get_package_name(pkg), "}")
