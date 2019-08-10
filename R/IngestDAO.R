@@ -1,6 +1,6 @@
 #' @title Instantiate the Ingest Interface
 #'
-#' @param path (`character`) A path to a folder where the raw data files
+#' @field path (`character`) A path to a folder where the raw data files
 #'   are/will-be stored.
 #'
 #' @return (`Ingest`) An implementing of the `Ingest` interface.
@@ -20,20 +20,22 @@
 #' db <- IngestDAO(path = getOption("path_dropzone", default = tempdir())
 #' names(db)
 #' }
+#'
+#' @docType class
+#' @format \code{\link[R6]{R6Class}} object.
+#' @keywords data
 IngestDAO <- R6::R6Class(
     classname = "IngestDAO",
     inherit = Ingest,
     private = list(
         # Private Variables ----------------------------------------------------
         .path = character(0),
-        .historical_data = data.frame(),
-        .new_data = data.frame(),
-        .submission_sample = data.frame(),
+        .historical_data = tibble::tibble(),
+        .new_data = tibble::tibble(),
+        .submission_sample = tibble::tibble(),
 
         # Private Methods ------------------------------------------------------
-        #' Pull data from external sources
         pull_data = function() .pull_data(private),
-        #' Make the data available for query
         import_data = function() .import_data(private)
     ),
 
@@ -60,10 +62,11 @@ IngestDAO <- R6::R6Class(
 }
 
 .import_data <- function(private){
+    utils::data("mtcars", package = "datasets", envir = environment())
 
     private$.historical_data <- mtcars[1:22,]
     private$.new_data <- mtcars[23:32,]
-    private$.submission_sample <- data.frame(UID = rownames( private$.new_data))
+    private$.submission_sample <- tibble::tibble(UID = rownames(private$.new_data))
 
     invisible(private)
 }
