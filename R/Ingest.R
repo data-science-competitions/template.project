@@ -4,7 +4,7 @@
 #'   or more sources to create or update a table in R session. Once ingested,
 #'   the data becomes available for query.
 #'
-#' @param path (`character`) A path to a folder where the raw data files
+#' @field path (`character`) A path to a folder where the raw data files
 #'   are/will-be stored.
 #'
 #' @return (`Ingest`) An interface that defines an abstract type that contains
@@ -35,12 +35,17 @@
 #'
 #' @examples
 #' \dontrun{
-#' db <- Ingest(path = tempdir())
+#' db <- Ingest(path = getOption("path_dropzone", default = tempdir())
 #' names(db)
 #' }
+#'
+#' @docType class
+#' @format \code{\link[R6]{R6Class}} object.
+#' @keywords data
 Ingest <- R6::R6Class(
     classname = "Ingest",
     cloneable = FALSE,
+    lock_objects = FALSE,
     public = list(
         # Public Variables -----------------------------------------------------
 
@@ -56,14 +61,12 @@ Ingest <- R6::R6Class(
     private = list(
         # Private Variables ----------------------------------------------------
         .path = character(0),
-        .historical_data = data.frame(),
-        .new_data = data.frame(),
-        .submission_sample = data.frame(),
+        .historical_data = tibble::tibble(),
+        .new_data = tibble::tibble(),
+        .submission_sample =  tibble::tibble(),
 
         # Private Methods ------------------------------------------------------
-        #' Pull data from external sources
         pull_data = function() invisible(private),
-        #' Make the data available for query
         import_data = function() invisible(private)
     ),
 

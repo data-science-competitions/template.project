@@ -1,9 +1,6 @@
 default:
   startup:
     - !expr options(tidyverse.quiet = TRUE)
-  messages:
-    - !expr if(is.null(getOption("default_flag"))) message("Loading default configuration")
-    - !expr options(default_flag = TRUE)
   paths:
     - !expr options(path_project   = tryCatch(rprojroot::find_rstudio_root_file(), error=function(e) getwd()))
     - !expr options(path_inst      = file.path(.Options$path_project, "inst"))
@@ -21,28 +18,14 @@ default:
     - !expr conflicted::conflict_prefer("arrange", "dplyr", quiet = TRUE)
     - !expr conflicted::conflict_prefer("group_by", "dplyr", quiet = TRUE)
     - !expr conflicted::conflict_prefer("summarise", "dplyr", quiet = TRUE)
-    - !expr conflicted::conflict_prefer("box", "shinydashboard", quiet = TRUE)
-  drake:
-    - !expr options(drake_make_menu = FALSE)
-
-package:
-  messages:
-    - !expr if(is.null(getOption("package_flag"))) message("Loading package configuration")
-    - !expr options(package_flag = TRUE)
+  register:
+    - !expr options(dataflows.ingest.abstract = "Ingest")
+    - !expr options(dataflows.ingest.concrete = "IngestDAO")
 
 session:
-  startup:
-    - !expr sink(tempfile())
-    - !expr devtools::document()
-    - !expr devtools::load_all(export_all = FALSE, helpers = FALSE)
-    - !expr sink()
-  messages:
-    - !expr if(is.null(getOption("session_flag"))) message("Loading session configuration")
-    - !expr options(session_flag = TRUE)
   packages:
     - !expr require(devtools, warn.conflicts = FALSE, quietly = TRUE)
     - !expr require(usethis, warn.conflicts = FALSE, quietly = TRUE)
     - !expr require(testthat, warn.conflicts = FALSE, quietly = TRUE)
     - !expr require(tidyverse, warn.conflicts = FALSE, quietly = TRUE)
     - !expr require(desc, warn.conflicts = FALSE, quietly = TRUE)
-    - !expr require(tic, warn.conflicts = FALSE, quietly = TRUE)

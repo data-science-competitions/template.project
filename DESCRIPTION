@@ -1,9 +1,9 @@
 Package: template.project
 Type: Package
-Title: R Project Template for Analytic Applications such as Machine Learning Competitions
 URL: https://github.com/data-science-competitions
 BugReports: https://github.com/data-science-competitions/template.project/issues
 Version: 0.19.31
+Title: R Project Template for Analytic Applications
 Authors@R: c(
             person("Harel", "Lustiger", email = "tidylab@gmail.com", role = c("aut", "cre"))
             )
@@ -20,14 +20,22 @@ LazyData: true
 RoxygenNote: 6.1.1
 Roxygen: list(markdown = TRUE)
 Language: en-GB
-Depends: R (>= 3.5)
+Depends: 
+    R (>= 3.5)
 Imports: 
     config (>= 0.3),
     conflicted (>= 1.0.2),
-    yaml (>= 2.2.0),
-    R6 (>= 2.3.0)
+    dm (>= 0.0.1),
+    dplyr (>= 0.8.0),
+    magrittr (>= 1.5),
+    R6 (>= 2.3.0),
+    stringr (>= 1.4.0),
+    tibble (>= 2.1.1),
+    yaml (>= 2.2.0)
 Suggests: 
-    covr,
-    devtools (>= 2.0.2),
+    covr (>= 3.2.1),
     desc (>= 1.2.0),
+    devtools (>= 2.0.2),
     testthat (>= 2.0.1)
+Remotes: 
+    krlmlr/dm
