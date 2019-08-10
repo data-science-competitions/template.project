@@ -35,7 +35,7 @@
         .install_package("config")
         config::get(file = file.path(rprojroot::find_rstudio_root_file(), "CONFIGURATION"))
         copy_CONFIGURATION_from_root_to_inst()
-    })
+    }, silent = TRUE)
 }
 
 .Last <- function(){
