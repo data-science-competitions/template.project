@@ -10,3 +10,18 @@ show_error_log <- function(){
 is_travis <- function(){
     identical(Sys.getenv("TRAVIS"), "true")
 }
+
+install_package <- function(pkg){
+    is_package_installed <- function(pkg) pkg %in% rownames(utils::installed.packages())
+
+    if(is_package_installed(pkg)) return(invisible())
+
+    message("--> Installing {", pkg, "}")
+    utils::install.packages(pkg,
+                            repos = "https://cloud.r-project.org",
+                            dependencies = TRUE,
+                            Ncpus = parallel::detectCores()
+    )
+
+    return(invisible())
+}
