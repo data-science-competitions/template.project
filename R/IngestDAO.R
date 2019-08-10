@@ -62,10 +62,10 @@ IngestDAO <- R6::R6Class(
 }
 
 .import_data <- function(private){
-    utils::data("mtcars", package = "datasets", envir = environment())
+    get("data")("mtcars", package = "datasets", envir = environment())
 
-    private$.historical_data <- mtcars[1:22,]
-    private$.new_data <- mtcars[23:32,]
+    private$.historical_data <- get("mtcars")[1:22,]
+    private$.new_data <- get("mtcars")[23:32,]
     private$.submission_sample <- tibble::tibble(UID = rownames(private$.new_data))
 
     invisible(private)
