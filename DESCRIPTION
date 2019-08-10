@@ -20,8 +20,6 @@ LazyData: true
 RoxygenNote: 6.1.1
 Roxygen: list(markdown = TRUE)
 Language: en-GB
-Remotes: 
-    krlmlr/dm
 Depends: 
     R (>= 3.5)
 Imports: 
@@ -29,7 +27,7 @@ Imports:
     conflicted (>= 1.0.2),
     dm (>= 0.0.1),
     dplyr (>= 0.8.0),
-    magrittr,
+    magrittr (>= 1.5),
     R6 (>= 2.3.0),
     stringr (>= 1.4.0),
     tibble (>= 2.1.1),
@@ -39,3 +37,5 @@ Suggests:
     desc (>= 1.2.0),
     devtools (>= 2.0.2),
     testthat (>= 2.0.1)
+Remotes: 
+    krlmlr/dm
