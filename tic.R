@@ -7,7 +7,7 @@ get_stage("after_failure") %>%
 
 # Stage: Before Install --------------------------------------------------------
 get_stage("before_install") %>%
-    add_step(step_install_deps()) %>%
+    add_step(step_install_local_package()) %>%
     add_step(step_install_cran("tidyverse")) %>%
     add_step(step_install_cran("devtools")) %>%
     add_step(step_install_cran("testthat")) %>%
