@@ -167,7 +167,7 @@ class(ds)
 
 ```{r, eval=TRUE, message=FALSE, echo=TRUE}
 ds <- DataStore$new()
-ds$data_model %>% dm::cdm_get_tables() %>% str()
+names(ds$data_model)
 ```
 
 ### Data Overview
@@ -198,6 +198,12 @@ ds$data_model %>%
   )
 ```
 -->
+
+### Data Glimpse
+
+```{r project-data-glimpse, echo=FALSE}
+ds$data_model$historical_data %>% dplyr::glimpse(width = 100)
+```
 
 <!--
 ## Function Dependencies

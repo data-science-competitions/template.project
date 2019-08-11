@@ -63,7 +63,7 @@ Ingest <- R6::R6Class(
         .path = character(0),
         .historical_data = tibble::tibble(),
         .new_data = tibble::tibble(),
-        .submission_format =  tibble::tibble(),
+        .submission_format = tibble::tibble(),
 
         # Private Methods ------------------------------------------------------
         pull_data = function() invisible(private),
