@@ -1,6 +1,6 @@
 #' @title Instantiate the Ingest Interface
 #'
-#' @param path (`character`) A path to a folder where the raw data files
+#' @field path (`character`) A path to a folder where the raw data files
 #'   are/will-be stored.
 #'
 #' @return (`Ingest`) An implementing of the `Ingest` interface.
@@ -15,20 +15,27 @@
 #' * \href{https://docs.microsoft.com/en-us/azure/data-explorer/ingest-data-overview}{What is data ingestion?}
 #' * \href{https://en.wikipedia.org/wiki/Data_access_object}{What is data access object?}
 #'
+#' @examples
+#' \dontrun{
+#' db <- IngestDAO(path = getOption("path_dropzone", default = tempdir())
+#' names(db)
+#' }
+#'
+#' @docType class
+#' @format \code{\link[R6]{R6Class}} object.
+#' @keywords data
 IngestDAO <- R6::R6Class(
     classname = "IngestDAO",
     inherit = Ingest,
     private = list(
-        # Private Variables ------------------------------------------------
+        # Private Variables ----------------------------------------------------
         .path = character(0),
-        .historical_data = data.frame(),
-        .new_data = data.frame(),
-        .submission_sample = data.frame(),
+        .historical_data = tibble::tibble(),
+        .new_data = tibble::tibble(),
+        .submission_sample = tibble::tibble(),
 
-        # Private Methods --------------------------------------------------
-        #' Pull data from external sources
+        # Private Methods ------------------------------------------------------
         pull_data = function() .pull_data(private),
-        #' Make the data available for query
         import_data = function() .import_data(private)
     ),
 
@@ -37,8 +44,7 @@ IngestDAO <- R6::R6Class(
         new_data = function() private$.new_data,
         submission_sample = function() private$.submission_sample
     )
-)#end Ingest
-
+)#end IngestDAO
 
 # Private Methods: High-level Functions ----------------------------------------
 .pull_data <- function(private){
@@ -56,10 +62,11 @@ IngestDAO <- R6::R6Class(
 }
 
 .import_data <- function(private){
+    get("data")("mtcars", package = "datasets", envir = environment())
 
-    private$.historical_data <- mtcars[1:22,]
-    private$.new_data <- mtcars[23:32,]
-    private$.submission_sample <- data.frame(UID = rownames( private$.new_data))
+    private$.historical_data <- get("mtcars")[1:22,]
+    private$.new_data <- get("mtcars")[23:32,]
+    private$.submission_sample <- tibble::tibble(UID = rownames(private$.new_data))
 
     invisible(private)
 }

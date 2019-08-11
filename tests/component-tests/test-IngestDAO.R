@@ -1,4 +1,4 @@
-context("component test for Ingest's data access object (DAO)")
+context("component test for Ingest concrete class (DAO)")
 
 test_that("IngestData implements its interface method signatures", {
     expect_class(db <- IngestDAO$new(path = tempdir()), "Ingest")
