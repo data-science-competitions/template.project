@@ -2,18 +2,20 @@
 output: github_document
 ---
 
-```{r setup, echo=FALSE}
+```{r setup, echo = FALSE, results = 'hide', message = FALSE, warning = FALSE}
 source("README.R", TRUE)
 knitr::opts_chunk$set(echo = TRUE, fig.align = "center", out.width = "100%")
+.install_package("desc")
+.install_package("devtools")
 ```
 
-```{r, echo = FALSE, message=FALSE}
+```{r, echo = FALSE, warning = FALSE}
 #######################
 ## Get Project Paths ##
 #######################
 path_project <- getwd()
 while (length(grep("test", path_project))>0) path_project <- dirname(path_project)
-devtools::load_all(path_project)
+devtools::load_all(path_project, quiet = TRUE)
 
 ############################# 
 ## Get Package DESCRIPTION ##
@@ -51,7 +53,7 @@ binder_url <- paste0("https://mybinder.org/v2/gh/", package_repo, "/master?urlpa
 [![Launch Rstudio Binder](`r mybinder_url`)](`r binder_url`)
 <!-- badges: end -->
 
-
+<!-- Package Title -->
 `r desc_obj$get_field("Title")`
 
 ---
@@ -61,12 +63,9 @@ knitr::include_graphics("https://i.imgur.com/RLEQkhe.png")
 ```
 
 <!-- Package Description -->
+## Description
 
-## Overview
-
-`r desc_obj$get_field("Description")` 
-
-<!--- Only relevant for the {boilerplate} package -->
+`r desc_obj$get_field("Description")`
 
 ## Useage
 
@@ -90,16 +89,32 @@ project and enable its integration.
 
 ## Installation
 
-You can install ``r package_name`` by using:
+``r package_name`` accommodates two stages in the project life-cycle:
+Development and Production.
+
+### Working in Pseudo-Package Mode (Advised During Development Stage)
+
+1. Download the project to local computer
+2. Launch the project via ``r paste0(package_name,".Rproj")``
+3. Optional: Install all package dependencies
+```{r, eval = FALSE}
+remotes::install_local(dependencies = TRUE, force = TRUE, upgrade = "always")
+devtools::uninstall()
+```
+4. Load the complete project as a package via `devtools::load_all()` or
+Ctrl+Shift+L
+
+### Working in Package Mode (Advised During Production Stage)
 
 ```
 install.packages("devtools")
 devtools::install_github("`r package_repo`")
 ```
+
 ## Data Pipeline
 
 The template includes a database abstraction layer (DAL) that separates data
-sources and analytic applications. The DAL has 3 stages with the following
+sources and analytic applications. The DAL has three stages with the following
 functionality:
 
 1. `Ingest`
@@ -117,13 +132,72 @@ The template provides skeletons for `Ingest`, `Prepare` and `Store` interfaces.
 In addition, the template includes a toy example which demonstrates the data
 flow between all three interfaces.
 
-```{r, message = FALSE}
-ingest_interface <- Ingest$new(path = tempdir())
-class(ingest_interface)
+<!--
+### Ingest Layer Interface and its Implementation
 
-ingest_object <- IngestDAO$new(path = tempdir())
-class(ingest_object)
+```{r ingest, message = FALSE, eval = FALSE}
+ingest_abstract <- Ingest$new(path = tempdir())
+class(ingest_abstract)
+
+ingest_concrete <- IngestDAO$new(path = tempdir())
+class(ingest_concrete)
 ```
+
+### Prepare Layer Interface and its Implementation
+
+```{r prepare, message = FALSE, eval = FALSE}
+prepare_abstract <- Prepare$new()
+class(prepare_abstract)
+
+prepare_concrete <- PrepareDAO$new()
+class(prepare_concrete)
+```
+
+### DataStore Object
+
+```{r datastore, message = FALSE, eval = FALSE}
+ds <- DataStore$new()
+class(ds)
+```
+-->
+
+## Datasets
+
+### Accessing the Project Data
+
+```{r, eval=TRUE, message=FALSE, echo=TRUE}
+ds <- DataStore$new()
+ds$data_model %>% dm::cdm_get_tables() %>% str()
+```
+
+### Data Overview
+
+```{r project-data-overview, out.width = "100%", fig.height=0.5, echo = FALSE, message=FALSE}
+remove_all_keys <- function(.data_model){
+  for(table_name in names(.data_model))
+    try(.data_model <- dm::cdm_rm_pk(.data_model, !!table_name, rm_referencing_fks = TRUE), silent = TRUE)
+  return(.data_model)
+}
+
+ds$data_model %>% 
+  remove_all_keys() %>% 
+  dm::cdm_draw(
+    col_attr = c("column", "type")[1:2],
+    view_type = "all", columnArrows = FALSE, rankdir = "BT"
+  )
+```
+
+<!--
+### Data Model
+
+```{r project-data-model, out.width = "100%", fig.height=0.5, echo = FALSE, message=FALSE, eval = FALSE}
+ds$data_model %>% 
+  dm::cdm_draw(
+    col_attr = c("column", "type")[1],
+    view_type = "keys_only", columnArrows = TRUE, rankdir = "LR"
+  )
+```
+-->
 
 <!--
 ## Function Dependencies
@@ -132,23 +206,3 @@ class(ingest_object)
 plot_function_dependencies(package_name)
 ```
 -->
-
-## Datasets
-
-### Data Overview
-
-```{r package-data-overview, out.width = "100%", fig.height=0.5, echo = FALSE}
-plot_datasets_overview(
-  list(
-    historical_data = ingest_object$historical_data, 
-    new_data = ingest_object$new_data,
-    submission_sample = ingest_object$submission_sample
-  )
-)
-```
-
-### Data Glimpse
-
-```{r data-glimpse, eval=TRUE, message=FALSE, echo=FALSE}
-ingest_object$historical_data %>% dplyr::glimpse(width = 100)
-```

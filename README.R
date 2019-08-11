@@ -68,4 +68,3 @@ plot_datasets_overview <- function(x){
 }
 
 .is_package_installed <- function(pkg) pkg %in% rownames(utils::installed.packages())
-

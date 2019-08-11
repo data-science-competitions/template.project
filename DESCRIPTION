@@ -2,7 +2,7 @@ Package: template.project
 Type: Package
 URL: https://github.com/data-science-competitions
 BugReports: https://github.com/data-science-competitions/template.project/issues
-Version: 0.19.31
+Version: 0.19.32
 Title: R Project Template for Analytic Applications
 Authors@R: c(
             person("Harel", "Lustiger", email = "tidylab@gmail.com", role = c("aut", "cre"))
@@ -20,6 +20,8 @@ LazyData: true
 RoxygenNote: 6.1.1
 Roxygen: list(markdown = TRUE)
 Language: en-GB
+Remotes: 
+    krlmlr/dm
 Depends: 
     R (>= 3.5)
 Imports: 
@@ -37,5 +39,3 @@ Suggests:
     desc (>= 1.2.0),
     devtools (>= 2.0.2),
     testthat (>= 2.0.1)
-Remotes: 
-    krlmlr/dm
