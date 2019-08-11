@@ -29,10 +29,6 @@ IngestDAO <- R6::R6Class(
     inherit = Ingest,
     private = list(
         # Private Variables ----------------------------------------------------
-        .path = character(0),
-        .historical_data = tibble::tibble(),
-        .new_data = tibble::tibble(),
-        .submission_format = tibble::tibble(),
 
         # Private Methods ------------------------------------------------------
         pull_data = function() .pull_data(private),
