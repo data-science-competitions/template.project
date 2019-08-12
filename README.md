@@ -176,6 +176,9 @@ names(ds$data_model)
 
 ### Data Glimpse
 
+    ## ---
+    ## historical_data
+
     ## Observations: 22
     ## Variables: 12
     ## $ UID  <chr> "Mazda RX4", "Mazda RX4 Wag", "Datsun 710", "Hornet 4 Drive", "Hornet Sportabout",...
@@ -190,6 +193,31 @@ names(ds$data_model)
     ## $ AM   <dbl> 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0
     ## $ GEAR <dbl> 4, 4, 4, 3, 3, 3, 3, 4, 4, 4, 4, 3, 3, 3, 3, 3, 3, 4, 4, 4, 3, 3
     ## $ CARB <dbl> 4, 4, 1, 1, 2, 1, 4, 2, 2, 4, 4, 3, 3, 3, 4, 4, 4, 1, 2, 1, 1, 2
+
+    ## ---
+    ## new_data
+
+    ## Observations: 10
+    ## Variables: 12
+    ## $ UID  <chr> "AMC Javelin", "Camaro Z28", "Pontiac Firebird", "Fiat X1-9", "Porsche 914-2", "Lo...
+    ## $ MPG  <dbl> 15.2, 13.3, 19.2, 27.3, 26.0, 30.4, 15.8, 19.7, 15.0, 21.4
+    ## $ CYL  <dbl> 8, 8, 8, 4, 4, 4, 8, 6, 8, 4
+    ## $ DISP <dbl> 304.0, 350.0, 400.0, 79.0, 120.3, 95.1, 351.0, 145.0, 301.0, 121.0
+    ## $ HP   <dbl> 150, 245, 175, 66, 91, 113, 264, 175, 335, 109
+    ## $ DRAT <dbl> 3.15, 3.73, 3.08, 4.08, 4.43, 3.77, 4.22, 3.62, 3.54, 4.11
+    ## $ WT   <dbl> 3.435, 3.840, 3.845, 1.935, 2.140, 1.513, 3.170, 2.770, 3.570, 2.780
+    ## $ QSEC <dbl> 17.30, 15.41, 17.05, 18.90, 16.70, 16.90, 14.50, 15.50, 14.60, 18.60
+    ## $ VS   <dbl> 0, 0, 0, 1, 0, 1, 0, 0, 0, 1
+    ## $ AM   <dbl> 0, 0, 0, 1, 1, 1, 1, 1, 1, 1
+    ## $ GEAR <dbl> 3, 3, 3, 4, 5, 5, 5, 5, 5, 4
+    ## $ CARB <dbl> 2, 4, 2, 1, 2, 2, 4, 6, 8, 2
+
+    ## ---
+    ## submission_format
+
+    ## Observations: 10
+    ## Variables: 1
+    ## $ UID <chr> "AMC Javelin", "Camaro Z28", "Pontiac Firebird", "Fiat X1-9", "Porsche 914-2", "Lot...
 
 <!--
 ## Function Dependencies

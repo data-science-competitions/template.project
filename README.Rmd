@@ -160,7 +160,6 @@ ds <- DataStore$new()
 class(ds)
 ```
 -->
-
 ## Datasets
 
 ### Accessing the Project Data
@@ -202,7 +201,11 @@ ds$data_model %>%
 ### Data Glimpse
 
 ```{r project-data-glimpse, echo=FALSE}
-ds$data_model$historical_data %>% dplyr::glimpse(width = 100)
+tables <- ds$data_model %>% dm::cdm_get_tables()
+for(k in seq_along(tables)){
+  message("---\n", names(tables)[k])
+  tables[[k]] %>% dplyr::glimpse(width = 100)
+} 
 ```
 
 <!--
