@@ -59,9 +59,9 @@ standardise_strings <- function(strings, allowed_letters, allowd_special_charact
     allowed_letters <- tolower(allowed_letters)
     allowed_special_character <- tolower(allowd_special_character)
     special_character <- switch(allowed_special_character,
-                          "underscores" = "_",
-                          "hyphens" = "-",
-                          "dots" = ".")
+                                "underscores" = "_",
+                                "hyphens" = "-",
+                                "dots" = ".")
 
     for(k in seq_along(strings)){
         string <- strings[[k]]
@@ -113,7 +113,7 @@ standardise_strings <- function(strings, allowed_letters, allowd_special_charact
 .add_special_character <- function(string, special_character) {
     `%+%` <- function(a, b) paste0(a, b)
 
-    pattern <- paste(" ", ".", "-", "/", "#", "_", sep = "|\\")
+    pattern <- paste(" ", ".", "-", "/", "#", "_", "?", sep = "|\\")
 
     string %>%
         # Transform columns names separators to under scores
