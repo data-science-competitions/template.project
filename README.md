@@ -166,6 +166,22 @@ names(ds$data_model)
 
 ### Data Overview
 
+<font size="2">
+
+    ## -- Table source ---------------------------------------------------------------------------------------------------
+    ## src:  <PrepareDAO>
+    ## -- Data model -----------------------------------------------------------------------------------------------------
+    ## Data model object:
+    ##   3 tables:  historical_data, new_data, submission_format 
+    ##   26 columns
+    ##   2 primary keys
+    ##   1 references
+    ## -- Rows -----------------------------------------------------------------------------------------------------------
+    ## Total: 42
+    ## historical_data: 22, new_data: 10, submission_format: 10
+
+</font>
+
 <img src="README_files/figure-gfm/project-data-overview-1.png" width="100%" style="display: block; margin: auto;" />
 
 <!--
