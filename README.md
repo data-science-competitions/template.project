@@ -216,8 +216,9 @@ names(ds$data_model)
     ## submission_format
 
     ## Observations: 10
-    ## Variables: 1
+    ## Variables: 2
     ## $ UID <chr> "AMC Javelin", "Camaro Z28", "Pontiac Firebird", "Fiat X1-9", "Porsche 914-2", "Lot...
+    ## $ MPG <dbl> 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 
 <!--
 ## Function Dependencies

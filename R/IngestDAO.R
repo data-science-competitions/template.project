@@ -58,11 +58,15 @@ IngestDAO <- R6::R6Class(
 }
 
 .import_data <- function(private){
+    .add_uid <- function(.data){
+        eval(parse(text = 'tibble::rownames_to_column(.data, "UID")'))
+    }
+
     get("data")("mtcars", package = "datasets", envir = environment())
 
-    private$.historical_data <- get("mtcars")[1:22,]
-    private$.new_data <- get("mtcars")[23:32,]
-    private$.submission_format <- tibble::tibble(UID = rownames(private$.new_data))
+    private$.historical_data <- get("mtcars")[1:22,] %>% .add_uid()
+    private$.new_data <- get("mtcars")[23:32,] %>% .add_uid()
+    private$.submission_format <- cbind.data.frame(UID = private$.new_data[, "UID"], mpg = 0, stringsAsFactors = FALSE)
 
     invisible(private)
 }
