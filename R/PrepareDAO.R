@@ -26,6 +26,7 @@ PrepareDAO <- R6::R6Class(
         import_data.frames_from_Ingest = function() .import_data.frames_from_Ingest(private),
         cast_data = function() .cast_data(private),
         clean_data = function() .clean_data(private),
+        transform_data = function() .transform_data(private),
         enrich_data = function() .enrich_data(private)
     ),
 
@@ -63,6 +64,14 @@ PrepareDAO <- R6::R6Class(
 
     invisible(private)
 }
+
+#' @title Transform Data
+#' @description Apply transformations
+#' @noRd
+.transform_data <- function(private){
+    invisible(private)
+}
+
 
 #' @title Enrich Data
 #' @description Craft new features

@@ -32,8 +32,12 @@ Prepare <- R6::R6Class(
             private$cast_data()
             message("-> Cleaning Data")
             private$clean_data()
+            message("-> Transforming Data")
+            private$transform_data()
             message("-> Enriching Data")
             private$enrich_data()
+            message("-> Validating Data")
+            private$validate_data()
         }),
 
     private = list(
@@ -44,7 +48,9 @@ Prepare <- R6::R6Class(
         import_data.frames_from_Ingest = function() .import_data.frames_from_Ingest(private),
         cast_data = function() invisible(private),
         clean_data = function() invisible(private),
-        enrich_data = function() invisible(private)
+        transform_data = function() invisible(private),
+        enrich_data = function() invisible(private),
+        validate_data = function() invisible(private)
     ),
 
     active = list(
@@ -70,10 +76,10 @@ Prepare <- R6::R6Class(
         if(is.data.frame(private$.ingest[[element]])){
             private[[paste0(".", element)]] <-
                 private$.ingest[[element]] %>%
-                .standardise_col_names()
+                .standardise_col_names() %>%
+                as.data.frame(stringsAsFactors = FALSE)
         }
     }
 
     invisible(private)
 }
-
