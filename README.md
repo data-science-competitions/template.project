@@ -3,7 +3,7 @@
 
 <!-- badges: start -->
 
-[![R\>=](https://img.shields.io/badge/R%3E=-3.5-green.svg)](https://www.r-project.org/)
+[![R\>=](https://img.shields.io/badge/R%3E=-3.5-brightgreen.svg)](https://www.r-project.org/)
 [![Travis build
 status](https://travis-ci.org/data-science-competitions/template.project.svg?branch=master)](https://travis-ci.org/data-science-competitions/template.project)
 [![Code coverage
