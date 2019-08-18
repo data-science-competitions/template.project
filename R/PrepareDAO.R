@@ -26,28 +26,56 @@ PrepareDAO <- R6::R6Class(
         import_data.frames_from_Ingest = function() .import_data.frames_from_Ingest(private),
         cast_data = function() .cast_data(private),
         clean_data = function() .clean_data(private),
+        transform_data = function() .transform_data(private),
         enrich_data = function() .enrich_data(private)
     ),
 
     active = list(
         historical_data = function() private$.historical_data,
         new_data = function() private$.new_data,
-        submission_sample = function() private$.submission_sample
+        submission_format = function() private$.submission_format
     )
 )#end PrepareDAO
 
 # Private Methods: High-level Functions ----------------------------------------
+#' @title Cast Data
+#' @description Convert variables types
+#' @noRd
 .cast_data <- function(private){
-    message("-> Casting Data")
     invisible(private)
 }
 
+#' @title Clean Data
+#' @description Apply cleaning operations on the data:
+#' 1. Remove duplicates
+#' @noRd
 .clean_data <- function(private){
-    message("-> Cleaning Data")
+    .drop_duplicates <- function(.data){
+        .data %>% dplyr::distinct()
+    }
+
+    for(element in names(private$.ingest)){
+        if(is.data.frame(private$.ingest[[element]])){
+            private[[paste0(".", element)]] <-
+                private[[paste0(".", element)]] %>%
+                .drop_duplicates()
+        }
+    }
+
     invisible(private)
 }
 
+#' @title Transform Data
+#' @description Apply transformations
+#' @noRd
+.transform_data <- function(private){
+    invisible(private)
+}
+
+
+#' @title Enrich Data
+#' @description Craft new features
+#' @noRd
 .enrich_data <- function(private){
-    message("-> Enriching Data")
     invisible(private)
 }

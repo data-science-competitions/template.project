@@ -3,6 +3,7 @@
 
 <!-- badges: start -->
 
+[![R\>=](https://img.shields.io/badge/R%3E=-3.5-brightgreen.svg)](https://www.r-project.org/)
 [![Travis build
 status](https://travis-ci.org/data-science-competitions/template.project.svg?branch=master)](https://travis-ci.org/data-science-competitions/template.project)
 [![Code coverage
@@ -159,40 +160,28 @@ class(ds)
 
 ``` r
 ds <- DataStore$new()
-ds$data_model %>% dm::cdm_get_tables() %>% str()
+names(ds$data_model)
 ```
 
-    ## List of 3
-    ##  $ historical_data  :Classes 'tbl_df', 'tbl' and 'data.frame':   22 obs. of  12 variables:
-    ##   ..$ UID : chr [1:22] "Mazda RX4" "Mazda RX4 Wag" "Datsun 710" "Hornet 4 Drive" ...
-    ##   ..$ MPG : num [1:22] 21 21 22.8 21.4 18.7 18.1 14.3 24.4 22.8 19.2 ...
-    ##   ..$ CYL : num [1:22] 6 6 4 6 8 6 8 4 4 6 ...
-    ##   ..$ DISP: num [1:22] 160 160 108 258 360 ...
-    ##   ..$ HP  : num [1:22] 110 110 93 110 175 105 245 62 95 123 ...
-    ##   ..$ DRAT: num [1:22] 3.9 3.9 3.85 3.08 3.15 2.76 3.21 3.69 3.92 3.92 ...
-    ##   ..$ WT  : num [1:22] 2.62 2.88 2.32 3.21 3.44 ...
-    ##   ..$ QSEC: num [1:22] 16.5 17 18.6 19.4 17 ...
-    ##   ..$ VS  : num [1:22] 0 0 1 1 0 1 0 1 1 1 ...
-    ##   ..$ AM  : num [1:22] 1 1 1 0 0 0 0 0 0 0 ...
-    ##   ..$ GEAR: num [1:22] 4 4 4 3 3 3 3 4 4 4 ...
-    ##   ..$ CARB: num [1:22] 4 4 1 1 2 1 4 2 2 4 ...
-    ##  $ new_data         :Classes 'tbl_df', 'tbl' and 'data.frame':   10 obs. of  12 variables:
-    ##   ..$ UID : chr [1:10] "AMC Javelin" "Camaro Z28" "Pontiac Firebird" "Fiat X1-9" ...
-    ##   ..$ MPG : num [1:10] 15.2 13.3 19.2 27.3 26 30.4 15.8 19.7 15 21.4
-    ##   ..$ CYL : num [1:10] 8 8 8 4 4 4 8 6 8 4
-    ##   ..$ DISP: num [1:10] 304 350 400 79 120 ...
-    ##   ..$ HP  : num [1:10] 150 245 175 66 91 113 264 175 335 109
-    ##   ..$ DRAT: num [1:10] 3.15 3.73 3.08 4.08 4.43 3.77 4.22 3.62 3.54 4.11
-    ##   ..$ WT  : num [1:10] 3.44 3.84 3.85 1.94 2.14 ...
-    ##   ..$ QSEC: num [1:10] 17.3 15.4 17.1 18.9 16.7 ...
-    ##   ..$ VS  : num [1:10] 0 0 0 1 0 1 0 0 0 1
-    ##   ..$ AM  : num [1:10] 0 0 0 1 1 1 1 1 1 1
-    ##   ..$ GEAR: num [1:10] 3 3 3 4 5 5 5 5 5 4
-    ##   ..$ CARB: num [1:10] 2 4 2 1 2 2 4 6 8 2
-    ##  $ submission_sample:Classes 'tbl_df', 'tbl' and 'data.frame':   10 obs. of  1 variable:
-    ##   ..$ UID: chr [1:10] "AMC Javelin" "Camaro Z28" "Pontiac Firebird" "Fiat X1-9" ...
+    ## [1] "historical_data"   "new_data"          "submission_format"
 
 ### Data Overview
+
+<font size="2">
+
+    ## -- Table source ---------------------------------------------------------------------------------------------------
+    ## src:  <PrepareDAO>
+    ## -- Data model -----------------------------------------------------------------------------------------------------
+    ## Data model object:
+    ##   3 tables:  historical_data, new_data, submission_format 
+    ##   26 columns
+    ##   2 primary keys
+    ##   1 references
+    ## -- Rows -----------------------------------------------------------------------------------------------------------
+    ## Total: 42
+    ## historical_data: 22, new_data: 10, submission_format: 10
+
+</font>
 
 <img src="README_files/figure-gfm/project-data-overview-1.png" width="100%" style="display: block; margin: auto;" />
 
@@ -201,6 +190,52 @@ ds$data_model %>% dm::cdm_get_tables() %>% str()
 
 
 -->
+
+### Data Glimpse
+
+    ## ---
+    ## historical_data
+
+    ## Observations: 22
+    ## Variables: 12
+    ## $ UID  <chr> "Mazda RX4", "Mazda RX4 Wag", "Datsun 710", "Hornet 4 Drive", "Hornet Sportabout",...
+    ## $ MPG  <dbl> 21.0, 21.0, 22.8, 21.4, 18.7, 18.1, 14.3, 24.4, 22.8, 19.2, 17.8, 16.4, 17.3, 15.2...
+    ## $ CYL  <dbl> 6, 6, 4, 6, 8, 6, 8, 4, 4, 6, 6, 8, 8, 8, 8, 8, 8, 4, 4, 4, 4, 8
+    ## $ DISP <dbl> 160.0, 160.0, 108.0, 258.0, 360.0, 225.0, 360.0, 146.7, 140.8, 167.6, 167.6, 275.8...
+    ## $ HP   <dbl> 110, 110, 93, 110, 175, 105, 245, 62, 95, 123, 123, 180, 180, 180, 205, 215, 230, ...
+    ## $ DRAT <dbl> 3.90, 3.90, 3.85, 3.08, 3.15, 2.76, 3.21, 3.69, 3.92, 3.92, 3.92, 3.07, 3.07, 3.07...
+    ## $ WT   <dbl> 2.620, 2.875, 2.320, 3.215, 3.440, 3.460, 3.570, 3.190, 3.150, 3.440, 3.440, 4.070...
+    ## $ QSEC <dbl> 16.46, 17.02, 18.61, 19.44, 17.02, 20.22, 15.84, 20.00, 22.90, 18.30, 18.90, 17.40...
+    ## $ VS   <dbl> 0, 0, 1, 1, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0
+    ## $ AM   <dbl> 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0
+    ## $ GEAR <dbl> 4, 4, 4, 3, 3, 3, 3, 4, 4, 4, 4, 3, 3, 3, 3, 3, 3, 4, 4, 4, 3, 3
+    ## $ CARB <dbl> 4, 4, 1, 1, 2, 1, 4, 2, 2, 4, 4, 3, 3, 3, 4, 4, 4, 1, 2, 1, 1, 2
+
+    ## ---
+    ## new_data
+
+    ## Observations: 10
+    ## Variables: 12
+    ## $ UID  <chr> "AMC Javelin", "Camaro Z28", "Pontiac Firebird", "Fiat X1-9", "Porsche 914-2", "Lo...
+    ## $ MPG  <dbl> 15.2, 13.3, 19.2, 27.3, 26.0, 30.4, 15.8, 19.7, 15.0, 21.4
+    ## $ CYL  <dbl> 8, 8, 8, 4, 4, 4, 8, 6, 8, 4
+    ## $ DISP <dbl> 304.0, 350.0, 400.0, 79.0, 120.3, 95.1, 351.0, 145.0, 301.0, 121.0
+    ## $ HP   <dbl> 150, 245, 175, 66, 91, 113, 264, 175, 335, 109
+    ## $ DRAT <dbl> 3.15, 3.73, 3.08, 4.08, 4.43, 3.77, 4.22, 3.62, 3.54, 4.11
+    ## $ WT   <dbl> 3.435, 3.840, 3.845, 1.935, 2.140, 1.513, 3.170, 2.770, 3.570, 2.780
+    ## $ QSEC <dbl> 17.30, 15.41, 17.05, 18.90, 16.70, 16.90, 14.50, 15.50, 14.60, 18.60
+    ## $ VS   <dbl> 0, 0, 0, 1, 0, 1, 0, 0, 0, 1
+    ## $ AM   <dbl> 0, 0, 0, 1, 1, 1, 1, 1, 1, 1
+    ## $ GEAR <dbl> 3, 3, 3, 4, 5, 5, 5, 5, 5, 4
+    ## $ CARB <dbl> 2, 4, 2, 1, 2, 2, 4, 6, 8, 2
+
+    ## ---
+    ## submission_format
+
+    ## Observations: 10
+    ## Variables: 2
+    ## $ UID <chr> "AMC Javelin", "Camaro Z28", "Pontiac Firebird", "Fiat X1-9", "Porsche 914-2", "Lot...
+    ## $ MPG <dbl> 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 
 <!--
 ## Function Dependencies

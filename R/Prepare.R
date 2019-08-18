@@ -28,9 +28,16 @@ Prepare <- R6::R6Class(
 
             message("Preparing Data")
             private$import_data.frames_from_Ingest()
+            message("-> Casting Data")
             private$cast_data()
+            message("-> Cleaning Data")
             private$clean_data()
+            message("-> Transforming Data")
+            private$transform_data()
+            message("-> Enriching Data")
             private$enrich_data()
+            message("-> Validating Data")
+            private$validate_data()
         }),
 
     private = list(
@@ -41,30 +48,25 @@ Prepare <- R6::R6Class(
         import_data.frames_from_Ingest = function() .import_data.frames_from_Ingest(private),
         cast_data = function() invisible(private),
         clean_data = function() invisible(private),
-        enrich_data = function() invisible(private)
+        transform_data = function() invisible(private),
+        enrich_data = function() invisible(private),
+        validate_data = function() invisible(private)
     ),
 
     active = list(
         historical_data = function() private$.historical_data,
         new_data = function() private$.new_data,
-        submission_sample = function() private$.submission_sample
+        submission_format = function() private$.submission_format
     )
 )#end Prepare
 
 # Helper Functions -------------------------------------------------------------
 #' @title Import Data Frames from Ingest to Prepare
 #' @section Operations:
-#' 1. Extract the data frames from ingest;
-#' 2. Add unique identifier (UID) for each row; and
-#' 3. Standardise column names.
+#' 1. Detect tabels in Ingest and import them to Prepare; and
+#' 2. Standardise column names.
 #' @noRd
 .import_data.frames_from_Ingest <- function(private){
-    .add_row_uid <- function(.data){
-        if(! "UID" %in% colnames(.data))
-            .data <- .data %>% tibble::rownames_to_column(var = "UID")
-        return(.data)
-    }
-
     .standardise_col_names <- function(.data){
         colnames(.data) <- standardise_strings(colnames(.data), "uppercase", "underscores")
         return(.data)
@@ -74,8 +76,8 @@ Prepare <- R6::R6Class(
         if(is.data.frame(private$.ingest[[element]])){
             private[[paste0(".", element)]] <-
                 private$.ingest[[element]] %>%
-                .add_row_uid() %>%
-                .standardise_col_names()
+                .standardise_col_names() %>%
+                as.data.frame(stringsAsFactors = FALSE)
         }
     }
 

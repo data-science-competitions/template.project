@@ -33,6 +33,8 @@ test_that("standardise_strings works when given valid input arguments", {
     expect_equal(standardise_strings("LongE-N", "uppercase", "underscores"), "LONG_E_N")
     expect_equal(standardise_strings("Avg_RWP_rut/yr", "uppercase", "underscores"), "AVG_RWP_RUT_YR")
     expect_equal(standardise_strings("Reference #", "uppercase", "underscores"), "REFERENCE")
+    expect_equal(standardise_strings("Sterilised?", "uppercase", "underscores"), "STERILISED")
+
 
     expect_equal(standardise_strings("Year", "uppercase", "hyphens"), "YEAR")
     expect_equal(standardise_strings("FinancialYear", "uppercase", "hyphens"), "FINANCIAL-YEAR")
