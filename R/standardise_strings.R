@@ -70,6 +70,7 @@ standardise_strings <- function(strings, allowed_letters, allowd_special_charact
         string <-
             string %>%
             .split_camelcase() %>%
+            .replace_percentage_sign() %>%
             .add_special_character(special_character) %>%
             .remove_excessive_special_character(special_character)
         string <- switch(allowed_letters,
@@ -131,4 +132,8 @@ standardise_strings <- function(strings, allowed_letters, allowd_special_charact
 
     mysub("[" %+% special_character %+% "\t\r\n]+$",
           mysub("^[" %+% special_character %+% "\t\r\n]+", x))
+}
+
+.replace_percentage_sign <- function(string){
+    string %>% stringr::str_replace_all("%", " Percentage ")
 }
