@@ -23,7 +23,7 @@
     }
 
     # Main --------------------------------------------------------------------
-    try({ # The expectation is needed when using Travis
+    try({ # The expectation is needed when using CI
         .install_package("devtools")
         .install_package("roxygen2")
 
@@ -39,8 +39,10 @@
 }
 
 .Last <- function(){
-    try({
+    arrange_DESCRIPTION_requirements_alphabetically <- function(){
         deps <- desc::description$new()$get_deps() %>% dplyr::arrange(type, package)
         desc::description$new()$del_deps()$set_deps(deps)$write()
-    }, silent = TRUE)
+    }
+
+    try(arrange_DESCRIPTION_requirements_alphabetically(), silent = TRUE)
 }
