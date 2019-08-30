@@ -28,6 +28,8 @@ plot_function_dependencies <- function(package_name){
 }
 
 plot_datasets_overview <- function(x){
+    .install_package("DiagrammeR")
+
     suppressWarnings(
         suppressMessages(
             devtools::install_github(

@@ -7,6 +7,9 @@ source("README.R", TRUE)
 knitr::opts_chunk$set(echo = TRUE, fig.align = "center", out.width = "100%")
 .install_package("desc")
 .install_package("devtools")
+# Required for converting HTML widgets to Images
+.install_package("webshot")
+# webshot::install_phantomjs()
 ```
 
 ```{r, echo = FALSE, warning = FALSE}
@@ -172,11 +175,9 @@ names(ds$data_model)
 
 ### Data Overview
 
-<font size="2">
 ```{r data-model, echo = FALSE}
 ds$data_model
 ```
-</font>
 
 ```{r project-data-overview, out.width = "100%", fig.height=0.5, echo = FALSE, message=FALSE}
 remove_all_keys <- function(.data_model){
