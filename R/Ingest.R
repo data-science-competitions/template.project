@@ -1,3 +1,4 @@
+#nocov start
 #' @title Data Ingestion Interface for Non-Real-Time Analytic Applications
 #'
 #' @description Data ingestion is the process used to load data records from one
@@ -76,3 +77,9 @@ Ingest <- R6::R6Class(
         submission_format = function() private$.submission_format
     )
 )#end Ingest
+
+# Shared Helper Functions ------------------------------------------------------
+.download_files_from_the_internet <- function(source, target){
+    utils::download.file(source, target)
+}
+#nocov end

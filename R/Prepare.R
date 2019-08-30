@@ -1,3 +1,4 @@
+#nocov start
 #' @title Data Preparation Interface for Non-Real-Time Analytic Applications
 #'
 #' @description Data preprocessing is a data mining technique that involves
@@ -60,7 +61,7 @@ Prepare <- R6::R6Class(
     )
 )#end Prepare
 
-# Helper Functions -------------------------------------------------------------
+# Shared Helper Functions ------------------------------------------------------
 #' @title Import Data Frames from Ingest to Prepare
 #' @section Operations:
 #' 1. Detect tabels in Ingest and import them to Prepare; and
@@ -83,3 +84,4 @@ Prepare <- R6::R6Class(
 
     invisible(private)
 }
+#nocov end
