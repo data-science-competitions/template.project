@@ -50,9 +50,9 @@ IngestDAO <- R6::R6Class(
     sources <- c()
     targets <- c()
 
-    for(k in seq_along(sources)){
-        .download_missing_files(sources[[k]], targets[[k]])
-    }
+    for(k in seq_along(targets))
+        if(identical(file.exists(targets[k]), FALSE)) #nocov
+            .download_files_from_the_internet(sources[[k]], targets[[k]]) #nocov
 
     invisible(private)
 }
@@ -72,7 +72,3 @@ IngestDAO <- R6::R6Class(
 }
 
 # Private Methods: Low-level Functions -----------------------------------------
-.download_missing_files <- function(source, target){
-    if(identical(file.exists(target), FALSE))
-        utils::download.file(source, target)
-}
