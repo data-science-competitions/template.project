@@ -176,3 +176,7 @@ names(ds$data_model)
 ## Vignettes
 
   - [Data Pipeline](about::blank)
+
+<!-- end list -->
+
+    vignette("data-pipeline", package = "template.project")

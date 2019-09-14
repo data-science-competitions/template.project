@@ -177,3 +177,7 @@ plot_function_dependencies(package_name)
 ## Vignettes
 
 * [Data Pipeline](about::blank)
+
+```
+vignette("data-pipeline", package = "`r package_name`")
+```

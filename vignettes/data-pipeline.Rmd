@@ -15,7 +15,7 @@ knitr::opts_chunk$set(
 ```
 
 ```{r setup}
-devtools::load_all(rprojroot::find_package_root_file())
+devtools::load_all()
 ```
 
 ## Data Pipeline

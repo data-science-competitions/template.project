@@ -1,19 +1,17 @@
 # Files ------------------------------------------------------------------------
-^\.Rprofile$
-.*\.ini$
 ^\.gitattributes$
-^README\.R$
-^appveyor\.yml$
+^\.Rprofile$
+^.*\.Rproj$
+^tic\.R$
 ^codecov\.yml$
 ^\.travis\.yml$
-^tic\.R$
+^CONFIGURATION$
+^README\.R$
 ^README\.Rmd$
 ^LICENSE\.md$
-^.*\.Rproj$
+.*\.ini$
 .*\.md$
 .*\.png$
-.*\.html$
-^CONFIGURATION$
 
 # Folders ----------------------------------------------------------------------
 ^\.tic/*
@@ -21,5 +19,6 @@
 ^temp/*
 ^data-raw/*
 ^public/*
-^\.Rproj\.user$
 ^inst/data$
+^doc$
+^Meta$
