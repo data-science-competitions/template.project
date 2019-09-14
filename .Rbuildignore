@@ -14,11 +14,9 @@
 .*\.png$
 
 # Folders ----------------------------------------------------------------------
-^\.tic/*
-^\.Rproj\.user/*
 ^temp/*
 ^data-raw/*
 ^public/*
 ^inst/data$
-^doc$
-^Meta$
+^\.tic/*
+^\.Rproj\.user/*

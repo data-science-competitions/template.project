@@ -173,7 +173,8 @@ names(ds$data_model)
 
 -->
 
+<!--
 ## Vignettes
 
-  - [Data
-    Pipeline](https://github.com/data-science-competitions/template.project/blob/master/vignettes/data-pipeline.html)
+* [Data Pipeline](https://github.com/data-science-competitions/template.project/blob/master/vignettes/data-pipeline.html)
+-->

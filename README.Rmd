@@ -174,7 +174,8 @@ plot_function_dependencies(package_name)
 ```
 -->
 
+<!--
 ## Vignettes
 
 * [Data Pipeline](`r paste(package_url, "blob/master", "vignettes", "data-pipeline.html", sep="/")`)
-
+-->
