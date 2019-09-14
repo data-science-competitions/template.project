@@ -20,7 +20,7 @@ RoxygenNote: 6.1.1
 Roxygen: list(markdown = TRUE)
 Language: en-GB
 Remotes: 
-    krlmlr/dm@v0.0.2
+    krlmlr/dm@v0.0.1.9002
 Depends: 
     R (>= 3.5)
 Imports: 
