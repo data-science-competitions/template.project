@@ -13,11 +13,7 @@ default:
     - !expr options(path_tests     = file.path(.Options$path_project, "tests"))
     - !expr options(path_dropzone  = file.path(.Options$path_data, "dropzone"))
   conflicted:
-    - !expr conflicted::conflict_prefer("filter", "dplyr", quiet = TRUE)
-    - !expr conflicted::conflict_prefer("select", "dplyr", quiet = TRUE)
-    - !expr conflicted::conflict_prefer("arrange", "dplyr", quiet = TRUE)
-    - !expr conflicted::conflict_prefer("group_by", "dplyr", quiet = TRUE)
-    - !expr conflicted::conflict_prefer("summarise", "dplyr", quiet = TRUE)
+    - !expr for(f in getNamespaceExports("dplyr")) conflicted::conflict_prefer(f, "dplyr", quiet = TRUE)
 
 session:
   packages:
