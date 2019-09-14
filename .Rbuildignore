@@ -20,3 +20,4 @@
 ^inst/data$
 ^\.tic/*
 ^\.Rproj\.user$
+.*_cache/

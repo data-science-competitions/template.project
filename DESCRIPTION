@@ -1,6 +1,6 @@
 Package: template.project
 Type: Package
-URL: https://github.com/data-science-competitions
+URL: https://github.com/data-science-competitions/template.project
 BugReports: https://github.com/data-science-competitions/template.project/issues
 Version: 0.19.38
 Title: R Project Template for Analytic Applications
