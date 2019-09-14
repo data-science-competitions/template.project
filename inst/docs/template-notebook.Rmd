@@ -12,7 +12,6 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-devtools::document(rprojroot::find_package_root_file())
 devtools::load_all(rprojroot::find_package_root_file())
 knitr::opts_chunk$set(echo = FALSE,
                       fig.align="center",
