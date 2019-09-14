@@ -18,9 +18,6 @@ default:
     - !expr conflicted::conflict_prefer("arrange", "dplyr", quiet = TRUE)
     - !expr conflicted::conflict_prefer("group_by", "dplyr", quiet = TRUE)
     - !expr conflicted::conflict_prefer("summarise", "dplyr", quiet = TRUE)
-  register:
-    - !expr options(dataflows.ingest.abstract = "Ingest")
-    - !expr options(dataflows.ingest.concrete = "IngestDAO")
 
 session:
   packages:
