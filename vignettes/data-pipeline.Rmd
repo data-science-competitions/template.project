@@ -1,0 +1,19 @@
+---
+title: "Data Pipeline"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Data Pipeline}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+devtools::load_all(rprojroot::find_package_root_file())
+```
