@@ -19,4 +19,4 @@
 ^public/*
 ^inst/data$
 ^\.tic/*
-^\.Rproj\.user/*
+^\.Rproj\.user$
