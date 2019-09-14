@@ -2,6 +2,7 @@
 ^\.gitattributes$
 ^\.Rprofile$
 ^.*\.Rproj$
+^\.Rproj\.user$
 ^tic\.R$
 ^codecov\.yml$
 ^\.travis\.yml$
@@ -15,9 +16,10 @@
 
 # Folders ----------------------------------------------------------------------
 ^temp/*
+^doc/*
 ^data-raw/*
 ^public/*
 ^inst/data$
 ^\.tic/*
-^\.Rproj\.user$
-.*_cache/
+
+.*_cache/*
