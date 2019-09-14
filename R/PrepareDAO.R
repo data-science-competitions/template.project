@@ -20,7 +20,7 @@ PrepareDAO <- R6::R6Class(
     lock_objects = FALSE,
     private = list(
         # Private Variables ----------------------------------------------------
-        .ingest = getOption("dataflows.ingest.concrete", "IngestDAO"),
+        .ingest = "IngestDAO",
 
         # Private Methods ------------------------------------------------------
         import_data.frames_from_Ingest = function() .import_data.frames_from_Ingest(private),
