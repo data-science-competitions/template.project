@@ -29,3 +29,5 @@ session:
     - !expr require(testthat, warn.conflicts = FALSE, quietly = TRUE)
     - !expr require(tidyverse, warn.conflicts = FALSE, quietly = TRUE)
     - !expr require(desc, warn.conflicts = FALSE, quietly = TRUE)
+  behaviors:
+    - !expr options(error = utils::recover)
