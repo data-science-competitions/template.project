@@ -43,7 +43,7 @@ Prepare <- R6::R6Class(
 
     private = list(
         # Private Variables ----------------------------------------------------
-        .ingest = getOption("dataflows.ingest.abstract", "Ingest"),
+        .ingest = "Ingest",
 
         # Private Methods ------------------------------------------------------
         import_data.frames_from_Ingest = function() .import_data.frames_from_Ingest(private),

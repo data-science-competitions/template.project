@@ -2,11 +2,12 @@ Package: template.project
 Type: Package
 URL: https://github.com/data-science-competitions
 BugReports: https://github.com/data-science-competitions/template.project/issues
-Version: 0.19.35
+Version: 0.19.38
 Title: R Project Template for Analytic Applications
 Authors@R: c(person("Harel", "Lustiger", email = "tidylab@gmail.com", role = c("aut", "cre")))
 Maintainer: Harel Lustiger <tidylab@gmail.com>
-Description: Using this template reduces:  
+Description: This template conforms to a conceptual model of **Analysis Projects** suggested by [Hadley Wickham](https://docs.google.com/document/d/1LzZKS44y4OEJa4Azg5reGToNAZL0e0HSUwxamNY7E-Y/).  
+    Using this template reduces:  
     * Unnecessary variance between projects configurations; and  
     * Development time spent on making a barebone project working for the first time.    
     This is possible as the boilerplate comes with:    
@@ -19,7 +20,7 @@ RoxygenNote: 6.1.1
 Roxygen: list(markdown = TRUE)
 Language: en-GB
 Remotes: 
-    krlmlr/dm
+    krlmlr/dm@v0.0.1.9002
 Depends: 
     R (>= 3.5)
 Imports: 

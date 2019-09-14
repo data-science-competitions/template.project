@@ -25,6 +25,9 @@ Applications
 
 ## Description
 
+This template conforms to a conceptual model of **Analysis Projects**
+suggested by [Hadley
+Wickham](https://docs.google.com/document/d/1LzZKS44y4OEJa4Azg5reGToNAZL0e0HSUwxamNY7E-Y/).  
 Using this template reduces:  
 \* Unnecessary variance between projects configurations; and  
 \* Development time spent on making a barebone project working for the
@@ -167,15 +170,15 @@ names(ds$data_model)
 
 ### Data Overview
 
-    ## -- Table source ----------------------------------------------------------------------------------------------
+    ## -- Table source -----------------------------------------------------------------------------------------------
     ## src:  <PrepareDAO>
-    ## -- Data model ------------------------------------------------------------------------------------------------
+    ## -- Data model -------------------------------------------------------------------------------------------------
     ## Data model object:
     ##   3 tables:  historical_data, new_data, submission_format 
     ##   26 columns
     ##   2 primary keys
     ##   1 references
-    ## -- Rows ------------------------------------------------------------------------------------------------------
+    ## -- Rows -------------------------------------------------------------------------------------------------------
     ## Total: 42
     ## historical_data: 22, new_data: 10, submission_format: 10
 
