@@ -28,7 +28,6 @@
         .install_package("roxygen2")
 
         sink(tempfile())
-        suppressMessages(devtools::document())
         suppressMessages(devtools::load_all(export_all = FALSE, helpers = FALSE))
         sink()
 

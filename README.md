@@ -45,20 +45,22 @@ This is possible as the boilerplate comes with:
 3.  Create a new release named `inception`.
 4.  Copy `template.project` content to the new reposetory.
 5.  Change the `template.project.Rproj` file to `<package-name>.Rproj`.
-6.  Open the `DESCRIPTION` file, and edit the following fields:
-7.  **Package** modify the package name while using the `tidylab.`
-    prefix.
-8.  **Title** modify the package title; use uppercase words with no
-    period (‘.’).
-9.  **URL** modify the package URL such that it leads to its GitHub
-    repo.
-10. **BugReports** edit the URL such that it leads to the package issue
-    page.
-11. **Description** modify the package decription.
-12. In `README.Rmd` delete the **Useage** Section.
-13. Render `README.Rmd` by clicking the **Knit** button.
-14. Push changed on the `inception` branch.
-15. Go to [Travis website](https://travis-ci.org/account/repositories),
+6.  Open the `DESCRIPTION` file, and edit the following fields:  
+    6.1. **Package** modify the package name while using the `tidylab.`
+    prefix.  
+    6.2. **Title** modify the package title; use uppercase words with no
+    period (‘.’).  
+    6.3. **Description** modify the package decription.  
+    6.4. **URL** and **BugReports**:
+      - Update automatically by calling
+        `usethis::use_github_links(overwrite = TRUE)`; OR  
+      - Update manually such that URL and BugReports lead to the GitHub
+        repo and issue page, respectively.
+7.  In `README.Rmd`:  
+    7.1. Delete the **Useage** section; and  
+    7.2. Render `README.Rmd` by clicking the **Knit** button.
+8.  Push changed on the `inception` branch.
+9.  Go to [Travis website](https://travis-ci.org/account/repositories),
     add the project and enable its integration.
 
 ## Installation
@@ -100,18 +102,6 @@ names(ds$data_model)
     ## [1] "historical_data"   "new_data"          "submission_format"
 
 ### Data Overview
-
-    ## -- Table source -----------------------------------------------------------------------------------------------
-    ## src:  <PrepareDAO>
-    ## -- Data model -------------------------------------------------------------------------------------------------
-    ## Data model object:
-    ##   3 tables:  historical_data, new_data, submission_format 
-    ##   26 columns
-    ##   2 primary keys
-    ##   1 references
-    ## -- Rows -------------------------------------------------------------------------------------------------------
-    ## Total: 42
-    ## historical_data: 22, new_data: 10, submission_format: 10
 
 <img src="README_files/figure-gfm/project-data-overview-1.png" width="100%" style="display: block; margin: auto;" />
 
