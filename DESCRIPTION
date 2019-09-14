@@ -21,6 +21,7 @@ Roxygen: list(markdown = TRUE)
 Language: en-GB
 Remotes: 
     krlmlr/dm@v0.0.1.9002
+VignetteBuilder: knitr
 Depends: 
     R (>= 3.5)
 Imports: 
@@ -37,4 +38,6 @@ Suggests:
     covr (>= 3.2.1),
     desc (>= 1.2.0),
     devtools (>= 2.0.2),
+    knitr,
+    rmarkdown,
     testthat (>= 2.0.1)
