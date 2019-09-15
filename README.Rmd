@@ -36,11 +36,14 @@ desc_obj <- description$new(target)
 ## Set System Variables ##
 ##########################
 package_url <- desc_obj$get_field("BugReports") %>% stringr::str_remove("/issues$")
-package_name <- desc_obj$get_field("Package")
-package_repo <- stringr::str_extract_all(package_url, "[^/]+(?://[^/]*)*")[[1]][2:3] %>% paste0(collapse ="/")
+package_elements <- stringr::str_extract_all(package_url, "[^/]+(?://[^/]*)*")[[1]]
+package_organization <- package_elements[2]
+package_name <- package_elements[3]
+package_repo <- package_elements[2:3] %>% paste0(collapse = "/")
+package_pages <- paste0("https://", package_organization, ".github.io/", package_name)
+
 Sys.setenv(CI_PROJECT_NAME = package_name)
 Sys.setenv(CI_PROJECT_URL = package_url)
-
 ####################
 ## Construct URLs ##
 ####################
@@ -184,8 +187,8 @@ plot_function_dependencies(package_name)
 ```
 -->
 
-<!--
+
 ## Vignettes
 
-* [Data Pipeline](`r paste(package_url, "blob/master", "vignettes", "data-pipeline.html", sep="/")`)
--->
+* [Data Pipeline](`r paste(package_pages, "articles", "data-pipeline.html", sep = "/")`)
+
