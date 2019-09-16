@@ -1,3 +1,5 @@
+# IngestDAO ---------------------------------------------------------------
+#
 #' @title Instantiate the Ingest Interface
 #'
 #' @field path (`character`) A path to a folder where the raw data files
@@ -28,9 +30,9 @@ IngestDAO <- R6::R6Class(
     classname = "IngestDAO",
     inherit = Ingest,
     private = list(
-        # Private Variables ----------------------------------------------------
+        # Private Variables
 
-        # Private Methods ------------------------------------------------------
+        # Private Methods
         pull_data = function() .pull_data(private),
         import_data = function() .import_data(private)
     ),

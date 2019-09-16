@@ -1,3 +1,5 @@
+# PrepareDAO --------------------------------------------------------------
+#
 #' @title Instantiate the Prepare Interface
 #'
 #' @description Data preprocessing is a data mining technique that involves
@@ -19,10 +21,10 @@ PrepareDAO <- R6::R6Class(
     cloneable = FALSE,
     lock_objects = FALSE,
     private = list(
-        # Private Variables ----------------------------------------------------
+        # Private Variables
         .ingest = "IngestDAO",
 
-        # Private Methods ------------------------------------------------------
+        # Private Methods
         import_data.frames_from_Ingest = function() .import_data.frames_from_Ingest(private),
         cast_data = function() .cast_data(private),
         clean_data = function() .clean_data(private),

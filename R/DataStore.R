@@ -1,3 +1,5 @@
+# DataStore ---------------------------------------------------------------
+#
 #' @title Storage Place for Hosting Application Datasets
 #'
 #' @description A DSO (DataStore Object) is known as the storage place to keep
@@ -28,16 +30,16 @@ DataStore <- R6::R6Class(
     portable = FALSE,
     lock_objects = TRUE,
     public = list(
-        # Public Variables -----------------------------------------------------
+        # Public Variables
         initialize = function(){
             private$.data_model <- private$generate_data_model()
         }
-        # Public Methods -------------------------------------------------------
+        # Public Methods
     ),
     private = list(
-        # Private Variables ----------------------------------------------------
+        # Private Variables
         .data_model = NULL,
-        # Private Methods ------------------------------------------------------
+        # Private Methods
         generate_data_model = function() .generate_data_model()
     ),
     active = list(
