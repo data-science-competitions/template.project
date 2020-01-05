@@ -1,3 +1,4 @@
+# Prepare -----------------------------------------------------------------
 #nocov start
 #' @title Data Preparation Interface for Non-Real-Time Analytic Applications
 #'
@@ -19,9 +20,9 @@ Prepare <- R6::R6Class(
     cloneable = FALSE,
     lock_objects = FALSE,
     public = list(
-        # Public Variables -----------------------------------------------------
+        # Public Variables
 
-        # Public Methods -------------------------------------------------------
+        # Public Methods
         initialize = function()
         {
             message("Instantiating ", private$.ingest)
@@ -42,10 +43,10 @@ Prepare <- R6::R6Class(
         }),
 
     private = list(
-        # Private Variables ----------------------------------------------------
+        # Private Variables
         .ingest = "Ingest",
 
-        # Private Methods ------------------------------------------------------
+        # Private Methods
         import_data.frames_from_Ingest = function() .import_data.frames_from_Ingest(private),
         cast_data = function() invisible(private),
         clean_data = function() invisible(private),

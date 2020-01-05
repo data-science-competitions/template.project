@@ -1,4 +1,6 @@
 # Expectations -----------------------------------------------------------------
+error_message <- function(title, failed_values = NULL) paste0("Error: ", title, paste0(failed_values, collapse = ", "))
+expect <- function(ok, failure_message, info = NULL, srcref = NULL) testthat::expect(identical(ok, TRUE), failure_message, info, srcref)
 expect_dir_exists_and_not_empty <- function(path){
     expect_dir_exists(path)
     expect_gte(length(list.files(path, pattern = ".*.R$")), 1)
@@ -10,13 +12,14 @@ expect_no_md_files <- function(path) expect_length(list.files(path, recursive = 
 expect_text_appears_in_document <- function(target, text) expect_true(any(grepl(text, readLines(target))))
 expect_subset <- function(x, y) expect_true(.is_subset(x ,y))
 expect_disjoint_sets <- function(x, y) expect_true(.are_disjoint_sets(x, y))
-expect_equal_sets <- function(x, y) expect_true(.are_set_equal(x, y), label = "Sets are not equal")
-expect_class <- function(object, class) expect_true(any(base::class(object) %in% class), label = paste("object is a", base::class(object), "not", class))
+expect_equal_sets <- function(x, y) expect_true(.are_set_equal(x, y), label = "sets are not equal")
+expect_class <- function(object, class) expect(any(base::class(object) %in% class), error_message(paste("object is a", base::class(object), "not", class)))
 expect_no_duplicates <- function(x) expect_true(.has_no_duplicates(x))
-expect_an_empty_data.frame <- function(x){expect_class(x, "data.frame"); expect_equal(nrow(x), 0, label = paste("data.frame is not-empty; "))}
-expect_a_non_empty_data.frame <- function(x){expect_class(x, "data.frame"); expect_gt(nrow(x), 0, label = paste("data.frame is empty; "))}
+expect_an_empty_data.frame <- function(x) if("expectation_success" %in% expect_class(x, "data.frame")) expect(nrow(x) == 0, error_message("data.frame is not-empty."))
+expect_a_non_empty_data.frame <- function(x) if("expectation_success" %in% expect_class(x, "data.frame")) expect(nrow(x) > 0, error_message("data.frame is empty."))
 expect_table_has_col_names <- function(object, col_names) expect_subset(col_names, colnames(object))
-expect_not_identical <- function(object, expected) expect_false(identical(object, expected), info  = "Error: objects A and B are identical")
+expect_not_identical <- function(object, expected) expect_false(identical(object, expected), info  = "objects A and B are identical")
+expect_not_a_tbl <- function(object) expect_false(any(base::class(object) %in% c("tbl", "tbl_df")), label = "object is not a tbl")
 
 # Predicates -------------------------------------------------------------------
 .are_set_equal <- function(x, y){
@@ -65,9 +68,9 @@ expect_not_identical <- function(object, expected) expect_false(identical(object
 
     try({
         sink(tempfile())
+        on.exit(sink())
         suppressMessages(devtools::document())
         suppressMessages(devtools::load_all(export_all = FALSE, helpers = FALSE))
-        sink()
     })
     invisible()
 }
@@ -119,10 +122,10 @@ expect_not_identical <- function(object, expected) expect_false(identical(object
     suppressWarnings({
         if(!require(package, character.only = TRUE)){
             message("--> Installing {", package, "}")
-            utils::install.packages(package,
-                                    repos = "https://cloud.r-project.org",
-                                    dependencies = TRUE,
-                                    Ncpus = parallel::detectCores()
+            utils::install.packages(
+                package,
+                repos = "https://cloud.r-project.org",
+                dependencies = TRUE
             )
         }
     })
@@ -191,4 +194,21 @@ expect_not_identical <- function(object, expected) expect_false(identical(object
     proj_path <- getwd()
     while (length(grep("test", proj_path))>0) proj_path <- dirname(proj_path)
     return(proj_path)
+}
+
+# PentaModel --------------------------------------------------------------
+.create_valid_mock_pentamodel <- function(path){
+    writeLines("model_init <- function(){params <- 1:3; assign('params', params, parent.frame()); return()}", file.path(path, "model_init.R"))
+    writeLines("model_fit <- function(historical_data, model_formula) lm(model_formula, historical_data)", file.path(path, "model_fit.R"))
+    writeLines("model_predict <- function(new_data, model_object) predict_function(model_object, new_data) %>% link_function()", file.path(path, "model_predict.R"))
+    writeLines("model_store <- function() assign('artifacts', letters, parent.frame())", file.path(path, "model_store.R"))
+    writeLines("model_end <- function() NULL", file.path(path, "model_end.R"))
+}
+
+.create_invalid_mock_pentamodel <- function(path){
+    writeLines("model_init <- function() NULL", file.path(path, "model_init.R"))
+    writeLines("model_init <- function() NULL", file.path(path, "model_fit.R"))
+    writeLines("model_init <- function() NULL", file.path(path, "model_predict.R"))
+    writeLines("model_init <- function() NULL", file.path(path, "model_store.R"))
+    writeLines("model_init <- function() NULL", file.path(path, "model_end.R"))
 }
