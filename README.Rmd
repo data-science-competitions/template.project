@@ -3,27 +3,37 @@ output: github_document
 ---
 
 ```{r setup, echo = FALSE, results = 'hide', message = FALSE, warning = FALSE}
-source("README.R", TRUE)
+try(remotes::install_cran(c("desc", "devtools", "webshot")))
+webshot::install_phantomjs()
 knitr::opts_chunk$set(
   echo = TRUE, 
   message = FALSE,
+  warning = FALSE,
   fig.align = "center", 
   out.width = "100%"
 )
-.install_package("desc")
-.install_package("devtools")
-# Required for converting HTML widgets to Images
-.install_package("webshot")
-# webshot::install_phantomjs()
 ```
 
-```{r load_all, echo = FALSE, warning = FALSE}
+```{r helper-functions, echo = FALSE}
+badge_custom <- function(x, y, color, url = "about::blank"){
+    alt <- paste(x)
+    x <- gsub(" ", "%20", x)
+    y <- gsub(" ", "%20", y)
+    x <- gsub("-", "--", x)
+    y <- gsub("-", "--", y)
+    badge <- paste0("![", alt, "](https://img.shields.io/badge/", x, "-",
+                    y, "-", color, ".svg)")
+    if (is.null(url)) return(badge) else paste0("[", badge, "](", url, ")")
+}
+```
+
+```{r, echo = FALSE, message=FALSE}
 #######################
 ## Get Project Paths ##
 #######################
 path_project <- getwd()
 while (length(grep("test", path_project))>0) path_project <- dirname(path_project)
-devtools::load_all(path_project, quiet = TRUE)
+devtools::load_all(path_project)
 
 ############################# 
 ## Get Package DESCRIPTION ##
@@ -36,14 +46,11 @@ desc_obj <- description$new(target)
 ## Set System Variables ##
 ##########################
 package_url <- desc_obj$get_field("BugReports") %>% stringr::str_remove("/issues$")
-package_elements <- stringr::str_extract_all(package_url, "[^/]+(?://[^/]*)*")[[1]]
-package_organization <- package_elements[2]
-package_name <- package_elements[3]
-package_repo <- package_elements[2:3] %>% paste0(collapse = "/")
-package_pages <- paste0("https://", package_organization, ".github.io/", package_name)
-
+package_name <- desc_obj$get_field("Package")
+package_repo <- stringr::str_extract_all(package_url, "[^/]+(?://[^/]*)*")[[1]][2:3] %>% paste0(collapse ="/")
 Sys.setenv(CI_PROJECT_NAME = package_name)
 Sys.setenv(CI_PROJECT_URL = package_url)
+
 ####################
 ## Construct URLs ##
 ####################
@@ -59,136 +66,29 @@ binder_url <- paste0("https://mybinder.org/v2/gh/", package_repo, "/master?urlpa
 # ``r package_name`` <img src='https://i.imgur.com/cLcAYfz.png' align="right" height="50"/>
 
 <!-- badges: start -->
-`r badge_custom("R>=", .get_R_version_dependency(), "brightgreen", "https://www.r-project.org/")`
+`r badge_custom("Project Website", "Click-Here", "9cf", desc_obj$get_urls()[[1]])`
 [![Travis build status](`r pipeline_url`)](`r travis_url`)
 [![Code coverage status](`r covr_url`)](`r codecov_url`)
-[![Launch Rstudio Binder](`r mybinder_url`)](`r binder_url`)
 <!-- badges: end -->
 
-<!-- Package Title -->
 `r desc_obj$get_field("Title")`
-
 ---
 
-```{r include_graphics, echo = FALSE, out.width = "100%"}
+```{r, echo = FALSE, out.width = "75%"}
 knitr::include_graphics("https://i.imgur.com/RLEQkhe.png")
 ```
 
-<!-- Package Description -->
-## Description
+## Overview
 
 `r desc_obj$get_field("Description")`
 
-## Useage
-
-1. Create a new repo on GitHub.
-2. Use the [`git-flow`](https://blog.sourcetreeapp.com/2012/08/01/smart-branching-with-sourcetree-and-git-flow/) approach in your development cycle. 
-3. Create a new release named `inception`.
-4. Copy ``r package_name`` content to the new reposetory.
-5. Change the ``r paste0(package_name,".Rproj")`` file to `<package-name>.Rproj`.
-6. Open the `DESCRIPTION` file, and edit the following fields:  
-  6.1. **Package** modify the package name while using the `tidylab.` prefix.  
-  6.2. **Title** modify the package title; use uppercase words with no period ('.').  
-  6.3. **Description** modify the package decription.  
-  6.4. **URL** and **BugReports**:  
-    * Update automatically by calling `usethis::use_github_links(overwrite = TRUE)`; OR  
-    * Update manually such that URL and BugReports lead to the GitHub repo and issue page, respectively.
-7. In `README.Rmd`:  
-  7.1. Delete the **Useage** section; and  
-  7.2. Render `README.Rmd` by clicking the **Knit** button.
-8. Push changed on the `inception` branch.
-9. Go to [Travis website](https://travis-ci.org/account/repositories), add the
-project and enable its integration.
+See the [project website](`r desc_obj$get_urls()[[1]]`) for more information. 
 
 ## Installation
 
-``r package_name`` accommodates two stages in the project life-cycle:
-Development and Production.
-
-### Working in Pseudo-Package Mode (Advised During Development Stage)
-
-1. Download the project to local computer
-2. Launch the project via ``r paste0(package_name,".Rproj")``
-3. Optional: Install all package dependencies
-```{r install_local, eval = FALSE}
-remotes::install_local(dependencies = TRUE, force = TRUE, upgrade = "always")
-devtools::uninstall()
-```
-4. Load the complete project as a package via `devtools::load_all()` or
-Ctrl+Shift+L
-
-### Working in Package Mode (Advised During Production Stage)
+You can install ``r package_name`` by using:
 
 ```
 install.packages("devtools")
 devtools::install_github("`r package_repo`")
 ```
-## Datasets
-
-```{r instantiate-classes, echo = FALSE, cache = TRUE}
-ds <- DataStore$new()
-```
-
-### Accessing the Project Data
-
-```{r accessing-the-project-data, eval = FALSE}
-ds <- DataStore$new()
-names(ds$data_model)
-```
-
-```{r, echo = FALSE}
-names(ds$data_model)
-```
-
-### Data Overview
-
-```{r project-data-overview, out.width = "100%", fig.height=0.5, echo = FALSE}
-remove_all_keys <- function(.data_model){
-  for(table_name in names(.data_model))
-    try(.data_model <- dm::cdm_rm_pk(.data_model, !!table_name, rm_referencing_fks = TRUE), silent = TRUE)
-  return(.data_model)
-}
-
-ds$data_model %>% 
-  remove_all_keys() %>% 
-  dm::cdm_draw(
-    col_attr = c("column", "type")[1:2],
-    view_type = "all", columnArrows = FALSE, rankdir = "BT"
-  )
-```
-
-<!--
-### Data Model
-
-```{r project-data-model, out.width = "100%", fig.height=0.5, echo = FALSE, eval = FALSE}
-ds$data_model %>% 
-dm::cdm_draw(
-col_attr = c("column", "type")[1],
-view_type = "keys_only", columnArrows = TRUE, rankdir = "LR"
-)
-```
--->
-
-### Data Glimpse
-
-```{r project-data-glimpse, echo = FALSE, message = TRUE}
-tables <- ds$data_model %>% dm::cdm_get_tables()
-for(k in seq_along(tables)){
-  message("---\n", names(tables)[k])
-  tables[[k]] %>% dplyr::glimpse(width = 100)
-} 
-```
-
-<!--
-## Function Dependencies
-
-```{r package-function-dependencies, echo = FALSE, out.width = "100%", eval = FALSE}
-plot_function_dependencies(package_name)
-```
--->
-
-
-## Vignettes
-
-* [Data Pipeline](`r paste(package_pages, "articles", "data-pipeline.html", sep = "/")`)
-

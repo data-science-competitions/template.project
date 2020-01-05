@@ -51,7 +51,7 @@ jobs:
 # DO NOT CHANGE THE CODE BELOW -------------------------------------------------
 before_install:
   - R -q -e 'if (!require(remotes, quietly = TRUE)) utils::install.packages("remotes")'
-  - R -q -e 'remotes::install_cran(c("desc", "roxygen2"), quiet = TRUE)'
+  - R -q -e 'if (!require(desc, quietly = TRUE)) utils::install.packages("desc")'
   - R -q -e 'try(options(repos = paste0("https://mran.microsoft.com/snapshot/", desc::description$new()$get_field("Date")))); remotes::install_deps(dependencies = TRUE)'
   - R -q -e 'remotes::install_github("ropenscilabs/tic@v0.3.0", dependencies = TRUE); print(tic::dsl_load()); tic::prepare_all_stages()'
   - R -q -e 'tic::before_install()'
@@ -60,5 +60,17 @@ before_script: R -q -e 'tic::before_script()'
 script: R -q -e 'tic::script()'
 after_success: R -q -e 'tic::after_success()'
 after_failure: R -q -e 'tic::after_failure()'
+before_deploy: R -q -e 'tic::before_deploy()'
+deploy:
+  provider: pages
+  local_dir: docs
+  skip_cleanup: true
+  keep-history: true
+  github_token: $GITHUB_PAT
+  target_branch: gh-pages
+  on:
+    all_branches: true
+    condition: $TRAVIS_JOB_NAME = pkgdown
+after_deploy: R -q -e 'tic::after_deploy()'
 after_script: R -q -e 'tic::after_script()'
 # DO NOT CHANGE THE CODE ABOVE -------------------------------------------------
