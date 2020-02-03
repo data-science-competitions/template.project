@@ -1,5 +1,8 @@
 library(tic)
-if(!requireNamespace("desc")) remotes::install_version("desc", "1.2.0")
+DESCRIPTION <- readLines("DESCRIPTION")
+Date <- trimws(gsub("Date:", "", DESCRIPTION[grepl("Date:", DESCRIPTION)]))
+if(length(Date) == 1) options(repos = paste0("https://mran.microsoft.com/snapshot/", Date))
+if(length(Date) != 1) options(repos = "https://cloud.r-project.org")
 invisible(sapply(list.files("./.app/tic", full.names = TRUE), source))
 
 # Stage : Before Install -------------------------------------------------------
@@ -8,13 +11,11 @@ get_stage("before_install") %>%
 
 # Stage: Install ---------------------------------------------------------------
 get_stage("install") %>%
-    add_step(step_run_code(set_repos_to_MRAN())) %>%
-    add_step(step_install_cran("devtools", repos = get_MRAN_URL())) %>%
-    add_step(step_install_deps(repos = get_MRAN_URL()))
+    add_step(step_install_cran("devtools")) %>%
+    add_step(step_install_deps())
 
 # Stage: Script ----------------------------------------------------------------
 get_stage("script") %>%
-    add_step(step_run_code(set_repos_to_MRAN())) %>%
     add_step(step_run_code(devtools::document())) %>%
     add_step(step_build_and_check(job_name = ci_get_job_name())) %>%
     add_step(step_run_test_suite(job_name = ci_get_job_name())) %>%
