@@ -18,8 +18,10 @@
 #' }
 #'
 foo <- function(name, age){
-    .assert_is_a_non_missing_nor_empty_string(name)
-    .assert_is_positive_and_finite(age)
+    msg_name <- "`name` should be a non empty string"
+    msg_age <- "`age` should be a positive and finite number"
+    assertthat::assert_that(isFALSE(missing(name)), isFALSE(is.null(name)), is.character(name), nchar(name) > 0, length(name) == 1, msg = msg_name)
+    assertthat::assert_that(isFALSE(missing(age)), is.numeric(age), length(age) == 1, is.finite(age), age > 0, msg = msg_name)
 
     age <- format(age, scientific = FALSE)
     msg <- paste(name, 'is', age, 'years old')

@@ -3,12 +3,9 @@
 
 <!-- badges: start -->
 
-[![Project
-Website](https://img.shields.io/badge/Project%20Website-Click--Here-9cf.svg)](https://data-science-competitions.github.io/template.project/)
-[![Travis build
-status](https://travis-ci.org/data-science-competitions/template.project.svg?branch=master)](https://travis-ci.org/data-science-competitions/template.project)
-[![Code coverage
-status](https://codecov.io/gh/data-science-competitions/template.project/branch/master/graph/badge.svg)](https://codecov.io/github/data-science-competitions/template.project/?branch=master)
+[![code
+coverage](https://codecov.io/gh/data-science-competitions/template.project/branch/master/graph/badge.svg)](https://codecov.io/github/data-science-competitions/template.project/?branch=master)
+[![continuous-integration](https://travis-ci.org/data-science-competitions/template.project.svg?branch=master)](https://travis-ci.org/data-science-competitions/template.project)
 <!-- badges: end -->
 
 ## R Project Template for Analytic Applications
@@ -28,13 +25,9 @@ This is possible as the boilerplate comes with:
 \* Fully configured test-suite, including code-coverage; and  
 \* Fully configured continuous-integration (CI) script for Travis.
 
-See the [project
-website](https://data-science-competitions.github.io/template.project/)
-for more information.
-
 ## Installation
 
 You can install `template.project` by using:
 
     install.packages("devtools")
-    devtools::install_github("data-science-competitions/template.project")
+    devtools::install_github("template.project")

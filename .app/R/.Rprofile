@@ -1,7 +1,10 @@
+# Rporfile for CI/CD ------------------------------------------------------
+#' When CI/CD starts, it replaces the .Rprofile of this repo (if any) with the
+#' content of this file.
+
 # First -------------------------------------------------------------------
 .First <- function(){
     # Helpers
-    assign(".Rprofile", new.env(), envir = globalenv())
     get_repos <- function(){
         DESCRIPTION <- readLines("DESCRIPTION")
         Date <- trimws(gsub("Date:", "", DESCRIPTION[grepl("Date:", DESCRIPTION)]))
@@ -11,21 +14,18 @@
 
     # Programming Logic
     ## .First watchdog
-    if(isFALSE(Sys.getenv("NEW_SESSION"))) return() else Sys.setenv(NEW_SESSION = FALSE)
+    if(file.exists(".git/First.lock")) return() else file.create(".git/First.lock", recursive = TRUE)
 
     ## Set global options
     options(startup.check.options.ignore = "stringsAsFactors", stringsAsFactors = TRUE)
+    options(Ncpus = 8, repos = structure(c(CRAN = get_repos())), dependencies = c("Imports"), build = FALSE)
+    .libPaths(Sys.getenv("R_LIBS_USER"))
 
-    ## Initiate the package management system
-    options(Ncpus = 8, repos = structure(c(CRAN = get_repos())), dependencies = c("Imports", "Suggests"), build = FALSE)
-    try({
-        source("./.app/renv/activate-renv.R", local = .Rprofile)
-        message("Activate the package management system with: .Rprofile$activate()")
-    })
+    ## Install requirements
+    if(!"remotes" %in% rownames(utils::installed.packages())) utils::install.packages("remotes", dependencies = getOption("dependencies"))
+    remotes::install_github("ropenscilabs/tic@v0.6.0", dependencies = getOption("dependencies"), quiet = TRUE, build = FALSE)
 
-    ## Load development toolkit
-    pkgs <- c("usethis", "testthat", "devtools")
-    invisible(sapply(pkgs, require, character.only = TRUE, quietly = TRUE, warn.conflicts = FALSE))
+    return(invisible())
 }
 
 # Last --------------------------------------------------------------------
@@ -33,10 +33,5 @@
     unlink <- function(x) base::unlink(x, recursive = TRUE, force = TRUE)
 
     ## .First watchdog
-    Sys.unsetenv("NEW_SESSION")
-
-    ## Cleanup
-    unlink("./.git/index.lock")
-    unlink("./renv")
-    rm(unlink)
+    unlink(".git/First.lock")
 }
