@@ -56,4 +56,6 @@ rsconnect/
 temp/
 
 # pkgdown
-docs/
+/docs/*
+/.idea/*
+/renv/*

@@ -1,25 +1,50 @@
-library(tic)
-if(!requireNamespace("desc")) remotes::install_version("desc", "1.2.0")
-invisible(sapply(list.files("./.app/tic", full.names = TRUE), source))
+#' Job Lifecycle
+#'
+#' 1. before_script
+#' 2. script
+#' 3. after_success or after_failure
+#' 4. OPTIONAL before_deploy
+#' 5. OPTIONAL deploy
+#' 6. OPTIONAL after_deploy
+#'
+library(tic, warn.conflicts = FALSE)
+source("./.app/tic/helpers.R")
 
-# Stage : Before Install -------------------------------------------------------
-get_stage("before_install") %>%
-    add_step(step_run_code(print(Sys.getenv())))
+# Stage: Before Script ----------------------------------------------------
+get_stage("before_script") %>%
+    add_code_step(install_deps()) %>%
+    add_code_step(try(devtools::uninstall(), silent = TRUE))
 
-# Stage: Install ---------------------------------------------------------------
-get_stage("install") %>%
-    add_step(step_run_code(set_repos_to_MRAN())) %>%
-    add_step(step_install_cran("devtools", repos = get_MRAN_URL())) %>%
-    add_step(step_install_deps(repos = get_MRAN_URL()))
+# Stage: Script -----------------------------------------------------------
+if(is_master_branch() | is_hotfix_branch()){
+    get_stage("script") %>% build_steps() %>% test_suite_steps()
 
-# Stage: Script ----------------------------------------------------------------
-get_stage("script") %>%
-    add_step(step_run_code(set_repos_to_MRAN())) %>%
-    add_step(step_run_code(devtools::document())) %>%
-    add_step(step_build_and_check(job_name = ci_get_job_name())) %>%
-    add_step(step_run_test_suite(job_name = ci_get_job_name())) %>%
-    add_step(step_deploy(job_name = ci_get_job_name()))
+} else if (is_develop_branch() | is_release_branch()){
+    get_stage("script") %>% build_steps() %>% test_suite_steps()
 
-# Stage: After Failure ---------------------------------------------------------
+} else if (is_feature_branch()){
+    get_stage("script") %>% test_suite_steps()
+}
+
+# Stage: After Success ----------------------------------------------------
+if (is_master_branch() | is_develop_branch()){
+    get_stage("after_success") %>%
+        add_code_step(step_install_cran("covr")) %>%
+        add_code_step(covr::package_coverage(type = "tests", quiet = FALSE, pre_clean = FALSE))
+}
+
+# Stage: After Failure ----------------------------------------------------
 get_stage("after_failure") %>%
-    add_step(step_run_code(sessioninfo::session_info(include_base = FALSE)))
+    add_code_step(print(sessioninfo::session_info(include_base = FALSE)))
+
+# Stage: Before Deploy ----------------------------------------------------
+get_stage("before_deploy")
+
+# Stage: Deploy -----------------------------------------------------------
+get_stage("deploy")
+
+# Stage: After Deploy -----------------------------------------------------
+get_stage("after_deploy")
+
+# Stage: After Script -----------------------------------------------------
+get_stage("after_script")

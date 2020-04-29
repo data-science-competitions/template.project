@@ -3,8 +3,7 @@ output: github_document
 ---
 
 ```{r setup, echo = FALSE, results = 'hide', message = FALSE, warning = FALSE}
-try(remotes::install_cran(c("desc", "devtools", "webshot")))
-webshot::install_phantomjs()
+source("./.app/README/helpers.R")
 knitr::opts_chunk$set(
   echo = TRUE, 
   message = FALSE,
@@ -12,66 +11,34 @@ knitr::opts_chunk$set(
   fig.align = "center", 
   out.width = "100%"
 )
+
+devtools::load_all(README$getwd())
+DESCRIPTION <- desc::description$new(file.path(README$getwd(), "DESCRIPTION"))
 ```
 
-```{r helper-functions, echo = FALSE}
-badge_custom <- function(x, y, color, url = "about::blank"){
-    alt <- paste(x)
-    x <- gsub(" ", "%20", x)
-    y <- gsub(" ", "%20", y)
-    x <- gsub("-", "--", x)
-    y <- gsub("-", "--", y)
-    badge <- paste0("![", alt, "](https://img.shields.io/badge/", x, "-",
-                    y, "-", color, ".svg)")
-    if (is.null(url)) return(badge) else paste0("[", badge, "](", url, ")")
-}
+```{r badges, echo = FALSE}
+badges <- new.env()
+badges$CICD <- list(
+  badge_name = "continuous-integration", 
+  href = "https://travis-ci.org/data-science-competitions/template.project", 
+  src = "https://travis-ci.org/data-science-competitions/template.project.svg?branch=master"
+)
+badges$covr <- list(
+  badge_name = "code coverage", 
+  href = "https://codecov.io/github/data-science-competitions/template.project/?branch=master", 
+  src = "https://codecov.io/gh/data-science-competitions/template.project/branch/master/graph/badge.svg"
+)
+invisible(lapply(badges, do.call, what = usethis::use_badge))
 ```
 
-```{r, echo = FALSE, message=FALSE}
-#######################
-## Get Project Paths ##
-#######################
-path_project <- getwd()
-while (length(grep("test", path_project))>0) path_project <- dirname(path_project)
-devtools::load_all(path_project)
-
-############################# 
-## Get Package DESCRIPTION ##
-#############################
-library(desc)
-target <- file.path(path_project, "DESCRIPTION")
-desc_obj <- description$new(target)
-
-##########################
-## Set System Variables ##
-##########################
-package_url <- desc_obj$get_field("BugReports") %>% stringr::str_remove("/issues$")
-package_name <- desc_obj$get_field("Package")
-package_repo <- stringr::str_extract_all(package_url, "[^/]+(?://[^/]*)*")[[1]][2:3] %>% paste0(collapse ="/")
-Sys.setenv(CI_PROJECT_NAME = package_name)
-Sys.setenv(CI_PROJECT_URL = package_url)
-
-####################
-## Construct URLs ##
-####################
-travis_url <- paste0("https://travis-ci.org/", package_repo)
-pipeline_url <- paste0(travis_url, ".svg?branch=master")
-mybinder_url <- "http://mybinder.org/badge.svg"
-
-codecov_url <- paste0("https://codecov.io/github/", package_repo, "/", "?branch=master")
-covr_url <- paste0("https://codecov.io/gh/", package_repo, "/branch/master/graph/badge.svg")
-binder_url <- paste0("https://mybinder.org/v2/gh/", package_repo, "/master?urlpath=rstudio")
-```
-
-# ``r package_name`` <img src='https://i.imgur.com/cLcAYfz.png' align="right" height="50"/>
+# ``r DESCRIPTION$get_field("Package")`` <img src='https://i.imgur.com/cLcAYfz.png' align="right" height="50"/>
 
 <!-- badges: start -->
-`r badge_custom("Project Website", "Click-Here", "9cf", desc_obj$get_urls()[[1]])`
-[![Travis build status](`r pipeline_url`)](`r travis_url`)
-[![Code coverage status](`r covr_url`)](`r codecov_url`)
+[![code coverage](https://codecov.io/gh/data-science-competitions/template.project/branch/master/graph/badge.svg)](https://codecov.io/github/data-science-competitions/template.project/?branch=master)
+[![continuous-integration](https://travis-ci.org/data-science-competitions/template.project.svg?branch=master)](https://travis-ci.org/data-science-competitions/template.project)
 <!-- badges: end -->
 
-`r desc_obj$get_field("Title")`
+`r DESCRIPTION$get_field("Title")`
 ---
 
 ```{r, echo = FALSE, out.width = "75%"}
@@ -80,15 +47,13 @@ knitr::include_graphics("https://i.imgur.com/RLEQkhe.png")
 
 ## Overview
 
-`r desc_obj$get_field("Description")`
-
-See the [project website](`r desc_obj$get_urls()[[1]]`) for more information. 
+`r DESCRIPTION$get_field("Description")`
 
 ## Installation
 
-You can install ``r package_name`` by using:
+You can install ``r DESCRIPTION$get_field("Package")`` by using:
 
 ```
 install.packages("devtools")
-devtools::install_github("`r package_repo`")
+devtools::install_github("`r DESCRIPTION$get_field("Package")`")
 ```
