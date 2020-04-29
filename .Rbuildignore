@@ -1,9 +1,9 @@
+^renv$
+^renv\.lock$
 # Files ------------------------------------------------------------------------
-^\.gitkeep$
 ^\.gitattributes$
 ^\.Rprofile$
 ^.*\.Rproj$
-^\.Rproj\.user$
 ^tic\.R$
 ^codecov\.yml$
 ^\.travis\.yml$
@@ -13,9 +13,12 @@
 .*\.ini$
 .*\.md$
 .*\.png$
+^vignettes/01-introduction\.Rmd$
 
 # Folders ----------------------------------------------------------------------
 ^\.app/*
+^\renv$
+^\.Rproj\.user$
 ^temp/*
 ^data-raw/*
 ^public/*
@@ -26,3 +29,6 @@
 # pkgdown ----------------------------------------------------------------------
 ^vignettes/*
 ^docs/*
+
+
+
