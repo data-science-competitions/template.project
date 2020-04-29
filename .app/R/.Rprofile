@@ -14,7 +14,7 @@
 
     # Programming Logic
     ## .First watchdog
-    if(isFALSE(Sys.getenv("NEW_SESSION"))) return() else Sys.setenv(NEW_SESSION = FALSE)
+    if(file.exists(".git/First.lock")) return() else file.create(".git/First.lock", recursive = TRUE)
 
     ## Set global options
     options(startup.check.options.ignore = "stringsAsFactors", stringsAsFactors = TRUE)
@@ -30,6 +30,8 @@
 
 # Last --------------------------------------------------------------------
 .Last <- function(){
+    unlink <- function(x) base::unlink(x, recursive = TRUE, force = TRUE)
+
     ## .First watchdog
-    Sys.unsetenv("NEW_SESSION")
+    unlink(".git/First.lock")
 }
