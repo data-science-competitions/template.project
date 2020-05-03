@@ -43,5 +43,4 @@
     ## Cleanup
     unlink("./.git/index.lock")
     unlink("./renv")
-    rm(unlink)
 }
