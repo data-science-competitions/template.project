@@ -45,6 +45,14 @@ deploy_shiny <- function(stage){
         add_step(step_deploy_shiny())
 }
 
+report_covr <- function(stage){
+    if(!tic::ci_on_travis()) return(stage)
+    stage %>%
+        add_code_step(Sys.setenv(TESTTHAT = "true")) %>%
+        add_code_step(print(covr::codecov(quiet = FALSE))) %>%
+        add_code_step(Sys.unsetenv("TESTTHAT"))
+}
+
 # branches wrappers -------------------------------------------------------
 ci_is_gitlab <- function() identical(Sys.getenv("CI_SERVER_NAME"), "GitLab")
 ci_get_branch <- function() if(ci_is_gitlab()) Sys.getenv("CI_COMMIT_REF_NAME") else tic::ci_get_branch()
