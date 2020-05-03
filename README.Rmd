@@ -17,14 +17,14 @@ DESCRIPTION <- desc::description$new(file.path(README$getwd(), "DESCRIPTION"))
 ```
 
 ```{r badges, echo = FALSE}
-badges <- new.env()
+badges <- list()
 badges$CICD <- list(
   badge_name = "continuous-integration", 
   href = "https://travis-ci.org/data-science-competitions/template.project", 
   src = "https://travis-ci.org/data-science-competitions/template.project.svg?branch=master"
 )
 badges$covr <- list(
-  badge_name = "code coverage", 
+  badge_name = "code-coverage", 
   href = "https://codecov.io/github/data-science-competitions/template.project/?branch=master", 
   src = "https://codecov.io/gh/data-science-competitions/template.project/branch/master/graph/badge.svg"
 )
@@ -34,8 +34,8 @@ invisible(lapply(badges, do.call, what = usethis::use_badge))
 # ``r DESCRIPTION$get_field("Package")`` <img src='https://i.imgur.com/cLcAYfz.png' align="right" height="50"/>
 
 <!-- badges: start -->
-[![code coverage](https://codecov.io/gh/data-science-competitions/template.project/branch/master/graph/badge.svg)](https://codecov.io/github/data-science-competitions/template.project/?branch=master)
 [![continuous-integration](https://travis-ci.org/data-science-competitions/template.project.svg?branch=master)](https://travis-ci.org/data-science-competitions/template.project)
+[![code-coverage](https://codecov.io/gh/data-science-competitions/template.project/branch/master/graph/badge.svg)](https://codecov.io/github/data-science-competitions/template.project/?branch=master)
 <!-- badges: end -->
 
 `r DESCRIPTION$get_field("Title")`
