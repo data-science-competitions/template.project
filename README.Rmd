@@ -17,16 +17,18 @@ DESCRIPTION <- desc::description$new(file.path(README$getwd(), "DESCRIPTION"))
 ```
 
 ```{r badges, echo = FALSE}
+glue <- stringr::str_glue
 badges <- list()
+
 badges$CICD <- list(
   badge_name = "continuous-integration", 
-  href = "https://travis-ci.org/data-science-competitions/template.project", 
-  src = "https://travis-ci.org/data-science-competitions/template.project.svg?branch=master"
+  href = glue("https://travis-ci.org/{slug}", slug = tic::ci_get_slug()), 
+  src = glue("https://travis-ci.org/{slug}.svg?branch={branch}", slug = tic::ci_get_slug(), branch = "master")
 )
 badges$covr <- list(
   badge_name = "code-coverage", 
-  href = "https://codecov.io/github/data-science-competitions/template.project/?branch=master", 
-  src = "https://codecov.io/gh/data-science-competitions/template.project/branch/master/graph/badge.svg"
+  href = glue("https://codecov.io/github/{slug}/?branch={branch}", slug = tic::ci_get_slug(), branch = "master"), 
+  src = glue("https://codecov.io/gh/{slug}/branch/{branch}/graph/badge.svg", slug = tic::ci_get_slug(), branch = "master")
 )
 invisible(lapply(badges, do.call, what = usethis::use_badge))
 ```
