@@ -56,6 +56,6 @@ knitr::include_graphics("https://i.imgur.com/RLEQkhe.png")
 You can install ``r DESCRIPTION$get_field("Package")`` by using:
 
 ```
-install.packages("devtools")
-devtools::install_github("`r DESCRIPTION$get_field("Package")`")
+install.packages("remotes")
+remotes::install_github("`r DESCRIPTION$get_field("Package")`")
 ```
