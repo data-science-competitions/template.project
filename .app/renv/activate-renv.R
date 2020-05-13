@@ -6,8 +6,8 @@ activate <- function(){
     renv.lockfile = "./.app/renv/renv.lock",
     renv.consent = TRUE,
     renv.settings = list(
-      ignored.packages = utils::installed.packages(priority = c("base", "recommended"))[,1],
-      snapshot.type = ifelse(packageVersion("renv") > "0.9.3", "explicit", "packrat"),
+      ignored.packages = c("renv", utils::installed.packages(priority = c("base", "recommended"))[,1]),
+      snapshot.type = ifelse(utils::packageVersion("renv") > "0.9.3", "explicit", "packrat"),
       auto.snapshot = FALSE,
       package.dependency.fields = getOption("dependencies", TRUE),
       vcs.ignore.library = TRUE,
