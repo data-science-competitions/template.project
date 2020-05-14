@@ -14,6 +14,7 @@ restore <- function(){
 }
 
 update <- function(){
+  renv$setup()
   message("Updating {renv} lockfile")
   unlink(getOption("renv.lockfile"), recursive = TRUE, force = TRUE)
   renv$snapshot()
