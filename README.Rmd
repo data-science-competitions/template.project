@@ -17,16 +17,18 @@ DESCRIPTION <- desc::description$new(file.path(README$getwd(), "DESCRIPTION"))
 ```
 
 ```{r badges, echo = FALSE}
-badges <- new.env()
+glue <- stringr::str_glue
+badges <- list()
+
 badges$CICD <- list(
   badge_name = "continuous-integration", 
-  href = "https://travis-ci.org/data-science-competitions/template.project", 
-  src = "https://travis-ci.org/data-science-competitions/template.project.svg?branch=master"
+  href = glue("https://travis-ci.org/{slug}", slug = tic::ci_get_slug()), 
+  src = glue("https://travis-ci.org/{slug}.svg?branch={branch}", slug = tic::ci_get_slug(), branch = "master")
 )
 badges$covr <- list(
-  badge_name = "code coverage", 
-  href = "https://codecov.io/github/data-science-competitions/template.project/?branch=master", 
-  src = "https://codecov.io/gh/data-science-competitions/template.project/branch/master/graph/badge.svg"
+  badge_name = "code-coverage", 
+  href = glue("https://codecov.io/github/{slug}/?branch={branch}", slug = tic::ci_get_slug(), branch = "master"), 
+  src = glue("https://codecov.io/gh/{slug}/branch/{branch}/graph/badge.svg", slug = tic::ci_get_slug(), branch = "master")
 )
 invisible(lapply(badges, do.call, what = usethis::use_badge))
 ```
@@ -34,8 +36,8 @@ invisible(lapply(badges, do.call, what = usethis::use_badge))
 # ``r DESCRIPTION$get_field("Package")`` <img src='https://i.imgur.com/cLcAYfz.png' align="right" height="50"/>
 
 <!-- badges: start -->
-[![code coverage](https://codecov.io/gh/data-science-competitions/template.project/branch/master/graph/badge.svg)](https://codecov.io/github/data-science-competitions/template.project/?branch=master)
 [![continuous-integration](https://travis-ci.org/data-science-competitions/template.project.svg?branch=master)](https://travis-ci.org/data-science-competitions/template.project)
+[![code-coverage](https://codecov.io/gh/data-science-competitions/template.project/branch/master/graph/badge.svg)](https://codecov.io/github/data-science-competitions/template.project/?branch=master)
 <!-- badges: end -->
 
 `r DESCRIPTION$get_field("Title")`
@@ -54,6 +56,6 @@ knitr::include_graphics("https://i.imgur.com/RLEQkhe.png")
 You can install ``r DESCRIPTION$get_field("Package")`` by using:
 
 ```
-install.packages("devtools")
-devtools::install_github("`r DESCRIPTION$get_field("Package")`")
+install.packages("remotes")
+remotes::install_github("`r DESCRIPTION$get_field("Package")`")
 ```

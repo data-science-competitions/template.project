@@ -1,5 +1,6 @@
 ^renv$
 ^renv\.lock$
+
 # Files ------------------------------------------------------------------------
 ^\.gitattributes$
 ^\.Rprofile$
@@ -7,6 +8,7 @@
 ^tic\.R$
 ^codecov\.yml$
 ^\.travis\.yml$
+^\.gitlab-ci.yml
 ^README\.Rmd$
 ^LICENSE\.md$
 .*\.gitkeep$

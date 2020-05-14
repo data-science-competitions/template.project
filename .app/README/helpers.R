@@ -1,6 +1,6 @@
 README <- new.env()
 
-remotes::install_cran(c("devtools", "desc", "usethis", "stringr"))
+# remotes::install_cran(c("devtools", "desc", "usethis", "stringr"))
 
 README$generate_shield_src <- function(label = "codecov", message = "0%", color = "red"){
     replace_symbols <- function(x){
