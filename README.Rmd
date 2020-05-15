@@ -18,17 +18,20 @@ DESCRIPTION <- desc::description$new(file.path(README$getwd(), "DESCRIPTION"))
 
 ```{r badges, echo = FALSE}
 glue <- stringr::str_glue
+slug <- tryCatch(tic::ci_get_slug(), error = function(e) "")
+branch = "master"
+
 badges <- list()
 
 badges$CICD <- list(
   badge_name = "continuous-integration", 
-  href = glue("https://travis-ci.org/{slug}", slug = tic::ci_get_slug()), 
-  src = glue("https://travis-ci.org/{slug}.svg?branch={branch}", slug = tic::ci_get_slug(), branch = "master")
+  href = glue("https://travis-ci.org/{slug}", slug = slug), 
+  src = glue("https://travis-ci.org/{slug}.svg?branch={branch}", slug = slug, branch = branch)
 )
 badges$covr <- list(
   badge_name = "code-coverage", 
-  href = glue("https://codecov.io/github/{slug}/?branch={branch}", slug = tic::ci_get_slug(), branch = "master"), 
-  src = glue("https://codecov.io/gh/{slug}/branch/{branch}/graph/badge.svg", slug = tic::ci_get_slug(), branch = "master")
+  href = glue("https://codecov.io/github/{slug}/?branch={branch}", slug = slug, branch = branch), 
+  src = glue("https://codecov.io/gh/{slug}/branch/{branch}/graph/badge.svg", slug = slug, branch = branch)
 )
 invisible(lapply(badges, do.call, what = usethis::use_badge))
 ```
@@ -57,5 +60,5 @@ You can install ``r DESCRIPTION$get_field("Package")`` by using:
 
 ```
 install.packages("remotes")
-remotes::install_github("`r DESCRIPTION$get_field("Package")`")
+remotes::install_local("`r DESCRIPTION$get_field("Package")`")
 ```
