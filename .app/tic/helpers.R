@@ -45,13 +45,10 @@ deploy_shiny <- function(stage){
         add_step(step_deploy_shiny())
 }
 
-report_covr <- function(stage){
+publish_package_coverage <- function(stage){
     stage %>%
-        add_step(step_message(c(sep(), "\n## Code Coverage Report", sep()))) %>%
-        add_code_step(step_install_cran("covr")) %>%
-        add_code_step(Sys.setenv(TESTTHAT = "true")) %>%
-        add_code_step(print(if(ci_on_travis()) covr::codecov(quiet = FALSE) else covr::gitlab(quiet = FALSE))) %>%
-        add_code_step(Sys.unsetenv("TESTTHAT"))
+        add_step(step_message(c(sep(), "\n## Publish Package Coverage Report", sep()))) %>%
+        step_publish_package_coverage()
 }
 
 # branches wrappers -------------------------------------------------------
