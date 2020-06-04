@@ -46,11 +46,11 @@ deploy_shiny <- function(stage){
 }
 
 report_covr <- function(stage){
-    if(!tic::ci_on_travis()) return(stage)
     stage %>%
         add_step(step_message(c(sep(), "\n## Code Coverage Report", sep()))) %>%
+        add_code_step(step_install_cran("covr")) %>%
         add_code_step(Sys.setenv(TESTTHAT = "true")) %>%
-        add_code_step(covr::codecov(quiet = FALSE)) %>%
+        add_code_step(print(if(ci_on_travis()) covr::codecov(quiet = FALSE) else covr::gitlab(quiet = FALSE))) %>%
         add_code_step(Sys.unsetenv("TESTTHAT"))
 }
 
