@@ -48,7 +48,7 @@ deploy_shiny <- function(stage){
 publish_package_coverage <- function(stage){
     stage %>%
         add_step(step_message(c(sep(), "\n## Publish Package Coverage Report", sep()))) %>%
-        step_publish_package_coverage()
+        add_step(step_publish_package_coverage())
 }
 
 # branches wrappers -------------------------------------------------------

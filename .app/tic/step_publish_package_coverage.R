@@ -11,10 +11,13 @@ PublishPackageCoverage <- R6::R6Class(
             Sys.setenv(TESTTHAT = "true")
             on.exit(Sys.unsetenv("TESTTHAT"))
 
+            coverage <- covr::package_coverage(type = c("tests"), quiet = FALSE)
+            print(coverage)
+
             if(ci_on_travis()){
-                covr::codecov(quiet = FALSE)
+                covr::codecov(coverage = coverage, quiet = FALSE)
             } else if (ci_on_gitlab()){
-                covr::gitlab(quiet = FALSE)
+                covr::gitlab(coverage = coverage, quiet = FALSE)
             } else {
                 stop("Unknown CI/CD service")
             }
