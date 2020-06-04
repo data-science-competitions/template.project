@@ -8,6 +8,9 @@ r: 4.0.0
 cache:
   - packages
   - ccache
+  directories:
+  - .Rprofile
+  - .Renviron
 latex: true
 
 # environment variables --------------------------------------------------------
