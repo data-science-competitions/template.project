@@ -18,6 +18,7 @@ env:
 # jobs -------------------------------------------------------------------------
 before_install:
  - mkdir -p $R_LIBS_USER
+ - rm -rf .Rprofile .Renviron
  - cp -rf ./.app/R/{.Rprofile,.Renviron} ./
  - R -q -e
     '`%=%` <- function(key, value) paste0(key,"=",value);
