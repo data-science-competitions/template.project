@@ -27,7 +27,7 @@ if(is_master_branch() | is_hotfix_branch()){
 }
 
 # Stage: After Success ----------------------------------------------------
-get_stage("after_success") %>%
+get_stage("after_success")
 
 # Stage: After Failure ----------------------------------------------------
 get_stage("after_failure") %>%
