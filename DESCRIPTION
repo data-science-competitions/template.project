@@ -4,7 +4,7 @@ Title: R Project Template for Analytic Applications
 URL: https://data-science-competitions.github.io/template.project/
 BugReports: https://github.com/data-science-competitions/template.project/issues
 Version: 1.0.1
-Date: 2020-02-27
+Date: 2020-04-24
 Authors@R: c(person("Harel", "Lustiger", email = "tidylab@gmail.com", role = c("aut", "cre")))
 Maintainer: Harel Lustiger <tidylab@gmail.com>
 Description: This template conforms to a conceptual model of **Analysis Projects** suggested by [Hadley Wickham](https://docs.google.com/document/d/1LzZKS44y4OEJa4Azg5reGToNAZL0e0HSUwxamNY7E-Y/).  
