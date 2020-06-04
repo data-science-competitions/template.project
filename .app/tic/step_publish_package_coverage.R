@@ -11,7 +11,7 @@ PublishPackageCoverage <- R6::R6Class(
             Sys.setenv(TESTTHAT = "true")
             on.exit(Sys.unsetenv("TESTTHAT"))
 
-            coverage <- covr::package_coverage(type = c("tests"), quiet = FALSE)
+            coverage <- covr::package_coverage(type = c("tests"), pre_clean = FALSE, quiet = FALSE)
             print(coverage)
 
             if(ci_on_travis()){
