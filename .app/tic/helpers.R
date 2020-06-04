@@ -45,13 +45,10 @@ deploy_shiny <- function(stage){
         add_step(step_deploy_shiny())
 }
 
-report_covr <- function(stage){
-    if(!tic::ci_on_travis()) return(stage)
+publish_package_coverage <- function(stage){
     stage %>%
-        add_step(step_message(c(sep(), "\n## Code Coverage Report", sep()))) %>%
-        add_code_step(Sys.setenv(TESTTHAT = "true")) %>%
-        add_code_step(covr::codecov(quiet = FALSE)) %>%
-        add_code_step(Sys.unsetenv("TESTTHAT"))
+        add_step(step_message(c(sep(), "\n## Publish Package Coverage Report", sep()))) %>%
+        step_publish_package_coverage()
 }
 
 # branches wrappers -------------------------------------------------------
