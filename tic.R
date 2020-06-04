@@ -17,7 +17,7 @@ get_stage("before_script") %>%
 
 # Stage: Script -----------------------------------------------------------
 if(is_master_branch() | is_hotfix_branch()){
-    get_stage("script") %>% build_steps() %>% test_suite_steps() %>% report_covr()
+    get_stage("script") %>% build_steps() %>% test_suite_steps()
 
 } else if (is_develop_branch() | is_release_branch()){
     get_stage("script") %>% build_steps() %>% test_suite_steps()
@@ -27,11 +27,7 @@ if(is_master_branch() | is_hotfix_branch()){
 }
 
 # Stage: After Success ----------------------------------------------------
-if (is_master_branch() | is_develop_branch()){
-    get_stage("after_success") %>%
-        add_code_step(step_install_cran("covr")) %>%
-        add_code_step(covr::package_coverage(type = "tests", quiet = FALSE, pre_clean = FALSE))
-}
+get_stage("after_success")
 
 # Stage: After Failure ----------------------------------------------------
 get_stage("after_failure") %>%
@@ -41,7 +37,8 @@ get_stage("after_failure") %>%
 get_stage("before_deploy")
 
 # Stage: Deploy -----------------------------------------------------------
-get_stage("deploy")
+get_stage("deploy") %>%
+    publish_package_coverage()
 
 # Stage: After Deploy -----------------------------------------------------
 get_stage("after_deploy")

@@ -4,10 +4,13 @@ dist: bionic
 
 # meta -------------------------------------------------------------------------
 language: r
-r: 3.6.2
+r: 4.0.0
 cache:
   - packages
   - ccache
+  directories:
+  - .Rprofile
+  - .Renviron
 latex: true
 
 # environment variables --------------------------------------------------------

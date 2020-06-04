@@ -28,5 +28,5 @@ This is possible as the boilerplate comes with:
 
 You can install `template.project` by using:
 
-    install.packages("devtools")
-    devtools::install_github("template.project")
+    install.packages("remotes")
+    remotes::install_local("template.project")
