@@ -8,8 +8,6 @@ r: 4.0.0
 cache:
   packages: true
   ccache: true
-  directories:
-   - ./.app
 latex: true
 
 # environment variables --------------------------------------------------------
@@ -33,14 +31,11 @@ install:
 - R -q -e 'tic::install()'
 before_script: R -q -e 'tic::before_script()'
 script: R -q -e 'tic::script()'
-after_success:
-- R -q -e 'tic::after_success()'
-- cp -rf ./{.Rprofile,.Renviron} ./.app/R/
+after_success: R -q -e 'tic::after_success()'
 after_failure: R -q -e 'tic::after_failure()'
-before_deploy:
-- cp -rf ./.app/R/{.Rprofile,.Renviron} ./
-- R -q -e 'tic::before_deploy()'
+before_deploy: R -q -e 'tic::before_deploy()'
 deploy:
+  skip_cleanup: true
   provider: script
   script: R -q -e 'tic::deploy()'
   on:

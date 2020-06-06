@@ -17,7 +17,7 @@
     if(file.exists(".git/First.lock")) return() else file.create(".git/First.lock", recursive = TRUE)
 
     ## Set global options
-    options(startup.check.options.ignore = "stringsAsFactors", stringsAsFactors = TRUE)
+    options(startup.check.options.ignore = "stringsAsFactors")
     options(Ncpus = 8, repos = structure(c(CRAN = get_repos())), dependencies = c("Imports"), build = FALSE)
     .libPaths(Sys.getenv("R_LIBS_USER"))
 
