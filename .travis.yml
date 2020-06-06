@@ -9,8 +9,7 @@ cache:
   packages: true
   ccache: true
   directories:
-   - .Rprofile
-   - .Renviron
+   - ./.app
 latex: true
 
 # environment variables --------------------------------------------------------
@@ -29,14 +28,18 @@ before_install:
      close(Renviron)'
  - R -q -e 'tic::dsl_load(); tic::prepare_all_stages(); tic::before_install()'
 install:
-  - if [ "${TRAVIS_OS_NAME}" == "osx" ]; then brew install ccache; fi
-  - if [ "${TRAVIS_OS_NAME}" == "osx" ]; then export PATH="/usr/local/opt/ccache/libexec:$PATH"; fi
-  - R -q -e 'tic::install()'
+- if [ "${TRAVIS_OS_NAME}" == "osx" ]; then brew install ccache; fi
+- if [ "${TRAVIS_OS_NAME}" == "osx" ]; then export PATH="/usr/local/opt/ccache/libexec:$PATH"; fi
+- R -q -e 'tic::install()'
 before_script: R -q -e 'tic::before_script()'
 script: R -q -e 'tic::script()'
-after_success: R -q -e 'tic::after_success()'
+after_success:
+- R -q -e 'tic::after_success()'
+- cp -rf ./{.Rprofile,.Renviron} ./.app/R/
 after_failure: R -q -e 'tic::after_failure()'
-before_deploy: R -q -e 'tic::before_deploy()'
+before_deploy:
+- cp -rf ./.app/R/{.Rprofile,.Renviron} ./
+- R -q -e 'tic::before_deploy()'
 deploy:
   provider: script
   script: R -q -e 'tic::deploy()'
