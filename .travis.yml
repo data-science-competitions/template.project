@@ -6,11 +6,8 @@ dist: bionic
 language: r
 r: 4.0.0
 cache:
-  - packages
-  - ccache
-  directories:
-  - .Rprofile
-  - .Renviron
+  packages: true
+  ccache: true
 latex: true
 
 # environment variables --------------------------------------------------------
@@ -29,15 +26,16 @@ before_install:
      close(Renviron)'
  - R -q -e 'tic::dsl_load(); tic::prepare_all_stages(); tic::before_install()'
 install:
-  - if [ "${TRAVIS_OS_NAME}" == "osx" ]; then brew install ccache; fi
-  - if [ "${TRAVIS_OS_NAME}" == "osx" ]; then export PATH="/usr/local/opt/ccache/libexec:$PATH"; fi
-  - R -q -e 'tic::install()'
+- if [ "${TRAVIS_OS_NAME}" == "osx" ]; then brew install ccache; fi
+- if [ "${TRAVIS_OS_NAME}" == "osx" ]; then export PATH="/usr/local/opt/ccache/libexec:$PATH"; fi
+- R -q -e 'tic::install()'
 before_script: R -q -e 'tic::before_script()'
 script: R -q -e 'tic::script()'
 after_success: R -q -e 'tic::after_success()'
 after_failure: R -q -e 'tic::after_failure()'
 before_deploy: R -q -e 'tic::before_deploy()'
 deploy:
+  skip_cleanup: true
   provider: script
   script: R -q -e 'tic::deploy()'
   on:
