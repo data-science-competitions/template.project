@@ -6,11 +6,11 @@ dist: bionic
 language: r
 r: 4.0.0
 cache:
-  - packages
-  - ccache
+  packages: true
+  ccache: true
   directories:
-  - .Rprofile
-  - .Renviron
+   - .Rprofile
+   - .Renviron
 latex: true
 
 # environment variables --------------------------------------------------------
