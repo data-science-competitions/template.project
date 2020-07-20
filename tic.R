@@ -18,7 +18,6 @@ get_stage("before_script") %>%
 # Stage: Script -----------------------------------------------------------
 if(is_master_branch() | is_hotfix_branch()){
     get_stage("script") %>% build_steps() %>% test_suite_steps()
-
 } else if (is_develop_branch() | is_release_branch()){
     get_stage("script") %>% build_steps() %>% test_suite_steps()
 

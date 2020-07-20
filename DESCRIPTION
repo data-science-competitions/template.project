@@ -3,7 +3,7 @@ Type: Package
 Title: R Project Template for Analytic Applications
 URL: https://data-science-competitions.github.io/template.project/
 BugReports: https://github.com/data-science-competitions/template.project/issues
-Version: 1.0.3
+Version: 1.1.0
 Date: 2020-04-24
 Authors@R: c(person("Harel", "Lustiger", email = "tidylab@gmail.com", role = c("aut", "cre")))
 Maintainer: Harel Lustiger <tidylab@gmail.com>
@@ -17,7 +17,7 @@ Description: This template conforms to a conceptual model of **Analysis Projects
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.0.2
+RoxygenNote: 7.1.0
 Roxygen: list(markdown = TRUE, r6 = TRUE)
 Language: en-GB
 Depends: 
@@ -28,5 +28,7 @@ Suggests:
     devtools (>= 2.0.2),
     testthat (>= 2.0.1)
 Imports:
+    R6,
     config (>= 0.3),
-    assertthat (>= 0.2.1)
+    assertthat (>= 0.2.1),
+    yaml

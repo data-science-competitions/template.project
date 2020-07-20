@@ -1,46 +1,39 @@
 # First -------------------------------------------------------------------
 .First <- function(){
+    if(identical(Sys.getenv("CI"), "true")) return()
+
+    # Helpers -----------------------------------------------------------------
     assign(".Rprofile", new.env(), envir = globalenv())
 
-    # Helpers
-    .Rprofile$NEW_SESSION <- new.env()
-    .Rprofile$NEW_SESSION$unset <- function() Sys.unsetenv("NEW_SESSION")
-    .Rprofile$NEW_SESSION$set <- function() Sys.setenv(NEW_SESSION = FALSE)
-    .Rprofile$NEW_SESSION$get <- function() as.logical(Sys.getenv("NEW_SESSION"))
-    get_repos <- function(){
-        DESCRIPTION <- readLines("DESCRIPTION")
-        Date <- trimws(gsub("Date:", "", DESCRIPTION[grepl("Date:", DESCRIPTION)]))
-        URL <- if(length(Date) == 1) paste0("https://mran.microsoft.com/snapshot/", Date) else "https://cran.rstudio.com/"
-        return(URL)
+    .Rprofile$run_docker <- function(){
+        # Write script
+        path_script <- tempfile("system-", fileext = ".R")
+        writeLines("
+        source('./R/Docker.R')
+        source('./R/DockerCompose.R')
+        Docker$new()$remove_dangling_images()$show_images()
+        docker <- DockerCompose$new()$restart()
+        ", path_script)
+
+        # Run script in a separate job
+        invisible(rstudioapi::jobRunScript(
+            path = path_script,
+            name = paste("Testing", as.character(read.dcf('DESCRIPTION', 'Package')), "in a Docker Container"),
+            workingDir = ".",
+            importEnv = FALSE,
+            exportEnv = ""
+        ))
     }
 
-    # Programming Logic
-    ## .First watchdog
-    if(isFALSE(.Rprofile$NEW_SESSION$get())) return() else .Rprofile$NEW_SESSION$set()
-
-    ## Set global options
-    options(startup.check.options.ignore = "stringsAsFactors")
-
-    ## Initiate the package management system
-    options(Ncpus = 8, repos = structure(c(CRAN = get_repos())), dependencies = "Imports", build = FALSE)
-    try({
-        source("./.app/renv/activate-renv.R", local = .Rprofile)
-        message("\033[47m\033[31mActivate the package management system with: .Rprofile$restore()\033[39m\033[49m")
-    })
-
-    ## Load development toolkit
-    pkgs <- c("usethis", "testthat", "devtools")
-    invisible(sapply(pkgs, require, character.only = TRUE, quietly = TRUE, warn.conflicts = FALSE))
+    # Programming Logic -------------------------------------------------------
+    pkgs <- c("usethis", "devtools", "magrittr")
+    invisible(sapply(pkgs, require, warn.conflicts = FALSE, character.only = TRUE))
 }
 
 # Last --------------------------------------------------------------------
 .Last <- function(){
-    unlink <- function(x) base::unlink(x, recursive = TRUE, force = TRUE)
-
-    ## .First watchdog
-    .Rprofile$NEW_SESSION$unset()
-
-    ## Cleanup
-    unlink("./.git/index.lock")
-    unlink("./renv")
+    if(identical(Sys.getenv("CI"), "true")) return()
+    try(system('docker-compose down'))
 }
+
+
