@@ -61,7 +61,12 @@ is_hotfix_branch <- function() grepl("hotfix", ci_get_branch())
 is_release_branch <- function() grepl("release", ci_get_branch())
 
 # helper functions --------------------------------------------------------
-install_deps <- function() remotes::install_deps(dependencies = getOption("dependencies"), build = getOption("build"), quiet = TRUE)
 ci_get_job_name <- function() tolower(paste0(Sys.getenv("TRAVIS_JOB_NAME"), Sys.getenv("APPVEYOR_JOB_NAME")))
 sep <- function() paste0("\n", paste0(rep("#", 80), collapse = ""))
-
+install_deps <- function(){
+    build <- quiet <- FALSE
+    try(remotes::install_deps(dependencies = "Depends",  build = build, quiet = quiet))
+    try(remotes::install_deps(dependencies = "Imports",  build = build, quiet = quiet))
+    try(remotes::install_deps(dependencies = "Suggests", build = build, quiet = quiet))
+    return(invisible())
+}
