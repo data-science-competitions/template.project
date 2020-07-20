@@ -11,14 +11,14 @@
         writeLines("
         source('./R/Docker.R')
         source('./R/DockerCompose.R')
-        #Docker$new()$remove_dangling_images()$show_images()
+        Docker$new()$remove_dangling_images()$show_images()
         docker <- DockerCompose$new()$restart()
         ", path_script)
 
         # Run script in a separate job
         invisible(rstudioapi::jobRunScript(
             path = path_script,
-            name = paste("Spinning-up", as.character(read.dcf('DESCRIPTION', 'Package')), "in a Docker Container"),
+            name = paste("Testing", as.character(read.dcf('DESCRIPTION', 'Package')), "in a Docker Container"),
             workingDir = ".",
             importEnv = FALSE,
             exportEnv = ""

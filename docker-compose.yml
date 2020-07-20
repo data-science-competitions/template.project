@@ -9,7 +9,7 @@ services:
       context: ./
       dockerfile: ./.app/docker/r/Dockerfile
       args:
-        - R_REPOS=\'https://mran.microsoft.com/snapshot/2020-04-24\'
+        - R_REPOS='https://mran.microsoft.com/snapshot/2020-04-24'
     container_name: r-package-test-rig
     restart: always
 networks:
