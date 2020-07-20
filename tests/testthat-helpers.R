@@ -16,6 +16,11 @@ expect_not_null <- function(object) expect(isFALSE(is.null(object)), "object is 
 expect_file_exists <- function(path) expect(file.exists(path), error_message("Could not find ", path))
 
 # Skips -------------------------------------------------------------------
+skip_on_check <- function(){
+    if(grepl("\\.Rcheck", getwd())) testthat::skip("On check")
+    return(invisible(TRUE))
+}
+
 skip_on_pc <- function(){
     is_ci <- function() identical(Sys.getenv("CI"), "true")
     if (isTRUE(is_ci())) return(invisible(TRUE))

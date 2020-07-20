@@ -1,6 +1,3 @@
-^renv$
-^renv\.lock$
-
 # Files ------------------------------------------------------------------------
 ^\.gitattributes$
 ^\.Rprofile$
@@ -15,22 +12,25 @@
 .*\.ini$
 .*\.md$
 .*\.png$
-^vignettes/01-introduction\.Rmd$
+^docker-compose\.yml$
+^\.dockerignore$
 
 # Folders ----------------------------------------------------------------------
-^\.app/*
-^\renv$
-^\.Rproj\.user$
-^temp/*
-^data-raw/*
-^public/*
-^inst/data$
-^inst/docs$
 .*_cache/*
+^\.app/*
+^\.Rproj\.user$
+^cache/*
+^data-raw/*
+^inst/data/*
+^inst/docs/*
+^renv/*
+^temp/*
+^public/*
 
 # pkgdown ----------------------------------------------------------------------
 ^vignettes/*
 ^docs/*
+
 
 
 
