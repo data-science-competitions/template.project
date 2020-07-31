@@ -86,16 +86,18 @@ DockerCompose$funs$stop <- function(self, private){
 }
 
 DockerCompose$funs$browse_url <- function(self, private, service, slug){
+    service <- match.arg(service, names(private$composition$services))
     url <- "localhost"
     port <- stringr::str_remove(self$get(service, "ports"), ":.*")
     if(length(port) == 0) port <- "8080"
     address <- stringr::str_glue("http://{url}:{port}/{slug}", url = "localhost", port = port, slug = slug)
-    if(interactive()) browseURL(utils::URLencode(address))
+    try(browseURL(utils::URLencode(address)))
     return(self)
 }
 
 DockerCompose$funs$get <- function(self, private, service, field){
-    stopifnot(!missing(service)); stopifnot(!missing(field))
+    stopifnot(!missing(field))
+    service <- match.arg(service, names(private$composition$services))
     private$composition$services[[service]][[field]]
 }
 
