@@ -1,39 +1,86 @@
-# First -------------------------------------------------------------------
+assign(".Rprofile", new.env(), envir = globalenv())
+
+# .First ------------------------------------------------------------------
 .First <- function(){
-    if(identical(Sys.getenv("CI"), "true")) return()
+    try(if(testthat::is_testing()) return())
 
-    # Helpers -----------------------------------------------------------------
-    assign(".Rprofile", new.env(), envir = globalenv())
+    # Package Management System
+    Date <- as.character(read.dcf("DESCRIPTION", "Date"));
+    URL <- if(is.na(Date)) "https://cran.rstudio.com/" else paste0("https://mran.microsoft.com/snapshot/", Date)
+    options(repos = URL)
 
-    .Rprofile$run_docker <- function(){
-        # Write script
-        path_script <- tempfile("system-", fileext = ".R")
-        writeLines("
-        source('./R/Docker.R')
-        source('./R/DockerCompose.R')
-        Docker$new()$remove_dangling_images()$show_images()
-        docker <- DockerCompose$new()$restart()
-        ", path_script)
+    suppressMessages(try({renv::consent(provided = TRUE); unlink("./renv")}))
+    options(
+        renv.lockfile = "./.app/renv/renv.lock",
+        renv.consent = TRUE,
+        renv.clean = FALSE,
+        renv.settings = list(
+            ignored.packages = c("renv"),
+            snapshot.type = ifelse(utils::packageVersion("renv") > "0.9.3", "explicit", "packrat"),
+            auto.snapshot = FALSE,
+            package.dependency.fields = c("Imports", "Depends", "LinkingTo", "Suggests")[1:3],
+            vcs.ignore.library = TRUE,
+            use.cache = TRUE
+        )
+    )
 
-        # Run script in a separate job
-        invisible(rstudioapi::jobRunScript(
-            path = path_script,
-            name = paste("Testing", as.character(read.dcf('DESCRIPTION', 'Package')), "in a Docker Container"),
+    # Programming Logic
+    pkgs <- c("usethis", "devtools", "magrittr", "testthat")
+    invisible(sapply(pkgs, require, warn.conflicts = FALSE, character.only = TRUE))
+}
+
+# .Last -------------------------------------------------------------------
+.Last <- function(){
+    try(if(testthat::is_testing()) return())
+
+    unlink("./renv")
+    try(system('docker-compose down'))
+}
+
+# Docker ------------------------------------------------------------------
+.Rprofile$docker$start <- function(){
+    # Write script
+    path_script <- tempfile("system-", fileext = ".R")
+    job_name <- paste("Testing", as.character(read.dcf('DESCRIPTION', 'Package')), "in a Docker Container")
+    writeLines(c("source('./R/utils_DockerCompose.R'); DockerCompose$new()$start()"), path_script)
+    .Rprofile$utils$run_script(path_script, job_name)
+}
+
+.Rprofile$docker$stop <- function(){
+    # Write script
+    path_script <- tempfile("system-", fileext = ".R")
+    job_name <- paste("Testing", as.character(read.dcf('DESCRIPTION', 'Package')), "in a Docker Container")
+    writeLines(c("source('./R/utils_DockerCompose.R'); DockerCompose$new()$stop()"), path_script)
+    .Rprofile$utils$run_script(path_script, job_name)
+}
+
+.Rprofile$docker$restart <- function(){
+    # Write script
+    path_script <- tempfile("system-", fileext = ".R")
+    job_name <- paste("Testing", as.character(read.dcf('DESCRIPTION', 'Package')), "in a Docker Container")
+    writeLines(c("source('./R/utils_DockerCompose.R'); DockerCompose$new()$restart()"), path_script)
+    .Rprofile$utils$run_script(path_script, job_name)
+}
+
+.Rprofile$docker$reset <- function(){
+    # Write script
+    path_script <- tempfile("system-", fileext = ".R")
+    job_name <- paste("Testing", as.character(read.dcf('DESCRIPTION', 'Package')), "in a Docker Container")
+    writeLines(c("source('./R/utils_DockerCompose.R'); DockerCompose$new()$reset()"), path_script)
+    .Rprofile$utils$run_script(path_script, job_name)
+}
+
+# Utils -------------------------------------------------------------------
+.Rprofile$utils$run_script <- function(path, name){
+    withr::with_envvar(
+        c(TESTTHAT = "true"),
+        rstudioapi::jobRunScript(
+            path = path,
+            name = name,
             workingDir = ".",
             importEnv = FALSE,
             exportEnv = ""
         ))
-    }
-
-    # Programming Logic -------------------------------------------------------
-    pkgs <- c("usethis", "devtools", "magrittr")
-    invisible(sapply(pkgs, require, warn.conflicts = FALSE, character.only = TRUE))
+    invisible()
 }
-
-# Last --------------------------------------------------------------------
-.Last <- function(){
-    if(identical(Sys.getenv("CI"), "true")) return()
-    try(system('docker-compose down'))
-}
-
 

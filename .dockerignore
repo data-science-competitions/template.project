@@ -1,10 +1,11 @@
 # Folders
-.app/docker
+.app/
 .git/
 .Rproj.user/
 man/
 inst/data
 inst/docs
+renv/
 
 # Files
 ^docker-compose.yml$
