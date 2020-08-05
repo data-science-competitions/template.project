@@ -17,12 +17,12 @@ WORKDIR /srv/shiny-server/${SHINY_APP_NAME}
 # Package Management System ----------------------------------------------------
 ARG R_REPOS=\'https://mran.microsoft.com/snapshot/2020-06-24\'
 COPY ./DESCRIPTION /srv/shiny-server/${SHINY_APP_NAME}/DESCRIPTION
-RUN R -e "if(!require(remotes)) install.packages('remotes', repos = ${R_REPOS})"
-RUN R -e "remotes::install_deps(dependencies = 'Depends',   repos = ${R_REPOS})"
-RUN R -e "remotes::install_deps(dependencies = 'Imports',   repos = ${R_REPOS})"
-RUN R -e "remotes::install_deps(dependencies = 'Suggests',  repos = ${R_REPOS})"
+RUN R -q -e "if(!require(remotes)) install.packages('remotes', repos = ${R_REPOS})"
+RUN R -q -e "remotes::install_deps(dependencies = 'Depends',   repos = ${R_REPOS})"
+RUN R -q -e "remotes::install_deps(dependencies = 'Imports',   repos = ${R_REPOS})"
+RUN R -q -e "remotes::install_deps(dependencies = 'Suggests',  repos = ${R_REPOS})"
 
 # Prepare Dashboard Files ------------------------------------------------------
 COPY . /srv/shiny-server/${SHINY_APP_NAME}/
-RUN R -e "remotes::install_local(upgrade = 'never')"
-RUN R -e "golem::add_shinyserver_file(open = FALSE)"
+RUN R -q -e "remotes::install_local(upgrade = 'never')"
+RUN R -q -e "golem::add_shinyserver_file(open = FALSE)"
