@@ -1,25 +1,27 @@
+# R Package Development---------------------------------------------------------
 FROM rocker/tidyverse:4.0.0
-ARG R_REPOS=\'https://mran.microsoft.com/snapshot/2020-04-24\'
 
 # Setup ------------------------------------------------------------------------
 RUN apt-get update && apt-get install -y \
+    dos2unix \
     libssl-dev \
     libxml2-dev \
     git \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Configure R for Package Development ------------------------------------------
-RUN R -q -e "if(!require(remotes)) install.packages('remotes', repos = ${R_REPOS})"
-RUN R -q -e "remotes::install_cran(c('devtools', 'testthat', 'covr', 'roxygen2'), repos = ${R_REPOS})"
+# Configure R ------------------------------------------------------------------
+ARG R_REPOS=\'https://mran.microsoft.com/snapshot/2020-04-24\'
+RUN echo "options(repos = ${R_REPOS})" >> .Rprofile
+RUN R -q -e "if(!require(remotes)) install.packages('remotes')"
+RUN R -q -e "remotes::install_cran(c('devtools', 'testthat', 'covr', 'roxygen2'))"
 
 # Package Management System ----------------------------------------------------
 ARG R_PACKAGE_NAME=sample-package
 COPY ./DESCRIPTION ./${R_PACKAGE_NAME}/DESCRIPTION
 WORKDIR /${R_PACKAGE_NAME}
-RUN R -q -e "if(!require(remotes)) install.packages('remotes', repos = ${R_REPOS})"
-RUN R -q -e "remotes::install_deps(dependencies = 'Depends',   repos = ${R_REPOS})"
-RUN R -q -e "remotes::install_deps(dependencies = 'Imports',   repos = ${R_REPOS})"
-RUN R -q -e "remotes::install_deps(dependencies = 'Suggests',  repos = ${R_REPOS})"
+RUN R -q -e "remotes::install_deps(dependencies = 'Depends')"
+RUN R -q -e "remotes::install_deps(dependencies = 'Imports')"
+RUN R -q -e "remotes::install_deps(dependencies = 'Suggests')"
 
 # Prepare Package Files --------------------------------------------------------
 COPY . /${R_PACKAGE_NAME}
