@@ -29,13 +29,13 @@ DockerCompose <- R6::R6Class(
         get = function(service, field) DockerCompose$funs$get(self, private, service, field),
         #' @description
         #' Create and start containers.
-        start = function() DockerCompose$funs$start(self, private),
+        start = function(service = NULL) DockerCompose$funs$start(self, private, service),
         #' @description
         #' Stop containers.
         stop = function() DockerCompose$funs$stop(self, private),
         #' @description
         #' Restart containers.
-        restart = function() DockerCompose$funs$restart(self, private),
+        restart = function(service = NULL) DockerCompose$funs$restart(self, private, service),
         #' @description
         #' Stop and remove containers, networks, images and volumes.
         reset = function() DockerCompose$funs$reset(self, private),
@@ -64,16 +64,21 @@ DockerCompose$funs$reset <- function(self, private){
     invisible(self)
 }
 
-DockerCompose$funs$restart <- function(self, private){
+DockerCompose$funs$restart <- function(self, private, service){
     system <- DockerCompose$funs$system
     DockerCompose$funs$stop(self, private)
-    DockerCompose$funs$start(self, private)
+    DockerCompose$funs$start(self, private, service)
     invisible(self)
 }
 
-DockerCompose$funs$start <- function(self, private){
+DockerCompose$funs$start <- function(self, private, service){
+    is.not.null <- Negate(is.null)
+    if(is.not.null(service)){
+        service <- match.arg(service, names(private$composition$services), several.ok = TRUE)
+    }
+
     system <- DockerCompose$funs$system
-    docker_command <- stringr::str_glue("docker-compose up -d --build")
+    docker_command <- stringr::str_glue("docker-compose up -d --build {services}", services = paste0(service, collapse = " "))
     system(docker_command, wait = TRUE)
     invisible(self)
 }
