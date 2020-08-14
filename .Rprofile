@@ -53,7 +53,7 @@ assign(".Rprofile", new.env(), envir = globalenv())
 .Rprofile$docker$start <- function(service = NULL){
     path_script <- tempfile("system-", fileext = ".R")
     job_name <- paste("Testing", as.character(read.dcf('DESCRIPTION', 'Package')), "in a Docker Container")
-    define_service <- paste0("service = c(", paste0(paste0("'",service,"'"), collapse = ", "),")")
+    define_service <- paste0("service <- c(", paste0(paste0("'",service,"'"), collapse = ", "),")")
     define_service <- if(is.null(service)) "service = NULL" else define_service
     writeLines(c(
     "source('./R/utils_DockerCompose.R')",

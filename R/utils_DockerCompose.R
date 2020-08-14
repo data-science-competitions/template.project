@@ -75,11 +75,10 @@ DockerCompose$funs$start <- function(self, private, service){
     is.not.null <- Negate(is.null)
     if(is.not.null(service)){
         service <- match.arg(service, names(private$composition$services), several.ok = TRUE)
-
     }
 
     system <- DockerCompose$funs$system
-    docker_command <- stringr::str_glue("docker-compose up -d --build ", services = paste0(service, collapse = " "))
+    docker_command <- stringr::str_glue("docker-compose up -d --build {services}", services = paste0(service, collapse = " "))
     system(docker_command, wait = TRUE)
     invisible(self)
 }
