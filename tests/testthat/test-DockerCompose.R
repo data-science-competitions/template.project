@@ -38,9 +38,19 @@ test_that("DockerCompose$get works", {
 })
 
 # Create and Start Containers ---------------------------------------------
-test_that("DockerCompose$start works", {
+test_that("DockerCompose$start works with all services", {
     test_env$docker -> docker
     expect_class(docker$start(), "DockerCompose")
+})
+
+test_that("DockerCompose$start works with specific services", {
+    test_env$docker -> docker
+    expect_class(docker$start("dummyservices"), "DockerCompose")
+})
+
+test_that("DockerCompose$start prompts an error for unknown services", {
+    test_env$docker -> docker
+    expect_error(docker$start("unknown_service"))
 })
 
 # Stop and Remove Containers ----------------------------------------------

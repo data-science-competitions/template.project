@@ -1,4 +1,4 @@
-# R Package Development: Core --------------------------------------------------
+# R Package Development---------------------------------------------------------
 FROM rocker/tidyverse:4.0.0
 
 # Setup ------------------------------------------------------------------------
@@ -30,3 +30,6 @@ RUN mv .Renviron home/rstudio/
 RUN chown rstudio:rstudio home/rstudio/
 ENV PASSWORD 1234
 ENV ROOT true
+
+
+
