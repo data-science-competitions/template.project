@@ -21,4 +21,4 @@ RUN R -q -e "system.time({\
              })"
 
 # Teardown ---------------------------------------------------------------------
-#ENTRYPOINT ["echo 'R Test-suite succeeded'"]
+ENTRYPOINT /bin/bash

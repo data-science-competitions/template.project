@@ -26,7 +26,7 @@ services:
       args:
         - TIC_VER='0.9.0'
     container_name: r_test
-    restart: "always"
+    restart: "no"
     depends_on:
       - r-core
   ######################################################
