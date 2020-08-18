@@ -2,12 +2,12 @@ context("unit test for Docker")
 
 # Setup -------------------------------------------------------------------
 testthat::setup({
-    assign("session", testthat::test_env(), envir = parent.frame())
-    session$path <- getwd()
+    assign("test_env", testthat::test_env(), envir = parent.frame())
+    test_env$path <- getwd()
     testthat::local_mock(
         system = function(...) message(""),
         browseURL = function(...) invisible(),
-        .local_envir = session
+        .local_envir = test_env
     )
 })
 
@@ -15,12 +15,12 @@ testthat::setup({
 test_that("Docker$new works", {
     expect_silent(docker <- Docker$new())
     expect_class(docker, "Docker")
-    session$docker <- docker
+    test_env$docker <- docker
 })
 
 # Public Methods ----------------------------------------------------------
 test_that("Docker$new works", {
-    docker <- session$docker
+    docker <- test_env$docker
     expect_message(docker$show_running_containers())
     expect_message(docker$show_images())
     expect_message(docker$remove_dangling_images())
