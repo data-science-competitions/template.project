@@ -5,8 +5,8 @@ PublishPackageCoverage <- R6::R6Class(
         # Public Methods -------------------------------------------------------
         initialize = function() remotes::install_cran("covr", quiet = TRUE),
         run = function(){
-            ci_on_travis <- function() identical(Sys.getenv("CI_SERVER_NAME"), "GitLab")
-            ci_on_gitlab <- function() identical(Sys.getenv("TRAVIS"), "true")
+            ci_on_gitlab <- function() identical(Sys.getenv("CI_SERVER_NAME"), "GitLab")
+            ci_on_travis <- function() identical(Sys.getenv("TRAVIS"), "true")
 
             Sys.setenv(TESTTHAT = "true")
             on.exit(Sys.unsetenv("TESTTHAT"))
