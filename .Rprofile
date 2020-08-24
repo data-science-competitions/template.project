@@ -27,9 +27,6 @@ assign(".Rprofile", new.env(), envir = globalenv())
     # Programming Logic
     pkgs <- c("usethis", "devtools", "magrittr", "testthat")
     invisible(sapply(pkgs, require, warn.conflicts = FALSE, character.only = TRUE))
-
-    # Options and Environment Variables
-    # Sys.setenv(R_USER = getwd(), HOME = getwd())
 }
 
 # .Last -------------------------------------------------------------------
