@@ -27,6 +27,9 @@ assign(".Rprofile", new.env(), envir = globalenv())
     # Programming Logic
     pkgs <- c("usethis", "devtools", "magrittr", "testthat")
     invisible(sapply(pkgs, require, warn.conflicts = FALSE, character.only = TRUE))
+
+    # Options and Environment Variables
+    # Sys.setenv(R_USER = getwd(), HOME = getwd())
 }
 
 # .Last -------------------------------------------------------------------
@@ -69,10 +72,15 @@ assign(".Rprofile", new.env(), envir = globalenv())
     .Rprofile$utils$run_script(path_script, job_name)
 }
 
-.Rprofile$docker$restart <- function(){
+.Rprofile$docker$restart <- function(service = NULL){
     path_script <- tempfile("system-", fileext = ".R")
     job_name <- paste("Testing", as.character(read.dcf('DESCRIPTION', 'Package')), "in a Docker Container")
-    writeLines(c("source('./R/utils-DockerCompose.R'); DockerCompose$new()$restart()"), path_script)
+    define_service <- paste0("service <- c(", paste0(paste0("'",service,"'"), collapse = ", "),")")
+    define_service <- if(is.null(service)) "service = NULL" else define_service
+    writeLines(c(
+        "source('./R/utils-DockerCompose.R')",
+        define_service,
+        "DockerCompose$new()$restart(service)"), path_script)
     .Rprofile$utils$run_script(path_script, job_name)
 }
 

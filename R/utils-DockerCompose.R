@@ -18,6 +18,7 @@ DockerCompose <- R6::R6Class(
         #' Initialize a DockerCompose object
         #' @param path_docker_compose (`character`) Path to docker-compose file.
         initialize = function(path_docker_compose = "./docker-compose.yml"){
+            # Sys.setenv(R_USER = getwd(), HOME = getwd())
             stopifnot(file.exists(path_docker_compose))
             private$path_docker_compose <- path_docker_compose
             private$composition <- yaml::read_yaml(path_docker_compose, eval.expr = FALSE)
