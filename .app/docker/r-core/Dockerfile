@@ -27,6 +27,8 @@ RUN R -q -e "remotes::install_deps(dependencies = 'Imports')"
 RUN R -q -e "remotes::install_deps(dependencies = 'Suggests')"
 
 # Run RStudio Server -----------------------------------------------------------
+ENV HOME /home/rstudio
+ENV R_USER /home/rstudio
 RUN printenv >> .env
 RUN cp .env home/rstudio/.Renviron
 RUN chown rstudio:rstudio home/rstudio/
