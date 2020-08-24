@@ -6,6 +6,7 @@ RUN apt-get update && apt-get install -y \
     dos2unix \
     libcurl4-openssl-dev \
     libssl-dev \
+	libxt-dev \
     libxml2-dev \
     libpq-dev \
     git \
