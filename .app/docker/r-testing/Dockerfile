@@ -1,5 +1,5 @@
 # R Package Development: Testing------------------------------------------------
-FROM r/core/fragility.radar:4.0.0
+FROM r/core:4.0.0
 RUN touch .Renviron .Rprofile
 
 # Setup Continuous Integration (CI) System -------------------------------------
