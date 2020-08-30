@@ -11,6 +11,8 @@ services:
         - R_REPOS='https://mran.microsoft.com/snapshot/2020-04-24'
     entrypoint: '/bin/bash'
     container_name: r_core
+    volumes:
+      - "~/renv/cache/:/renv/cache/"
     restart: "no"
   ######################################################
   # R Development

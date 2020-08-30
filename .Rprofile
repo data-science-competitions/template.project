@@ -10,8 +10,9 @@ assign(".Rprofile", new.env(), envir = globalenv())
     options(repos = URL)
 
     suppressMessages(try({renv::consent(provided = TRUE); unlink("./renv")}))
+    try(Sys.setenv(RENV_PATHS_CACHE = file.path("~", "renv", "cache")))
     options(
-        renv.lockfile = "./.app/renv/renv.lock",
+        renv.lockfile = "renv.lock",
         renv.consent = TRUE,
         renv.clean = FALSE,
         renv.settings = list(
