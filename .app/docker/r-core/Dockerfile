@@ -17,8 +17,9 @@ ARG R_REPOS=\'https://mran.microsoft.com/snapshot/2020-04-24\'
 RUN touch .env .Rprofile
 RUN echo "options(repos = ${R_REPOS})" >> .Rprofile
 RUN R -q -e "if(!require(remotes)) install.packages('remotes')"
-RUN R -q -e "remotes::install_cran(c('profvis', 'renv'))"
+RUN R -q -e "remotes::install_cran(c('profvis', 'renv', 'tinytex'))"
 RUN R -q -e "remotes::install_cran(c('devtools', 'testthat', 'covr', 'roxygen2'))"
+RUN R -q -e "tinytex::install_tinytex()"
 
 # Install Project Dependencies -------------------------------------------------
 COPY ./DESCRIPTION ./DESCRIPTION
