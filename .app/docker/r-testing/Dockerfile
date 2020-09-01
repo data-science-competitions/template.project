@@ -7,13 +7,14 @@ ARG TIC_VER='0.7.0'
 RUN R -q -e "remotes::install_github('ropensci/tic@v$(eval echo $TIC_VER)', upgrade = FALSE)"
 
 # Prepare Package Files --------------------------------------------------------
+ARG R_USER=./home/rstudio/
 ARG R_PACKAGE_NAME=rproject
-COPY . /${R_PACKAGE_NAME}
-RUN cp .Rprofile /${R_PACKAGE_NAME}
-RUN cp .Renviron /${R_PACKAGE_NAME}
-WORKDIR /${R_PACKAGE_NAME}
+COPY . ${R_USER}/${R_PACKAGE_NAME}
+RUN cp .Rprofile ${R_USER}/${R_PACKAGE_NAME}
+RUN cp .env ${R_USER}/.Renviron
+WORKDIR ${R_USER}/${R_PACKAGE_NAME}
 
-# Test Suite -------------------------------------------------------------------
+# Test-Suite -------------------------------------------------------------------
 RUN R -q -e "devtools::check(error_on = 'error')"
 RUN R -q -e "system.time({\
                devtools::load_all(export_all = FALSE, helpers = FALSE);\

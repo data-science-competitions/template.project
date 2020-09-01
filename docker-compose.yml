@@ -11,10 +11,6 @@ services:
         - R_REPOS='https://mran.microsoft.com/snapshot/2020-04-24'
     entrypoint: '/bin/bash'
     container_name: r_core
-    volumes:
-      - "./:/home/rstudio/rproject"
-    ports:
-      - 2020:2020
     restart: "no"
   ######################################################
   # R Development
@@ -29,10 +25,12 @@ services:
     entrypoint: '/init'
     container_name: r_develop
     volumes:
-      - "./:/home/rstudio/rproject"
+      - ".:/home/rstudio/rproject/"
     ports:
       - 8787:8787
     restart: "no"
+    depends_on:
+      - r-core
   ######################################################
   # R Testing
   ######################################################

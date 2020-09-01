@@ -1,10 +1,8 @@
 pkgload::load_all(export_all = FALSE, helpers = FALSE)
-Docker$new()$kill_all_containers()$remove_dangling_images()
+docker <- Docker$new()
+compose <- DockerCompose$new()
 
-docker <- DockerCompose$new()
-docker$restart()
+docker$kill_all_containers()$remove_dangling_images()
 
-# User name: rstudio
-# Password: 1234
-docker$browse_url("r-core")
-
+compose$restart("r-dev")
+compose$browse_url("r-dev")
