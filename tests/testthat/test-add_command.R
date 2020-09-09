@@ -5,6 +5,7 @@ testthat::setup({
     assign("test_env", testthat::test_env(), envir = parent.frame())
     withr::local_dir(tempdir(), .local_envir = test_env)
     invisible(file.create(".here"))
+    test_env$`%+%` <- base::paste0
     test_env$name <- "bilbo"
     test_env$subdomain <- "baggins"
 })

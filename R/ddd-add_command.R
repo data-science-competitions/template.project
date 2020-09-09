@@ -16,15 +16,15 @@ add_command <- function(name, subdomain = NULL, testthat_exemption = FALSE, covr
         is.logical(covr_exemption)
     )
 
-    .add_command_script(name, subdomain, covr_exemption)
-    if(!testthat_exemption) .add_command_test(name, subdomain)
+    .add_command$script(name, subdomain, covr_exemption)
+    if(!testthat_exemption) .add_command$test(name, subdomain)
 
     invisible()
 }
+.add_command <- new.env()
 
 # Low-lever Functions -----------------------------------------------------
-#' @noRd
-.add_command_script <- function(name, subdomain, covr_exemption){
+.add_command$script <- function(name, subdomain, covr_exemption){
     `%||%` <- function(a,b) if(is.null(a)) b else a
     slug <- .add_command_slug(name, subdomain)
     dir.create(usethis::proj_path("R"), recursive = TRUE, showWarnings = FALSE)
@@ -64,7 +64,7 @@ add_command <- function(name, subdomain = NULL, testthat_exemption = FALSE, covr
     writeLines(content, usethis::proj_path("R", slug, ext = "R"))
     invisible()
 }
-.add_command_test <- function(name, subdomain){
+.add_command$test <- function(name, subdomain){
     dir.create(usethis::proj_path("tests", "testthat"), recursive = TRUE, showWarnings = FALSE)
     slug <- .add_command_slug(name, subdomain)
     writeLines(
