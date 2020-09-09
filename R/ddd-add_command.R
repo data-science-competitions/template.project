@@ -21,25 +21,25 @@ add_command <- function(name, subdomain = NULL, testthat_exemption = FALSE, covr
 
     invisible()
 }
-.add_command <- new.env()
 
 # Low-lever Functions -----------------------------------------------------
+.add_command <- new.env()
 .add_command$script <- function(name, subdomain, covr_exemption){
     `%||%` <- function(a,b) if(is.null(a)) b else a
-    slug <- .add_command_slug(name, subdomain)
+    slug <- .add_command$slug(name, subdomain)
     dir.create(usethis::proj_path("R"), recursive = TRUE, showWarnings = FALSE)
 
     start_comments <- ifelse(covr_exemption, "# nocov start", "")
     end_comments <- ifelse(covr_exemption, "# nocov end", "")
 
-    content <- stringr::str_glue(
+    content <- stringr::str_glue(stringr::str_replace_all(
         "
-        #' @title What the Function Does
-        #' @description `{fct_name}` is an amazing function
-        #' @param session (`environment`) A shared environment.
-        #' @return session
-        #' @family {subdomain} subdomain
-        #' @export
+        ~ @title What the Function Does
+        ~ @description `{fct_name}` is an amazing function
+        ~ @param session (`environment`) A shared environment.
+        ~ @return session
+        ~ @family {subdomain} subdomain
+        ~ @export
         {fct_name} <- function(session) {{ {start_comments}
             stopifnot(is.environment(session))
             attach(.{fct_name}, warn.conflicts = FALSE)
@@ -54,7 +54,7 @@ add_command <- function(name, subdomain = NULL, testthat_exemption = FALSE, covr
 
         # Steps -------------------------------------------------------------------
         .{fct_name}$dummy_step <- function(...) NULL
-        ",
+        ", "~", "#'"),
         fct_name = name,
         subdomain = subdomain %||% "",
         start_comments = start_comments,
@@ -64,9 +64,10 @@ add_command <- function(name, subdomain = NULL, testthat_exemption = FALSE, covr
     writeLines(content, usethis::proj_path("R", slug, ext = "R"))
     invisible()
 }
+
 .add_command$test <- function(name, subdomain){
     dir.create(usethis::proj_path("tests", "testthat"), recursive = TRUE, showWarnings = FALSE)
-    slug <- .add_command_slug(name, subdomain)
+    slug <- .add_command$slug(name, subdomain)
     writeLines(
         stringr::str_glue("
         context('unit test for {fct_name}')
@@ -88,7 +89,7 @@ add_command <- function(name, subdomain = NULL, testthat_exemption = FALSE, covr
     invisible()
 }
 
-.add_command_slug <- function(name, subdomain){
+.add_command$slug <- function(name, subdomain){
     is.not.null <- Negate(is.null)
     `%+%` <- base::paste0
 
