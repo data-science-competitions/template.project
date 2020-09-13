@@ -16,16 +16,21 @@ RUN apt-get update && apt-get install -y \
 ARG R_REPOS=\'https://mran.microsoft.com/snapshot/2020-04-24\'
 RUN touch .env .Rprofile
 RUN echo "options(repos = ${R_REPOS})" >> .Rprofile
+
 RUN R -q -e "if(!require(remotes)) install.packages('remotes')"
-RUN R -q -e "remotes::install_cran(c('profvis', 'renv', 'tinytex'))"
-RUN R -q -e "remotes::install_cran(c('devtools', 'testthat', 'covr', 'roxygen2'))"
-RUN R -q -e "tinytex::install_tinytex()"
+RUN echo "install_cran <- remotes::install_cran" >> .Rprofile
+RUN echo "install_deps <- remotes::install_deps" >> .Rprofile
+RUN echo "install_github <- remotes::install_github" >> .Rprofile
+
+RUN R -q -e "install_cran(c('profvis', 'renv'))"
+RUN R -q -e "install_cran(c('devtools', 'testthat', 'covr', 'roxygen2'))"
+RUN R -q -e "install_cran(('tinytex')); tinytex::install_tinytex()"
 
 # Install Project Dependencies -------------------------------------------------
 COPY ./DESCRIPTION ./DESCRIPTION
-RUN R -q -e "remotes::install_deps(dependencies = 'Depends')"
-RUN R -q -e "remotes::install_deps(dependencies = 'Imports')"
-RUN R -q -e "remotes::install_deps(dependencies = 'Suggests')"
+RUN R -q -e "install_deps(dependencies = 'Depends')"
+RUN R -q -e "install_deps(dependencies = 'Imports')"
+RUN R -q -e "install_deps(dependencies = 'Suggests')"
 
 # Run RStudio Server -----------------------------------------------------------
 ENV HOME /home/rstudio
