@@ -2,5 +2,4 @@
 
 export(Docker)
 export(DockerCompose)
-export(add_command)
 export(foo)
