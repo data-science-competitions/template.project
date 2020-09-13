@@ -1,14 +1,21 @@
 # R Package Development: Core --------------------------------------------------
-FROM rocker/tidyverse:4.0.2
+FROM rocker/rstudio:4.0.2
 
 # Setup ------------------------------------------------------------------------
-RUN apt-get update && apt-get install -y \
+RUN apt-get update -qq && apt-get -y --no-install-recommends install \
     dos2unix \
     libcurl4-openssl-dev \
     libssl-dev \
 	libxt-dev \
     libxml2-dev \
+    libcairo2-dev \
+    libsqlite-dev \
+    libmariadbd-dev \
+    libmariadbclient-dev \
     libpq-dev \
+    libssh2-1-dev \
+    libsasl2-dev \
+    unixodbc-dev \
     git \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
@@ -21,10 +28,12 @@ RUN R -q -e "if(!require(remotes)) install.packages('remotes')"
 RUN echo "install_cran <- remotes::install_cran" >> .Rprofile
 RUN echo "install_deps <- remotes::install_deps" >> .Rprofile
 RUN echo "install_github <- remotes::install_github" >> .Rprofile
+RUN R -q -e "install_cran('tidyverse', dependencies = TRUE)"
 
 RUN R -q -e "install_cran(c('profvis', 'renv'))"
 RUN R -q -e "install_cran(c('devtools', 'testthat', 'covr', 'roxygen2'))"
 RUN R -q -e "install_cran(('tinytex')); tinytex::install_tinytex()"
+
 
 # Install Project Dependencies -------------------------------------------------
 COPY ./DESCRIPTION ./DESCRIPTION
