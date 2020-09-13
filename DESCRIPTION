@@ -3,7 +3,7 @@ Type: Package
 Title: R Project Template for Analytic Applications
 URL: https://data-science-competitions.github.io/template.project/
 BugReports: https://github.com/data-science-competitions/template.project/issues
-Version: 1.2.1
+Version: 1.2.2
 Date: 2020-04-24
 Authors@R: c(person("Harel", "Lustiger", email = "tidylab@gmail.com", role = c("aut", "cre")))
 Maintainer: Harel Lustiger <tidylab@gmail.com>
