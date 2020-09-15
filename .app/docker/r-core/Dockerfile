@@ -23,17 +23,12 @@ RUN apt-get update -qq && apt-get -y --no-install-recommends install \
 ARG R_REPOS=\'https://mran.microsoft.com/snapshot/2020-06-22\'
 RUN touch .env .Rprofile
 RUN echo "options(repos = ${R_REPOS})" >> .Rprofile
-
+RUN echo "require(remotes)" >> .Rprofile
 RUN R -q -e "if(!require(remotes)) install.packages('remotes')"
-RUN echo "install_cran <- remotes::install_cran" >> .Rprofile
-RUN echo "install_deps <- remotes::install_deps" >> .Rprofile
-RUN echo "install_github <- remotes::install_github" >> .Rprofile
 RUN R -q -e "install_cran('tidyverse', dependencies = TRUE)"
-
 RUN R -q -e "install_cran(c('profvis', 'renv'))"
 RUN R -q -e "install_cran(c('devtools', 'testthat', 'covr', 'roxygen2'))"
 RUN R -q -e "install_cran(('tinytex')); tinytex::install_tinytex()"
-
 
 # Install Project Dependencies -------------------------------------------------
 COPY ./DESCRIPTION ./DESCRIPTION
