@@ -23,8 +23,9 @@ RUN apt-get update -qq && apt-get -y --no-install-recommends install \
 ARG R_REPOS=\'https://mran.microsoft.com/snapshot/2020-06-22\'
 RUN touch .env .Rprofile
 RUN echo "options(repos = ${R_REPOS})" >> .Rprofile
-RUN echo "require(remotes)" >> .Rprofile
 RUN R -q -e "if(!require(remotes)) install.packages('remotes')"
+RUN echo "require(remotes)" >> .Rprofile
+
 RUN R -q -e "install_cran('tidyverse', dependencies = TRUE)"
 RUN R -q -e "install_cran(c('profvis', 'renv'))"
 RUN R -q -e "install_cran(c('devtools', 'testthat', 'covr', 'roxygen2'))"
@@ -44,3 +45,9 @@ RUN cp .env home/rstudio/.Renviron
 RUN chown rstudio:rstudio home/rstudio/
 ENV PASSWORD 1234
 ENV ROOT true
+
+# Run Rproject -----------------------------------------------------------------
+RUN touch .env .Rprofile
+RUN echo "setwd('./rproject')" >> .Rprofile
+RUN echo "try(source('.Rprofile'))" >> .Rprofile
+RUN cp .Rprofile home/rstudio/.Rprofile

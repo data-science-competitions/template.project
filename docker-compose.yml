@@ -16,7 +16,7 @@ services:
   # R Development
   ######################################################
   r-develop:
-    image: r/develop:4.0.2
+    image: r/core:4.0.2
     build:
       context: ./
       dockerfile: ./.app/docker/r-core/Dockerfile
@@ -29,8 +29,6 @@ services:
     ports:
       - 8787:8787
     restart: "no"
-    depends_on:
-      - r-core
   ######################################################
   # R Testing
   ######################################################
