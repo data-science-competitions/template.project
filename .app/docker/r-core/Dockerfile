@@ -1,5 +1,5 @@
 # R Package Development: Core --------------------------------------------------
-FROM rocker/rstudio:4.0.2
+FROM rocker/tidyverse:4.0.2
 
 # Setup ------------------------------------------------------------------------
 RUN apt-get update -qq && apt-get -y --no-install-recommends install \
@@ -13,6 +13,7 @@ RUN apt-get update -qq && apt-get -y --no-install-recommends install \
     libmariadbd-dev \
     libmariadbclient-dev \
     libpq-dev \
+	libsodium-dev \
     libssh2-1-dev \
     libsasl2-dev \
     unixodbc-dev \
@@ -27,6 +28,8 @@ RUN R -q -e "if(!require(remotes)) install.packages('remotes')"
 RUN echo "require(remotes)" >> .Rprofile
 
 RUN R -q -e "install_cran('tidyverse', dependencies = TRUE)"
+RUN R -q -e "update_packages(upgrade  = 'always')"
+
 RUN R -q -e "install_cran(c('profvis', 'renv'))"
 RUN R -q -e "install_cran(c('devtools', 'testthat', 'covr', 'roxygen2'))"
 RUN R -q -e "install_cran(('tinytex')); tinytex::install_tinytex()"
