@@ -12,8 +12,8 @@ RUN cp .env ${R_USER}/.Renviron
 WORKDIR ${R_USER}/${R_PACKAGE_NAME}
 
 # Test-Suite -------------------------------------------------------------------
-RUN R -q -e "devtools::check(error_on = 'error')"
 RUN R -q -e "devtools::document()"
+RUN R -q -e "devtools::check(error_on = 'error')"
 RUN R -q -e "system.time({\
                devtools::load_all(export_all = FALSE, helpers = FALSE);\
                testthat::test_dir('./tests/testthat', stop_on_failure = TRUE)\
