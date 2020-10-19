@@ -17,6 +17,7 @@ RUN apt-get update -qq && apt-get -y --no-install-recommends install \
     libssh2-1-dev \
     libsasl2-dev \
     unixodbc-dev \
+    libsqliteodbc \
     git \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
@@ -30,7 +31,7 @@ RUN echo "require(remotes)" >> .Rprofile
 RUN R -q -e "install_cran('tidyverse', dependencies = TRUE)"
 RUN R -q -e "update_packages(upgrade  = 'always')"
 
-RUN R -q -e "install_cran(c('profvis', 'renv'))"
+RUN R -q -e "install_cran(c('odbc', 'profvis', 'renv'))"
 RUN R -q -e "install_cran(c('devtools', 'testthat', 'covr', 'roxygen2'))"
 RUN R -q -e "install_cran(('tinytex')); tinytex::install_tinytex()"
 
