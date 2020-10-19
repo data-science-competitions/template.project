@@ -79,7 +79,9 @@ jobs:
           echo "require(remotes)" >> .Rprofile
           Rscript -e "Date <- as.character(read.dcf('DESCRIPTION', 'Date'));
                       URL <- if(is.na(Date)) 'https://cran.rstudio.com/' else paste0('https://mran.microsoft.com/snapshot/', Date);
-                      writeLines(paste0('options(repos = \'', URL, '\')'), '.Rprofile')"
+                      Rprofile <- file(".Rprofile", open = "wt");
+                      writeLines(paste0('options(repos = \'', URL, '\')'), Rprofile);
+                      close(Rprofile)"
           Rscript -e "if(!'remotes' %in% rownames(utils::installed.packages())) utils::install.packages('remotes')"
           Rscript -e "install_cran('tidyverse', dependencies = TRUE)"
           Rscript -e "install_deps(dependencies = TRUE)"
