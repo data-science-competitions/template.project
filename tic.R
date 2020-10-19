@@ -10,7 +10,7 @@ get_stage("before_script") %>%
 
 # Stage: Script -----------------------------------------------------------
 get_stage("script") %>%
-    add_code_step(unlink(list.files(pattern = "demo-.*.R", full.names = TRUE, recursive = TRUE))) %>%
+    add_code_step(unlink(list.files(pattern = "(demo-|DockerCompose).*.R", full.names = TRUE, recursive = TRUE))) %>%
     check_package() %>%
     run_unit_tests() %>%
     run_code_coverage()
