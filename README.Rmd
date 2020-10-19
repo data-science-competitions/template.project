@@ -3,7 +3,7 @@ output: github_document
 ---
 
 ```{r setup, echo = FALSE, results = 'hide', message = FALSE, warning = FALSE}
-source("./.app/README/helpers.R")
+source("./.dev/README/helpers.R")
 knitr::opts_chunk$set(
   echo = TRUE, 
   message = FALSE,

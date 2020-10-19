@@ -6,7 +6,7 @@
 
 # Folders
 .*_cache/
-^\.app/
+^\.dev/
 ^\.ccache$
 ^\.github
 ^renv$
