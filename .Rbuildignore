@@ -9,9 +9,9 @@
 ^\.app/
 ^\.ccache$
 ^\.github
+^renv$
 data-raw/
 docs/
-renv/
 
 # Files
 \.gitkeep$
