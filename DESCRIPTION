@@ -29,6 +29,5 @@ Suggests:
     testthat (>= 2.0.1)
 Imports:
     R6,
-    config (>= 0.3),
     assertthat (>= 0.2.1),
     yaml

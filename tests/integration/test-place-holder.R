@@ -1,4 +1,4 @@
-context("component test for <place holder>")
+context("integration test for <place holder>")
 
 test_that("<place holder> wroks", {
     expect_true(TRUE)
