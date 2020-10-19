@@ -22,7 +22,8 @@ Using this template reduces:
 first time.  
 This is possible as the boilerplate comes with:  
 \* Fully configured test-suite, including code-coverage; and  
-\* Fully configured continuous-integration (CI) script for Travis.
+\* Fully configured continuous-integration (CI) script for GitHub
+Actions.
 
 ## Installation
 

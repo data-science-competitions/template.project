@@ -3,7 +3,6 @@ output: github_document
 ---
 
 ```{r setup, echo = FALSE, results = 'hide', message = FALSE, warning = FALSE}
-source("./.dev/README/helpers.R")
 knitr::opts_chunk$set(
   echo = TRUE, 
   message = FALSE,
@@ -12,8 +11,8 @@ knitr::opts_chunk$set(
   out.width = "100%"
 )
 
-devtools::load_all(README$getwd())
-DESCRIPTION <- desc::description$new(file.path(README$getwd(), "DESCRIPTION"))
+devtools::load_all(usethis::proj_get())
+DESCRIPTION <- desc::description$new(usethis::proj_path("DESCRIPTION"))
 ```
 
 ```{r badges, echo = FALSE}
