@@ -21,11 +21,10 @@ slug <- tryCatch(tic::ci_get_slug(), error = function(e) "")
 branch = "master"
 
 badges <- list()
-
 badges$CICD <- list(
   badge_name = "continuous-integration", 
   href = glue("https://github.com/{slug}/actions", slug = slug), 
-  src = glue("https://codecov.io/github/{slug}/workflows/tic/badge.svg?branch={branch}", slug = slug, branch = branch)
+  src = glue("https://github.com/{slug}/workflows/tic/badge.svg?branch={branch}", slug = slug, branch = branch)
 )
 badges$covr <- list(
   badge_name = "code-coverage", 
@@ -38,7 +37,7 @@ invisible(lapply(badges, do.call, what = usethis::use_badge))
 # ``r DESCRIPTION$get_field("Package")`` <img src='https://i.imgur.com/cLcAYfz.png' align="right" height="50"/>
 
 <!-- badges: start -->
-[![continuous-integration](https://codecov.io/github/data-science-competitions/template.project/workflows/tic/badge.svg?branch=master)](https://github.com/data-science-competitions/template.project/actions)
+[![continuous-integration](https://github.com/data-science-competitions/template.project/workflows/tic/badge.svg?branch=master)](https://github.com/data-science-competitions/template.project/actions)
 [![code-coverage](https://codecov.io/gh/data-science-competitions/template.project/branch/master/graph/badge.svg)](https://codecov.io/github/data-science-competitions/template.project/?branch=master)
 <!-- badges: end -->
 
