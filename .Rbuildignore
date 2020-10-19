@@ -1,39 +1,28 @@
-# Files ------------------------------------------------------------------------
-^.*\.Rproj$
+# Docker
 ^\.dockerignore$
-^\.gitattributes$
-^\.gitlab-ci.yml
-^\.Rprofile$
+^docker-compose\.yml$
+^R/utils-DockerCompose\.R$
+^tests/testthat/test-DockerCompose\.R$
+
+# Folders
+.*_cache/
+^\.dev/
+^\.ccache$
+^\.github
+^renv$
+data-raw/
+docs/
+
+# Files
+\.gitkeep$
+^.*\.Rproj$
+^\.Rproj\.user$
 ^\.travis\.yml$
 ^codecov\.yml$
-^docker-compose\.yml$
-^LICENSE\.md$
-^README\.Rmd$
 ^renv\.lock$
 ^tic\.R$
-
-.*\.gitkeep$
-.*\.ini$
-.*\.md$
-.*\.png$
-
-# Folders ----------------------------------------------------------------------
-.*_cache/*
-^\.app/*
-^\.Rproj\.user$
-^cache/*
-^data-raw/*
-^inst/data/*
-^inst/docs/*
-^renv/*
-^temp/*
-^public/*
-^renv/*
-
-# pkgdown ----------------------------------------------------------------------
-^vignettes/*
-^docs/*
-
+^README\.Rmd$
+^LICENSE\.md$
 
 
 

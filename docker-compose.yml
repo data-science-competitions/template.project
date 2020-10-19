@@ -6,9 +6,7 @@ services:
     image: r/core:4.0.2
     build:
       context: ./
-      dockerfile: ./.app/docker/r-core/Dockerfile
-      args:
-        - R_REPOS='https://mran.microsoft.com/snapshot/2020-06-22'
+      dockerfile: ./.dev/docker/r-core/Dockerfile
     entrypoint: '/bin/bash'
     container_name: r_core
     restart: "no"
@@ -16,21 +14,22 @@ services:
   # R Development
   ######################################################
   r-develop:
-    image: r/develop:4.0.2
+    image: r/core:4.0.2
     build:
       context: ./
-      dockerfile: ./.app/docker/r-core/Dockerfile
-      args:
-        - R_REPOS='https://mran.microsoft.com/snapshot/2020-06-22'
+      dockerfile: ./.dev/docker/r-core/Dockerfile
     entrypoint: '/init'
     container_name: r_develop
+    #working_dir: "/home/rstudio/rproject/"
     volumes:
       - ".:/home/rstudio/rproject/"
     ports:
       - 8787:8787
     restart: "no"
-    depends_on:
-      - r-core
+    environment:
+      - DISABLE_AUTH=true
+    stdin_open: true
+    tty: true
   ######################################################
   # R Testing
   ######################################################
@@ -38,14 +37,14 @@ services:
     image: r/test:4.0.2
     build:
       context: ./
-      dockerfile: ./.app/docker/r-testing/Dockerfile
-      args:
-        - TIC_VER='0.9.0'
+      dockerfile: ./.dev/docker/r-test/Dockerfile
     entrypoint: '/bin/bash'
     container_name: r_test
     restart: "no"
     depends_on:
       - r-core
+    stdin_open: true
+    tty: true
   ######################################################
 version: "3.8"
 networks:
