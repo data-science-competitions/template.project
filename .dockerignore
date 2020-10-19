@@ -2,11 +2,16 @@
 .app/
 .git/
 .Rproj.user/
+cache/
+inst/docs/
 man/
-inst/data
-inst/docs
-renv/
+vignettes/_cache/
 
 # Files
-^docker-compose.yml$
+/.Rprofile
+/.Renviron
 
+# Docker
+docker-compose.yml
+R/utils-DockerCompose.R
+tests/testthat/test-DockerCompose.R
