@@ -14,6 +14,7 @@ expect_class <- function(object, class) expect(any(base::class(object) %in% clas
 expect_table_has_col_names <- function(object, col_names) if(is.null(expect_class(object, "data.frame"))) expect(all(col_names %in% colnames(object)), error_message("data.frame missing columns: ", setdiff(col_names, colnames(object))))
 expect_not_null <- function(object) expect(isFALSE(is.null(object)), "object is NULL")
 expect_file_exists <- function(path) expect(file.exists(path), error_message("Could not find ", path))
+expect_data.frame <- function(object) testthat::expect_s3_class(object, class = "data.frame")
 
 # Skips -------------------------------------------------------------------
 skip_on_check <- function(){

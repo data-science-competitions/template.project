@@ -11,7 +11,7 @@ assign(".Rprofile", new.env(), envir = globalenv())
 
     suppressMessages(try({renv::consent(provided = TRUE); unlink("./renv")}))
     options(
-        renv.lockfile = "./.app/renv/renv.lock",
+        renv.lockfile = "renv.lock",
         renv.consent = TRUE,
         renv.clean = FALSE,
         renv.settings = list(

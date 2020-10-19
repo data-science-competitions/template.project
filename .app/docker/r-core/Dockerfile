@@ -1,5 +1,5 @@
 # R Package Development: Core --------------------------------------------------
-FROM rocker/rstudio:4.0.2
+FROM rocker/tidyverse:4.0.2
 
 # Setup ------------------------------------------------------------------------
 RUN apt-get update -qq && apt-get -y --no-install-recommends install \
@@ -13,25 +13,31 @@ RUN apt-get update -qq && apt-get -y --no-install-recommends install \
     libmariadbd-dev \
     libmariadbclient-dev \
     libpq-dev \
+	libsodium-dev \
     libssh2-1-dev \
     libsasl2-dev \
     unixodbc-dev \
+    libsqliteodbc \
     git \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Configure RStudio Server -----------------------------------------------------
-ARG R_REPOS=\'https://mran.microsoft.com/snapshot/2020-06-22\'
+ARG R_REPOS=\'https://mran.microsoft.com/snapshot/2020-07-25\'
 RUN touch .env .Rprofile
 RUN echo "options(repos = ${R_REPOS})" >> .Rprofile
 RUN R -q -e "if(!require(remotes)) install.packages('remotes')"
 RUN echo "require(remotes)" >> .Rprofile
 
 RUN R -q -e "install_cran('tidyverse', dependencies = TRUE)"
-RUN R -q -e "install_cran(c('profvis', 'renv'))"
+RUN R -q -e "update_packages(upgrade  = 'always')"
+
+RUN R -q -e "install_cran(c('odbc', 'profvis', 'renv'))"
 RUN R -q -e "install_cran(c('devtools', 'testthat', 'covr', 'roxygen2'))"
 RUN R -q -e "install_cran(('tinytex')); tinytex::install_tinytex()"
 
 # Install Project Dependencies -------------------------------------------------
+ENV RENV_PATHS_ROOT '/home/rstudio/.local/share/renv'
+RUN mkdir -p $RENV_PATHS_ROOT
 COPY ./DESCRIPTION ./DESCRIPTION
 RUN R -q -e "install_deps(dependencies = 'Depends')"
 RUN R -q -e "install_deps(dependencies = 'Imports')"
@@ -48,6 +54,7 @@ ENV ROOT true
 
 # Run Rproject -----------------------------------------------------------------
 RUN touch .env .Rprofile
-RUN echo "setwd('./rproject')" >> .Rprofile
-RUN echo "try(source('.Rprofile'))" >> .Rprofile
+RUN echo "try(setwd('./rproject'), silent = TRUE)" >> .Rprofile
+RUN echo "try({source('.Rprofile'); .First()}, silent = TRUE)" >> .Rprofile
 RUN cp .Rprofile home/rstudio/.Rprofile
+
