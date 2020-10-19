@@ -13,7 +13,7 @@ Description: This template conforms to a conceptual model of **Analysis Projects
     * Development time spent on making a barebone project working for the first time.    
     This is possible as the boilerplate comes with:    
     * Fully configured test-suite, including code-coverage; and  
-    * Fully configured continuous-integration (CI) script for Travis.
+    * Fully configured continuous-integration (CI) script for GitHub Actions.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true

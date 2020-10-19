@@ -6,12 +6,12 @@
 
 # Folders
 .*_cache/
-^\.app/
+^\.dev/
 ^\.ccache$
 ^\.github
+^renv$
 data-raw/
 docs/
-renv/
 
 # Files
 \.gitkeep$

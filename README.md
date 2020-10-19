@@ -3,7 +3,7 @@
 
 <!-- badges: start -->
 
-[![continuous-integration](https://travis-ci.org/data-science-competitions/template.project.svg?branch=master)](https://travis-ci.org/data-science-competitions/template.project)
+[![continuous-integration](https://codecov.io/github/data-science-competitions/template.project/workflows/tic/badge.svg?branch=master)](https://github.com/data-science-competitions/template.project/actions)
 [![code-coverage](https://codecov.io/gh/data-science-competitions/template.project/branch/master/graph/badge.svg)](https://codecov.io/github/data-science-competitions/template.project/?branch=master)
 <!-- badges: end -->
 
@@ -22,7 +22,8 @@ Using this template reduces:
 first time.  
 This is possible as the boilerplate comes with:  
 \* Fully configured test-suite, including code-coverage; and  
-\* Fully configured continuous-integration (CI) script for Travis.
+\* Fully configured continuous-integration (CI) script for GitHub
+Actions.
 
 ## Installation
 
