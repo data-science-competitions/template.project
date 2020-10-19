@@ -1,1 +1,5 @@
-source(list.files(path = dirname(getwd()), pattern = "testthat-helpers.R$", recursive = TRUE, full.names = TRUE))
+# base --------------------------------------------------------------------
+is.not.null <- Negate(is.null)
+is.not.na <- Negate(is.na)
+
+# testthat ----------------------------------------------------------------

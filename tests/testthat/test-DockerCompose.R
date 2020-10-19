@@ -27,7 +27,7 @@ testthat::setup({
 test_that("DockerCompose$new works", {
     expect_error(docker <- DockerCompose$new(tempfile()))
     expect_silent(docker <- DockerCompose$new(test_env$path_yml))
-    expect_class(docker, "DockerCompose")
+    expect_is(docker, "DockerCompose")
     test_env$docker <- docker
 })
 
@@ -40,12 +40,12 @@ test_that("DockerCompose$get works", {
 # Create and Start Containers ---------------------------------------------
 test_that("DockerCompose$start works with all services", {
     test_env$docker -> docker
-    expect_class(docker$start(), "DockerCompose")
+    expect_is(docker$start(), "DockerCompose")
 })
 
 test_that("DockerCompose$start works with specific services", {
     test_env$docker -> docker
-    expect_class(docker$start("dummyservices"), "DockerCompose")
+    expect_is(docker$start("dummyservices"), "DockerCompose")
 })
 
 test_that("DockerCompose$start prompts an error for unknown services", {
@@ -56,19 +56,19 @@ test_that("DockerCompose$start prompts an error for unknown services", {
 # Stop and Remove Containers ----------------------------------------------
 test_that("DockerCompose$stop works", {
     test_env$docker -> docker
-    expect_class(docker$stop(), "DockerCompose")
+    expect_is(docker$stop(), "DockerCompose")
 })
 
 # Restart Containers ------------------------------------------------------
 test_that("DockerCompose$restart works", {
     test_env$docker -> docker
-    expect_class(docker$restart(), "DockerCompose")
+    expect_is(docker$restart(), "DockerCompose")
 })
 
 # Reset Containers --------------------------------------------------------
 test_that("DockerCompose$reset works", {
     test_env$docker -> docker
-    expect_class(docker$reset(), "DockerCompose")
+    expect_is(docker$reset(), "DockerCompose")
 })
 
 # browseURL ---------------------------------------------------------------
