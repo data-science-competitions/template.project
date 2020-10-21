@@ -1,6 +1,7 @@
 # Folders
 .dev/
 .git/
+.github/
 .Rproj.user/
 cache/
 inst/docs/
