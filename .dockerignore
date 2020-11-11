@@ -16,5 +16,5 @@ man/
 
 # Docker
 ^docker-compose.yml$
-R/utils-DockerCompose.R
-tests/testthat/utils-DockerCompose.R
+R/docker-DockerCompose.R
+tests/testthat/test-DockerCompose.R
