@@ -13,7 +13,7 @@ PublishPackageCoverage <- R6::R6Class(
             on.exit(Sys.unsetenv("TESTTHAT"))
 
             coverage <- covr::package_coverage(type = c("tests"), pre_clean = FALSE, quiet = FALSE)
-            print(coverage)
+            if(length(coverage)) print(coverage) else return()
 
             if(ci_on_travis() | ci_is_ghactions()){
                 print(covr::codecov(coverage = coverage, quiet = FALSE))
