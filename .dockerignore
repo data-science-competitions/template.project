@@ -4,15 +4,17 @@
 .github/
 .Rproj.user/
 cache/
-inst/docs/
 man/
-vignettes/_cache/
 
 # Files
-/.Rprofile
-/.Renviron
+^/.Rprofile$
+^/.Renviron$
+
+# Demo
+./R/demo-*
+./tests/testthat/test-demo-*
 
 # Docker
-docker-compose.yml
+^docker-compose.yml$
 R/utils-DockerCompose.R
-tests/testthat/test-DockerCompose.R
+tests/testthat/utils-DockerCompose.R
