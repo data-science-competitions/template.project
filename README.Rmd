@@ -2,61 +2,36 @@
 output: github_document
 ---
 
-```{r setup, echo = FALSE, results = 'hide', message = FALSE, warning = FALSE}
-knitr::opts_chunk$set(
-  echo = TRUE, 
-  message = FALSE,
-  warning = FALSE,
-  fig.align = "center", 
-  out.width = "100%"
-)
-
-devtools::load_all(usethis::proj_get())
-DESCRIPTION <- desc::description$new(usethis::proj_path("DESCRIPTION"))
+```{r, include = FALSE}
+source(file.path(usethis::proj_get(), "vignettes",  "_common.R"))
+pkg_name <- read.dcf("DESCRIPTION", "Package")[[1]]
 ```
 
-```{r badges, echo = FALSE}
-glue <- stringr::str_glue
-slug <- tryCatch(tic::ci_get_slug(), error = function(e) "")
-branch = "master"
-
-badges <- list()
-badges$CICD <- list(
-  badge_name = "continuous-integration", 
-  href = glue("https://github.com/{slug}/actions", slug = slug), 
-  src = glue("https://github.com/{slug}/workflows/test-suite/badge.svg?branch={branch}", slug = slug, branch = branch)
-)
-badges$covr <- list(
-  badge_name = "code-coverage", 
-  href = glue("https://codecov.io/github/{slug}/?branch={branch}", slug = slug, branch = branch), 
-  src = glue("https://codecov.io/gh/{slug}/branch/{branch}/graph/badge.svg", slug = slug, branch = branch)
-)
-invisible(lapply(badges, do.call, what = usethis::use_badge))
-```
-
-# ``r DESCRIPTION$get_field("Package")`` <img src='https://i.imgur.com/cLcAYfz.png' align="right" height="50"/>
+# `template.project` <img src='https://i.imgur.com/M8Jk1AL.png' align="right" height="75"/>
 
 <!-- badges: start -->
-[![continuous-integration](https://github.com/data-science-competitions/template.project/workflows/test-suite/badge.svg?branch=master)](https://github.com/data-science-competitions/template.project/actions)
-[![code-coverage](https://codecov.io/gh/data-science-competitions/template.project/branch/master/graph/badge.svg)](https://codecov.io/github/data-science-competitions/template.project/?branch=master)
+[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+[![test-suite](https://github.com/tidylab/template.project/workflows/test-suite/badge.svg)](https://github.com/tidylab/template.project/actions)
+[![code-coverage](https://codecov.io/gh/tidylab/template.project/branch/master/graph/badge.svg)](https://codecov.io/github/tidylab/template.project/?branch=master)
 <!-- badges: end -->
 
-`r DESCRIPTION$get_field("Title")`
+``r pkg_name``
 ---
 
-```{r, echo = FALSE, out.width = "75%"}
+```{r, echo = FALSE, out.width = "100%"}
 knitr::include_graphics("https://i.imgur.com/RLEQkhe.png")
 ```
 
 ## Overview
 
-`r DESCRIPTION$get_field("Description")`
+```{r child="vignettes/readme/overview.Rmd"}
+```
 
 ## Installation
 
-You can install ``r DESCRIPTION$get_field("Package")`` by using:
+You can install `template.project` by using:
 
-```
+```{r, echo=TRUE, eval=FALSE}
 install.packages("remotes")
-remotes::install_local("`r DESCRIPTION$get_field("Package")`")
+remotes::install_github("tidylab/template.project")
 ```
