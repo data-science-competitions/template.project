@@ -5,8 +5,8 @@
 
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
-[![test-suite](https://github.com/tidylab/template.project/workflows/test-suite/badge.svg)](https://github.com/tidylab/template.project/actions)
-[![code-coverage](https://codecov.io/gh/tidylab/template.project/branch/master/graph/badge.svg)](https://codecov.io/github/tidylab/template.project/?branch=master)
+[![test-suite](https://github.com/data-science-competitions/template.project/workflows/test-suite/badge.svg)](https://github.com/data-science-competitions/template.project/actions)
+[![code-coverage](https://codecov.io/gh/data-science-competitions/template.project/branch/master/graph/badge.svg)](https://codecov.io/github/data-science-competitions/template.project/?branch=master)
 <!-- badges: end -->
 
 ## `template.project`
@@ -31,5 +31,5 @@ You can install `template.project` by using:
 
 ``` r
 install.packages("remotes")
-remotes::install_github("tidylab/template.project")
+remotes::install_github("data-science-competitions/template.project")
 ```
