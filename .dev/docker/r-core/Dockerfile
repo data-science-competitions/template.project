@@ -5,7 +5,10 @@ FROM rocker/tidyverse:4.0.2
 RUN apt-get update -qq && apt-get -y --no-install-recommends install \
     dos2unix \
     libcurl4-openssl-dev \
-    libssl-dev \
+    libfreetype6-dev \
+    libpng-dev \
+    libtiff5-dev \
+    libjpeg-dev \
 	libxt-dev \
     libxml2-dev \
     libcairo2-dev \
@@ -13,11 +16,11 @@ RUN apt-get update -qq && apt-get -y --no-install-recommends install \
     libmariadbd-dev \
     libmariadbclient-dev \
     libpq-dev \
-	libsodium-dev \
+    libsodium-dev \
+    libssl-dev \
     libssh2-1-dev \
     libsasl2-dev \
     unixodbc-dev \
-    libsqliteodbc \
     git \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
