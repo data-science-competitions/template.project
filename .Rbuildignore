@@ -1,7 +1,7 @@
 # Docker
 ^\.dockerignore$
 ^docker-compose\.yml$
-^R/utils-DockerCompose\.R$
+^R/docker-DockerCompose\.R$
 ^tests/testthat/test-DockerCompose\.R$
 
 # Folders
@@ -9,12 +9,13 @@
 ^\.dev/
 ^\.ccache$
 ^\.github
-^renv$
-data-raw/
-docs/
+\.gitkeep
+^data-raw/
+^docs/
+^renv/
+^pkgdown/
 
 # Files
-\.gitkeep$
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^\.travis\.yml$
@@ -24,5 +25,5 @@ docs/
 ^README\.Rmd$
 ^LICENSE\.md$
 
-
-
+# Demo
+demo-.*\.R$

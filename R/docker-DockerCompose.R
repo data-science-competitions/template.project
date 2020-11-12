@@ -1,3 +1,4 @@
+# nocov start
 # DockerCompose -----------------------------------------------------------
 #' @title Use a docker-compose.yml File
 #' @description
@@ -109,3 +110,4 @@ DockerCompose$funs$get <- function(self, private, service, field){
 # Helpers -----------------------------------------------------------------
 DockerCompose$funs$system <- function(command, ...){ message("\033[43m\033[44m",command,"\033[43m\033[49m") ; base::system(command, ...) }
 DockerCompose$funs$escape_character <- function(x){ if(is.character(x)) paste0('"', x, '"') else x }
+# nocov end
